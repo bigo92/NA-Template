@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>NA.Domain</AssemblyName>
+    <RootNamespace>NA.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="HostedServices\" />
+    <Folder Include="SignalR\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NA.DataAccess\C.NA.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

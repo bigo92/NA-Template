@@ -1,0 +1,12 @@
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\bin\Debug\netcoreapp2.2\NA.Repository.deps.json
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\bin\Debug\netcoreapp2.2\NA.Repository.dll
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\bin\Debug\netcoreapp2.2\NA.Repository.pdb
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\bin\Debug\netcoreapp2.2\NA.Common.dll
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\bin\Debug\netcoreapp2.2\NA.Common.pdb
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\C.NA.Repository.csprojAssemblyReference.cache
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\C.NA.Repository.csproj.CoreCompileInputs.cache
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\C.NA.Repository.AssemblyInfoInputs.cache
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\C.NA.Repository.AssemblyInfo.cs
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\C.NA.Repository.csproj.CopyComplete
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\NA.Repository.dll
+C:\Users\Computer.DESKTOP-TLTTANA\source\repos\na.Library\NA.Repository\obj\Debug\netcoreapp2.2\NA.Repository.pdb
