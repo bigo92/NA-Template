@@ -23,11 +23,11 @@ namespace NA.Domain.Bases
             var typeT = typeof(T);
             if (!serviceCollections.Any(x => x.ServiceType == typeT))
             {
-                serviceCollections.AddSingleton(ActivatorUtilities.CreateInstance<T>(provider));
+                serviceCollections.Add(new ServiceDescriptor(typeof(T),p => ActivatorUtilities.CreateInstance<T>(provider,Guid.NewGuid().ToString()),ServiceLifetime.Singleton));
             }
-            using (var scope = serviceCollections.BuildServiceProvider().CreateScope())
+            using (var provider = serviceCollections.BuildServiceProvider().CreateScope())
             {
-                return scope.ServiceProvider.GetRequiredService<T>();
+                return provider.ServiceProvider.GetRequiredService<T>();
             }
         }
            

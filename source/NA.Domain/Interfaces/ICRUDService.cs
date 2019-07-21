@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NA.Domain.Interfaces
 {
-    public interface ICRUD
+    public interface ICRUDService
     {
         void Get<T>(T model);
 

@@ -36,9 +36,9 @@ namespace E.NA.WebApi.Modules.General.Controllers
         }
 
         [HttpGet]
-        public async Task<string> Service()
+        public string Service()
         {
-            _log.LogError("ahihi");
+            _log.LogError("api call service");
             var a = _dp.Service<TempService>().FindOne();
             return a;
         }
