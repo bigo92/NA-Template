@@ -17,11 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NA.Domain\D.NA.Domain.csproj" />
+    <Folder Include="Modules\Auth\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Auth\" />
+    <ProjectReference Include="..\na.domain\D.NA.Domain.csproj" />
   </ItemGroup>
 
 </Project>

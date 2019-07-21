@@ -1,23 +1,21 @@
 ﻿using System;
-using NA.Domain.Interfaces;
 using NA.Domain.Bases;
-using Microsoft.Extensions.Logging;
+using NA.Domain.Interfaces;
 
 namespace NA.Domain.Services
 {
-    public interface ITempService : ICRUD
+    public interface ITempService2 : ICRUD
     {
 
     }
 
-    public class TempService : ITempService, IDisposable
+    public class TempService2 : ITempService2
     {
-        private readonly IDispatcherFactory _dp;
-        private readonly ILogger<TempService> _log;
-        public TempService(IDispatcherFactory dp, ILogger<TempService> log)
+        public TempService2()
         {
-            _dp = dp;_log = log;
+
         }
+
         public void Get<T>(T model)
         {
             throw new NotImplementedException();
@@ -43,9 +41,5 @@ namespace NA.Domain.Services
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            _log.LogError("Dispose Service");
-        }
     }
 }

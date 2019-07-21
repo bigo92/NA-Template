@@ -17,3 +17,11 @@ C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.commo
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\NA.Common.pdb
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.common\bin\Debug\netcoreapp2.2\NA.Common.runtimeconfig.json
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.common\bin\Debug\netcoreapp2.2\NA.Common.runtimeconfig.dev.json
+C:\Users\pc\Documents\NA-Template\source\na.common\bin\Debug\netcoreapp2.2\NA.Common.deps.json
+C:\Users\pc\Documents\NA-Template\source\na.common\bin\Debug\netcoreapp2.2\NA.Common.dll
+C:\Users\pc\Documents\NA-Template\source\na.common\bin\Debug\netcoreapp2.2\NA.Common.pdb
+C:\Users\pc\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\B.NA.Common.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\B.NA.Common.AssemblyInfoInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\B.NA.Common.AssemblyInfo.cs
+C:\Users\pc\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\NA.Common.dll
+C:\Users\pc\Documents\NA-Template\source\na.common\obj\Debug\netcoreapp2.2\NA.Common.pdb

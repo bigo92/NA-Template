@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NA.Domain.Bases;
 using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
@@ -14,12 +15,12 @@ namespace E.NA.WebApi.Modules.General.Controllers
     [ApiController]
     public class TempController : ControllerBase
     {
-        private readonly IControllerService controlerService;
-        private readonly UnitOfWork unit;
-        public TempController(IControllerService controlerService, UnitOfWork unit)
+        private readonly IControllerService _cs;
+        private readonly IDispatcherFactory _dp;
+        private readonly ILogger _log;
+        public TempController(IControllerService cs, IDispatcherFactory dp, ILogger<TempController> log)
         {
-            this.controlerService = controlerService;
-            this.unit = unit;
+            _cs = cs;_dp = dp;_log = log;
         }
 
         [HttpGet]
@@ -31,13 +32,15 @@ namespace E.NA.WebApi.Modules.General.Controllers
         [HttpGet]
         public string Domain()
         {
-            return controlerService.GetDomain();
+            return _cs.GetDomain();
         }
 
         [HttpGet]
-        public string Service()
+        public async Task<string> Service()
         {
-            return unit.Service<TempService>().FindOne();
+            _log.LogError("ahihi");
+            var a = _dp.Service<TempService>().FindOne();
+            return a;
         }
     }
 }

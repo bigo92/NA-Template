@@ -22,3 +22,15 @@ C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.dataA
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.csproj.CopyComplete
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\NA.DataAccess.dll
 C:\Users\Computer.DESKTOP-TLTTANA\OneDrive\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\NA.DataAccess.pdb
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\bin\Debug\netcoreapp2.2\NA.DataAccess.deps.json
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\bin\Debug\netcoreapp2.2\NA.DataAccess.dll
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\bin\Debug\netcoreapp2.2\NA.DataAccess.pdb
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\bin\Debug\netcoreapp2.2\NA.Common.dll
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\bin\Debug\netcoreapp2.2\NA.Common.pdb
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.csprojAssemblyReference.cache
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.AssemblyInfoInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.AssemblyInfo.cs
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\C.NA.DataAccess.csproj.CopyComplete
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\NA.DataAccess.dll
+C:\Users\pc\Documents\NA-Template\source\na.dataAccess\obj\Debug\netcoreapp2.2\NA.DataAccess.pdb

@@ -4,21 +4,26 @@ using System.Linq;
 
 namespace NA.Domain.Bases
 {
-    public class UnitOfWork : IDisposable
+    public interface IDispatcherFactory
+    {
+        T Service<T>() where T : class;
+    }
+
+    public class DispatcherFactory : IDispatcherFactory, IDisposable
     {
         private readonly IServiceProvider provider;
-        public UnitOfWork(IServiceProvider provider)
+        public DispatcherFactory(IServiceProvider provider)
         {
             this.provider = provider;
         }
                      
-        private IServiceCollection serviceCollections = new ServiceCollection();
+        private readonly IServiceCollection serviceCollections = new ServiceCollection();
         public T Service<T>() where T : class
         {
             var typeT = typeof(T);
             if (!serviceCollections.Any(x => x.ServiceType == typeT))
             {
-                serviceCollections.AddScoped<T>();
+                serviceCollections.AddSingleton(ActivatorUtilities.CreateInstance<T>(provider));
             }
             using (var scope = serviceCollections.BuildServiceProvider().CreateScope())
             {

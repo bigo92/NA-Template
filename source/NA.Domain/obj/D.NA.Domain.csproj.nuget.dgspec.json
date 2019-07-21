@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj": {}
+    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj": {
+    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
         "projectName": "NA.Common",
-        "projectPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
-        "packagesPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.common\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Computer.DESKTOP-TLTTANA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,133 +41,126 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
-            "Microsoft.AspNetCore.App": {
+            "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj",
+        "projectName": "NA.DataAccess",
+        "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\pc\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj": {
+                "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
+        "projectName": "NA.Domain",
+        "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\pc\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
-            "Microsoft.NETCore.App": {
-              "suppressParent": "All",
+            "Microsoft.Extensions.Logging": {
               "target": "Package",
-              "version": "[2.2.0, )",
-              "autoReferenced": true
+              "version": "[2.2.0, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[2.2.3, )"
-            }
-          },
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
-        }
-      }
-    },
-    "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj",
-        "projectName": "NA.DataAccess",
-        "projectPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.dataAccess\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\Computer.DESKTOP-TLTTANA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp2.2"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp2.2": {
-            "projectReferences": {
-              "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj": {
-                "projectPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp2.2": {
-          "dependencies": {
-            "Microsoft.NETCore.App": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )",
-              "autoReferenced": true
-            }
-          },
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
-        }
-      }
-    },
-    "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
-        "projectName": "NA.Domain",
-        "projectPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
-        "packagesPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\na.domain\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\Computer.DESKTOP-TLTTANA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp2.2"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp2.2": {
-            "projectReferences": {
-              "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Computer.DESKTOP-TLTTANA\\OneDrive\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp2.2": {
-          "dependencies": {
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
