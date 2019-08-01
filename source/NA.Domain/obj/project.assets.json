@@ -1099,13 +1099,13 @@
     },
     "NA.Common/1.0.0": {
       "type": "project",
-      "path": "../na.common/B.NA.Common.csproj",
-      "msbuildProject": "../na.common/B.NA.Common.csproj"
+      "path": "../na.common/NA.Common.csproj",
+      "msbuildProject": "../na.common/NA.Common.csproj"
     },
     "NA.DataAccess/1.0.0": {
       "type": "project",
-      "path": "../na.dataAccess/C.NA.DataAccess.csproj",
-      "msbuildProject": "../na.dataAccess/C.NA.DataAccess.csproj"
+      "path": "../na.dataAccess/NA.DataAccess.csproj",
+      "msbuildProject": "../na.dataAccess/NA.DataAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1123,9 +1123,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\NA.Domain.csproj",
       "projectName": "NA.Domain",
-      "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\D.NA.Domain.csproj",
+      "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\NA.Domain.csproj",
       "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.domain\\obj\\",
       "projectStyle": "PackageReference",
@@ -1146,8 +1146,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\pc\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj": {
-              "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\NA.DataAccess\\C.NA.DataAccess.csproj"
+            "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\NA.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\NA.DataAccess.csproj"
             }
           }
         }

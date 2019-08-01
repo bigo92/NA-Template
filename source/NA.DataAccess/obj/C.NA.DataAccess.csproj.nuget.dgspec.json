@@ -4,12 +4,12 @@
     "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.dataAccess\\C.NA.DataAccess.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj": {
+    "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj",
         "projectName": "NA.Common",
-        "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+        "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj",
         "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\obj\\",
         "projectStyle": "PackageReference",
@@ -82,8 +82,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\pc\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj": {
-                "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\Na.Common\\B.NA.Common.csproj"
+              "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj": {
+                "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj"
               }
             }
           }

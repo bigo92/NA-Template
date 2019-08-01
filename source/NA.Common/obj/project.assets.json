@@ -692,9 +692,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+      "projectUniqueName": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj",
       "projectName": "NA.Common",
-      "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\B.NA.Common.csproj",
+      "projectPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\NA.Common.csproj",
       "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\pc\\Documents\\NA-Template\\source\\na.common\\obj\\",
       "projectStyle": "PackageReference",

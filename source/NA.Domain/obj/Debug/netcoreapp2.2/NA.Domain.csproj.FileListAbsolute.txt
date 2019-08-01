@@ -1,0 +1,14 @@
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.Domain.deps.json
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.Domain.dll
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.Domain.pdb
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.Common.dll
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.DataAccess.dll
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.DataAccess.pdb
+C:\Users\pc\Documents\NA-Template\source\na.domain\bin\Debug\netcoreapp2.2\NA.Common.pdb
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.csprojAssemblyReference.cache
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.AssemblyInfoInputs.cache
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.AssemblyInfo.cs
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.csproj.CopyComplete
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.dll
+C:\Users\pc\Documents\NA-Template\source\na.domain\obj\Debug\netcoreapp2.2\NA.Domain.pdb
