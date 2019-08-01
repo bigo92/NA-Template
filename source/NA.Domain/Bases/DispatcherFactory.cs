@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NA.Domain.Services;
 using System;
 using System.Linq;
 
@@ -37,7 +38,7 @@ namespace NA.Domain.Bases
             var typeT = typeof(T);
             if (!serviceCollections.Any(x => x.ServiceType == typeT))
             {
-                serviceCollections.Add(new ServiceDescriptor(typeof(T), p => ActivatorUtilities.CreateInstance<T>(provider, Guid.NewGuid().ToString()), ServiceLifetime.Singleton));
+                serviceCollections.Add(new ServiceDescriptor(typeof(I), p => ActivatorUtilities.CreateInstance<T>(provider, Guid.NewGuid().ToString()), ServiceLifetime.Singleton));
             }
             using (var provider = serviceCollections.BuildServiceProvider())
             {
