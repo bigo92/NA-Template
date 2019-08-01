@@ -1,0 +1,8 @@
+source/NA.Common/obj/
+source/.vs/
+source/NA.Common/bin/
+source/NA.DataAccess/bin/
+source/NA.DataAccess/obj/
+source/NA.Domain/obj/
+source/NA.WebApi/obj/
+source/NA.XUnitTest/obj/
