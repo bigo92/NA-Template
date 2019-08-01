@@ -4,8 +4,10 @@ using NA.Domain.Bases;
 using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
 using NA.WebApi.Modules.General.Controllers;
+using NA.WebApi.Modules.General.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -28,12 +30,43 @@ namespace NA.XUnitTest.Controllers
         }
 
         [Fact]
-        public async Task TestValid()
+        public void TestValidFalse()
+        {
+            var model = new TempModel
+            {
+                name = ""
+            };
+            // Set some properties here
+            var context = new ValidationContext(model, null, null);
+            var results = new List<ValidationResult>();
+            var isModelStateValid = Validator.TryValidateObject(model, context, results, true);
+
+            // Assert here
+            Assert.False(isModelStateValid);
+        }
+
+        [Fact]
+        public void TestValidTrue()
+        {
+            var model = new TempModel {
+                name = "123"
+            };
+            // Set some properties here
+            var context = new ValidationContext(model, null, null);
+            var results = new List<ValidationResult>();
+            var isModelStateValid = Validator.TryValidateObject(model, context, results, true);
+
+            // Assert here
+            Assert.True(isModelStateValid);
+        }
+
+        [Fact]
+        public async Task TestLogic()
         {
             // Arrange
             var controller = new TempController(_dispatcherFactory.Object, _controllerService.Object);
             // Act
-            var result = controller.TestValid(new WebApi.Modules.General.Models.TempModel { });
+            var result = controller.Test(new TempModel { name = "123" });
 
             // Assert
             var viewResult = Assert.IsType<string>(result);

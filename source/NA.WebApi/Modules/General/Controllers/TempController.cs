@@ -31,14 +31,11 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpPost]
-        public string TestValid([FromBody] TempModel model)
+        public string Test([FromBody] TempModel model)
         {
             if (ModelState.IsValid)
             {
-                if (model.name != "")
-                {
-                    return "ok";
-                }
+                return "ok";
             }
             return "false";
         }
