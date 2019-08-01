@@ -16,7 +16,7 @@ namespace NA.XUnitTest.Services
         }
 
         [Fact]
-        public void Test1()
+        public void FindOneTest()
         {
             var result = sv.Object.FindOne();
             Assert.Equal("123",result);
