@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NA.Domain.Bases;
+using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
