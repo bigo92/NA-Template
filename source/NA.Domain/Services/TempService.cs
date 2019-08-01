@@ -26,7 +26,7 @@ namespace NA.Domain.Services
 
         public string FindOne()
         {
-            return _dp.Service<TempService2>().FindOne();
+            return _dp.Service<ITempService2,TempService2>().FindOne();
         }
 
         public void Add<T>(T model)

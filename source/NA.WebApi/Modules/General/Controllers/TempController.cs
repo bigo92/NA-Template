@@ -26,7 +26,7 @@ namespace NA.WebApi.Modules.General.Controllers
         [HttpGet]
         public string Test()
         {
-           var result = dispatcherFactory.Service<TempService>().FindOne();
+           var result = dispatcherFactory.Service<ITempService,TempService>().FindOne();
            return result;
         }
 

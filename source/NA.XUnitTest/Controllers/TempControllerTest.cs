@@ -21,12 +21,13 @@ namespace NA.XUnitTest.Controllers
         private readonly Mock<ITempService> _tempService;
         public TempControllerTest()
         {
+            _tempService = new Mock<ITempService>();
             _dispatcherFactory = new Mock<IDispatcherFactory>();
             _controllerService = new Mock<IControllerService>();
-            _tempService = new Mock<ITempService>();
+            
             //setup
             _tempService.Setup(x => x.FindOne()).Returns("123");
-            _dispatcherFactory.Setup(x => x.Service<ITempService>()).Returns(_tempService.Object);
+            _dispatcherFactory.Setup(x => x.Service<ITempService,TempService>()).Returns(_tempService.Object);
         }
 
         [Fact]
@@ -61,7 +62,7 @@ namespace NA.XUnitTest.Controllers
         }
 
         [Fact]
-        public async Task TestLogic()
+        public async Task TestPost()
         {
             // Arrange
             var controller = new TempController(_dispatcherFactory.Object, _controllerService.Object);
@@ -71,6 +72,18 @@ namespace NA.XUnitTest.Controllers
             // Assert
             var viewResult = Assert.IsType<string>(result);
             Assert.Equal("ok", viewResult);
+        }
+
+        [Fact]
+        public async Task TestGet()
+        {
+            // Arrange
+            var controller = new TempController(_dispatcherFactory.Object, _controllerService.Object);
+            // Act
+            var result = controller.Test();
+
+            // Assert
+            Assert.Equal("123", result);
         }
     }
 }

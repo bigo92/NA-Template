@@ -1,14 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NA.Domain.Interfaces;
 using NA.Domain.Services;
 using System;
+using System.Collections;
 using System.Linq;
 
 namespace NA.Domain.Bases
 {
     public interface IDispatcherFactory
     {
-        T Service<T>() where T : class;
-        T Service<I,T>() where T : class;
+        I Service<I,T>() where T : class;
     }
 
     public class DispatcherFactory : IDispatcherFactory, IDisposable
@@ -20,29 +21,18 @@ namespace NA.Domain.Bases
         }
                      
         private readonly IServiceCollection serviceCollections = new ServiceCollection();
-        public T Service<T>() where T : class
+       
+        public I Service<I,T>() where T : class
         {
+            var typeI = typeof(I);
             var typeT = typeof(T);
-            if (!serviceCollections.Any(x => x.ServiceType == typeT))
+            if (!serviceCollections.Any(x => x.ServiceType == typeI && x.ImplementationType == typeT))
             {
-                serviceCollections.Add(new ServiceDescriptor(typeof(T),p => ActivatorUtilities.CreateInstance<T>(provider,Guid.NewGuid().ToString()),ServiceLifetime.Singleton));
-            }
-            using (var provider = serviceCollections.BuildServiceProvider().CreateScope())
-            {
-                return provider.ServiceProvider.GetRequiredService<T>();
-            }
-        }
-
-        public T Service<I,T>() where T : class
-        {
-            var typeT = typeof(T);
-            if (!serviceCollections.Any(x => x.ServiceType == typeT))
-            {
-                serviceCollections.Add(new ServiceDescriptor(typeof(I), p => ActivatorUtilities.CreateInstance<T>(provider, Guid.NewGuid().ToString()), ServiceLifetime.Singleton));
+                serviceCollections.Add(new ServiceDescriptor(typeI, p => ActivatorUtilities.CreateInstance<T>(provider, Guid.NewGuid().ToString()), ServiceLifetime.Singleton));
             }
             using (var provider = serviceCollections.BuildServiceProvider())
             {
-                return provider.GetRequiredService<T>();
+                return provider.GetRequiredService<I>();
             }
         }
 
