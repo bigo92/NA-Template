@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using NA.Domain.Bases;
 using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
+using NA.WebApi.Modules.General.Models;
 
-namespace NA.WebApi.Modules.General
+namespace NA.WebApi.Modules.General.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -27,6 +28,19 @@ namespace NA.WebApi.Modules.General
         {
            var result = dispatcherFactory.Service<TempService>().FindOne();
            return result;
+        }
+
+        [HttpPost]
+        public string TestValid([FromBody] TempModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.name != "")
+                {
+                    return "ok";
+                }
+            }
+            return "false";
         }
     }
 }

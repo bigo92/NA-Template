@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NA.Domain.Bases;
 using NA.WebApi.Bases.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NA.WebApi
 {
@@ -29,6 +31,25 @@ namespace NA.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register the Swagger generator, defining one or more Swagger documents        
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", null);
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "NA.WebApi.xml");
+                c.IncludeXmlComments(xmlPath);
+            });
+
             services.AddSingleton<IDispatcherFactory,DispatcherFactory>();
             services.AddSingleton<IControllerService, ControllerService>();            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -48,6 +69,13 @@ namespace NA.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WHM API");
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
