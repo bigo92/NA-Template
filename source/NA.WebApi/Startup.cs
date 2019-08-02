@@ -63,12 +63,14 @@ namespace NA.WebApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/api/error");
+                //app.UseDeveloperExceptionPage();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
+                app.UseExceptionHandler("/api/error");
             }
 
             app.UseSwagger();
@@ -78,7 +80,20 @@ namespace NA.WebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WHM API");
             });
 
-            app.UseHttpsRedirection();
+            // router angular
+            app.MapWhen(context => !context.Request.Path.Value.StartsWith("/api"), builder =>
+            {
+                builder.UseMvc(routes =>
+                {
+                    routes.MapSpaFallbackRoute(
+                       name: "angular",
+                       defaults: new { controller = "Home", action = "Index" }
+                   );
+                });
+            });
+
+            // router default      
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

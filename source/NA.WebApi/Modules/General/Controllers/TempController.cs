@@ -16,11 +16,9 @@ namespace NA.WebApi.Modules.General.Controllers
     public class TempController : ControllerBase
     {
         private readonly IDispatcherFactory dispatcherFactory;
-        private readonly IControllerService controllerService;
-        public TempController(IDispatcherFactory dispatcherFactory, IControllerService controllerService)
+        public TempController(IDispatcherFactory dispatcherFactory)
         {
             this.dispatcherFactory = dispatcherFactory;
-            this.controllerService = controllerService;
         }
 
         [HttpGet]

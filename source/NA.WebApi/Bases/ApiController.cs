@@ -1,71 +1,75 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using NA.Common.Extentions;
+using NA.Common.Models;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace NA.WebApi.Bases.Services
+namespace NA.WebApi.Bases
 {
-    public interface IControllerService
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class ApiController: ControllerBase
     {
-        string GetDomain();
-    }
-
-    public class ControllerService : IControllerService
-    {
-        private readonly IHttpContextAccessor httpContextAccessor;
-        public ControllerService(IHttpContextAccessor httpContextAccessor)
+        protected string GetDomain()
         {
-            this.httpContextAccessor = httpContextAccessor;
+            return $"{Request.Scheme}://{Request.Host}";
         }
 
-        public string GetDomain()
+        protected string GetLanguage()
         {
-            return $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";
+            var key = "vi";
+            if (Request.Headers.ContainsKey("Language"))
+            {
+                key = Request.Headers["Language"];
+            }
+            return key;
         }
 
-        //public async Task<ResultModel<dynamic>> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
-        //{
-        //    var lstError = new List<ErrorModel>();
-        //    await Task.Run(() =>
-        //    {
-        //        lstError = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new ErrorModel { key = x.Key, value = x.Value.Errors[0].ErrorMessage }).ToList();
-        //        if (errors != null)
-        //        {
-        //            lstError.AddRange(errors);
-        //        }
-        //        //fix key 
-        //        foreach (var item in lstError)
-        //        {
-        //            item.key = item.key == "" ? "" : item.key.FirstCharToLoower();
-        //        }
-        //    });
+        protected async Task<ResultModel<dynamic>> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
+        {
+            var lstError = new List<ErrorModel>();
 
-        //    if (data == null)
-        //    {
-        //        return new ResultModel<dynamic>
-        //        {
-        //            success = lstError.Count == 0,
-        //            error = lstError,
-        //            data = data,
-        //            paging = paging
-        //        };
-        //    }
+            lstError = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new ErrorModel { key = x.Key, value = x.Value.Errors[0].ErrorMessage }).ToList();
+            if (errors != null)
+            {
+                lstError.AddRange(errors);
+            }
+            //fix key 
+            foreach (var item in lstError)
+            {
+                item.key = item.key == "" ? "" : item.key;
+            }
 
-        //    JToken dataResult = JToken.FromObject(data);
-        //    if (data != null && (dataResult is JObject || dataResult is JArray))
-        //    {
-        //        JsonExtention.ConvertJsonData(dataResult);
-        //        //dataResult = tci.common.Extentions.JsonExtention.TolowerKeyName(dataResult);
-        //    }
+            if (data == null)
+            {
+                return new ResultModel<dynamic>
+                {
+                    success = lstError.Count == 0,
+                    error = lstError,
+                    data = data,
+                    paging = paging
+                };
+            }
 
-        //    return new ResultModel<dynamic>
-        //    {
-        //        success = lstError.Count == 0,
-        //        error = lstError,
-        //        data = dataResult,
-        //        paging = paging
-        //    };
-        //}
+            JToken dataResult = JToken.FromObject(data);
+            if (data != null && (dataResult is JObject || dataResult is JArray))
+            {
+                JsonExtention.ConvertJsonData(dataResult);
+                //dataResult = tci.common.Extentions.JsonExtention.TolowerKeyName(dataResult);
+            }
 
+            return new ResultModel<dynamic>
+            {
+                success = lstError.Count == 0,
+                error = lstError,
+                data = dataResult,
+                paging = paging
+            };
+        }
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public async Task<ResultModel<dynamic>> BindForm(dynamic data)
         //{
         //    var result = new List<Dictionary<string, object>>();
@@ -82,6 +86,7 @@ namespace NA.WebApi.Bases.Services
         //    };
         //}
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public List<Dictionary<string, object>> GetAttrForm(dynamic data)
         //{
         //    var propertyInfos = data.GetType().GetProperties();
@@ -89,7 +94,7 @@ namespace NA.WebApi.Bases.Services
         //    foreach (var pr in propertyInfos)
         //    {
         //        var property = new Dictionary<string, object>();
-        //        var name = tci.common.Extentions.StringExtention.FirstCharToLoower(pr.Name);
+        //        var name = NA.Common.Extentions.StringExtention.FirstCharToLoower(pr.Name);
         //        var attrs = pr.CustomAttributes;
         //        var value = pr.GetValue(data, null);
         //        property.Add("name", name);
@@ -318,6 +323,7 @@ namespace NA.WebApi.Bases.Services
         //    return result;
         //}
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public void AddErrors(IdentityResult result, Dictionary<string, string> replaceError = null)
         //{
         //    foreach (var error in result.Errors)
@@ -338,6 +344,7 @@ namespace NA.WebApi.Bases.Services
         //    }
         //}
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public async Task<JObject> PatchModel<T>(T model)
         //{
         //    var stream = this.HttpContext.Request.Body;
@@ -360,6 +367,7 @@ namespace NA.WebApi.Bases.Services
         //    }
         //}
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public async Task<Newtonsoft.Json.Linq.JObject> PatchModel2<T>(T model)
         //{
         //    var stream = this.HttpContext.Request.Body;
@@ -382,9 +390,10 @@ namespace NA.WebApi.Bases.Services
         //    }
         //}
 
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //public bool ValidationParams<T>(T data, dynamic paramValid)
         //{
-        //    var propertyInfos = (data as Newtonsoft.Json.Linq.JObject);
+        //    var propertyInfos = JObject.FromObject(data);
         //    foreach (var pr in paramValid)
         //    {
         //        var name = pr.keyName;
@@ -400,7 +409,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -413,7 +422,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -426,7 +435,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -465,7 +474,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -478,7 +487,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -491,7 +500,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -503,12 +512,12 @@ namespace NA.WebApi.Bases.Services
         //                        value = propertyInfos.GetValue(name).ToObject<string>();
         //                        if (!(value as string).ValidEmail())
         //                        {
-        //                            ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                            ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                        }
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -521,7 +530,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -560,7 +569,7 @@ namespace NA.WebApi.Bases.Services
         //                    }
         //                    else
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
@@ -582,16 +591,17 @@ namespace NA.WebApi.Bases.Services
         //                {
         //                    try
         //                    {
-        //                        value = propertyInfos.GetValue(name).ToObject<DateTime>().ToLocalTime();                                
+        //                        value = propertyInfos.GetValue(name).ToObject<DateTime>().ToLocalTime();
         //                    }
         //                    catch (Exception)
         //                    {
-        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.fomat");
+        //                        ModelState.AddModelError($"data.{name}", $"shared.{name}.format");
         //                    }
         //                }
         //                break;
         //            default://String,Textarea,Editor,tag
-        //                value = propertyInfos.GetValue(name).ToObject<string>();
+        //                // value = propertyInfos.GetValue(name).ToObject<string>();
+        //                value = propertyInfos.Value<string>(name);
         //                break;
         //        }
         //        foreach (var item in pr.validation)
@@ -606,6 +616,20 @@ namespace NA.WebApi.Bases.Services
         //                    if (pr.type == "9" || pr.type == "14")// Image or File
         //                    {
         //                        if ((value as List<tci.entites.Bases.FilesJson>).Count(x => x.url != "") == 0)
+        //                        {
+        //                            ModelState.AddModelError($"data.{name}", item.message);
+        //                        }
+        //                    }
+        //                    if (pr.type == "11" || pr.type == "18")
+        //                    {
+        //                        if ((value as Array) == null || (value as Array).Length == 0)
+        //                        {
+        //                            ModelState.AddModelError($"data.{name}", item.message);
+        //                        }
+        //                    }
+        //                    if (pr.type == "17")
+        //                    {
+        //                        if ((value as JArray) == null || (value as JArray).Count == 0)
         //                        {
         //                            ModelState.AddModelError($"data.{name}", item.message);
         //                        }
