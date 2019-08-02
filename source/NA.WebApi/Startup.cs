@@ -51,8 +51,7 @@ namespace NA.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddSingleton<IDispatcherFactory,DispatcherFactory>();
-            services.AddSingleton<IControllerService, ControllerService>();            
+            services.AddSingleton<IDispatcherFactory,DispatcherFactory>();        
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            

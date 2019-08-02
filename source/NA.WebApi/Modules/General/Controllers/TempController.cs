@@ -6,14 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NA.Domain.Bases;
 using NA.Domain.Services;
+using NA.WebApi.Bases;
 using NA.WebApi.Bases.Services;
 using NA.WebApi.Modules.General.Models;
 
 namespace NA.WebApi.Modules.General.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class TempController : ControllerBase
+    public class TempController : ApiController
     {
         private readonly IDispatcherFactory dispatcherFactory;
         public TempController(IDispatcherFactory dispatcherFactory)
