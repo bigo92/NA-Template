@@ -1,0 +1,4 @@
+﻿dotnet ef dbcontext scaffold "Server=.;Database=NATemplate;user id=sa;password=123456;Trusted_Connection=False;" Microsoft.EntityFrameworkCore.SqlServer -o ModelsRender -f
+
+
+dotnet ef dbcontext scaffold "User ID=postgres;Password=admin;Server=112.213.88.161;Port=5432;Database=tcispa;Integrated Security=true;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models -f
