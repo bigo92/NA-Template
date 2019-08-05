@@ -14,16 +14,16 @@ namespace NA.WebApi.Modules.General.Controllers
 {
     public class TempController : ApiController
     {
-        private readonly IDispatcherFactory dispatcherFactory;
+        private readonly IDispatcherFactory _dispatcherFactory;
         public TempController(IDispatcherFactory dispatcherFactory)
         {
-            this.dispatcherFactory = dispatcherFactory;
+            this._dispatcherFactory = dispatcherFactory;
         }
 
         [HttpGet]
         public string Test()
         {
-           var result = dispatcherFactory.Service<ITempService,TempService>().FindOne();
+           var result = _dispatcherFactory.Service<ITempService,TempService>().FindOne();
            return result;
         }
 
@@ -35,6 +35,16 @@ namespace NA.WebApi.Modules.General.Controllers
                 return "ok";
             }
             return "false";
+        }
+
+        [HttpPost]
+        public object Add([FromBody] object model)
+        {
+            if (ModelState.IsValid)
+            {
+                _dispatcherFactory.Service<ITempService, TempService>().Add(model);
+            }
+            return null;
         }
     }
 }

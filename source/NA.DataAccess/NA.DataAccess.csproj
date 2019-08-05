@@ -5,12 +5,15 @@
     <RootNamespace>NA.DataAccess</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="ModelsRender\**" />
+    <EmbeddedResource Remove="ModelsRender\**" />
+    <None Remove="ModelsRender\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\na.common\NA.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bases\" />
     <Folder Include="Models\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,9 +30,9 @@ namespace NA.Domain.Bases
             {
                 serviceCollections.Add(new ServiceDescriptor(typeI, p => ActivatorUtilities.CreateInstance<T>(provider, Guid.NewGuid().ToString()), ServiceLifetime.Singleton));
             }
-            using (var provider = serviceCollections.BuildServiceProvider())
+            using (var provider = serviceCollections.BuildServiceProvider().CreateScope())
             {
-                return provider.GetRequiredService<I>();
+                return provider.ServiceProvider.GetRequiredService<I>();
             }
         }
 

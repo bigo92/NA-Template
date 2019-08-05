@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace NA.DataAccess.ModelsRender
+namespace NA.DataAccess.Models
 {
     public partial class NATemplateContext : DbContext
     {

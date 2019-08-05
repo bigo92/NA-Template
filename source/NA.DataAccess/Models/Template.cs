@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NA.DataAccess.ModelsRender
+namespace NA.DataAccess.Models
 {
     public partial class Template
     {

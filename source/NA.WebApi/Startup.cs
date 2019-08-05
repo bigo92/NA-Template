@@ -9,10 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NA.DataAccess.Bases;
+using NA.DataAccess.Models;
 using NA.Domain.Bases;
 using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
@@ -32,6 +35,9 @@ namespace NA.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<NATemplateContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
             // Register the Swagger generator, defining one or more Swagger documents        
             services.AddSwaggerGen(c =>
             {
@@ -51,8 +57,8 @@ namespace NA.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddSingleton<IDispatcherFactory,DispatcherFactory>();        
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<NATemplateContext>>();
+            services.AddScoped<IDispatcherFactory,DispatcherFactory>();        
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
         }
