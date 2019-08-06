@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -58,10 +59,13 @@ namespace NA.WebApi
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork<NATemplateContext>>();
-            services.AddScoped<IDispatcherFactory,DispatcherFactory>();        
+            services.AddScoped<IDispatcherFactory, DispatcherFactory>();
+            services.AddImplementInterfaceScoped<TempService>(Assembly.Load("NA.Domain"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -100,6 +104,28 @@ namespace NA.WebApi
             // router default      
             //app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    public static class ServiceCollectionExtension {
+        public static void AddImplementInterfaceScoped<T>(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            var serviceType = typeof(T);
+
+            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
+            {
+                services.AddScoped(serviceType, implementationType);
+            }
+        }
+
+        public static void AddImplementInterfaceSingleton<T>(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            var serviceType = typeof(T);
+
+            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
+            {
+                services.AddSingleton(serviceType, implementationType);
+            }
         }
     }
 }
