@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NA.DataAccess.Bases;
+using NA.DataAccess.Models;
 using NA.Domain.Bases;
 using NA.Domain.Services;
 using NA.WebApi.Bases.Services;
@@ -32,6 +36,9 @@ namespace NA.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<NATemplateContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
             // Register the Swagger generator, defining one or more Swagger documents        
             services.AddSwaggerGen(c =>
             {
@@ -51,11 +58,14 @@ namespace NA.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddSingleton<IDispatcherFactory,DispatcherFactory>();        
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<NATemplateContext>>();
+            services.AddScoped<IDispatcherFactory, DispatcherFactory>();
+            services.AddImplementInterfaceScoped<TempService>(Assembly.Load("NA.Domain"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -94,6 +104,28 @@ namespace NA.WebApi
             // router default      
             //app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    public static class ServiceCollectionExtension {
+        public static void AddImplementInterfaceScoped<T>(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            var serviceType = typeof(T);
+
+            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
+            {
+                services.AddScoped(serviceType, implementationType);
+            }
+        }
+
+        public static void AddImplementInterfaceSingleton<T>(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            var serviceType = typeof(T);
+
+            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
+            {
+                services.AddSingleton(serviceType, implementationType);
+            }
         }
     }
 }
