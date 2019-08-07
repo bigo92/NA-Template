@@ -1,0 +1,13 @@
+<div [class]="class" [sortablejs]="controlValue">
+  <ng-container *ngFor="let item of controlValue;let i = index">
+    <div class="col-md-{{size}} position-relative"
+      [hidden]="(item.url === '' && i !== indexShow) || (i === indexShow && disabled)">
+      <div (click)="open(item)" class="image-preview" id="image-preview-{{i}}" style="background-color: #e6e0e0">
+        <label for="image-upload" id="image-label-{{i}}" class="image-label"></label>
+        <input type="file" id="image-upload-{{i}}" (change)="readURL($event)" class="image-upload" [attr.index]="i"
+          [attr.flag]="item.flag" multiple [disabled]="disabled" />
+      </div>
+      <i nz-icon nzType="close-circle" nzTheme="outline" *ngIf="item.url !== '' && !disabled" (click)="remove(i);"></i>
+    </div>
+  </ng-container>
+</div>

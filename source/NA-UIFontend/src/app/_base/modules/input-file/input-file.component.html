@@ -1,0 +1,8 @@
+<div [class]="class">
+  <div class="col-md-{{size}}" *ngFor="let item of controlValue;let i = index">
+    <div class="image-preview" id="image-preview-{{i}}" style="background-color: #e6e0e0">
+      <label for="image-upload" id="image-label-{{i}}" class="image-label"></label>
+      <input type="file" id="image-upload-{{i}}" (change)="readURL($event)" class="image-upload" [attr.index]="i" [attr.flag]="item.flag" />
+    </div>
+  </div>
+</div>

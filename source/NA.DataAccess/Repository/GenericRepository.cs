@@ -83,7 +83,6 @@ namespace NA.DataAccess.Repository
                 if (entity == null)
                     throw new ArgumentNullException("entity");
                 SetEntryModified(entity);
-                //Context.SaveChanges(); commented out call to SaveChanges as Context save changes will be called with Unit of work
             }
             catch (Exception dbEx)
             {
@@ -97,7 +96,6 @@ namespace NA.DataAccess.Repository
                 if (entity == null)
                     throw new ArgumentNullException("entity");
                 _entities.Remove(entity);
-                //Context.SaveChanges(); commented out call to SaveChanges as Context save changes will be called with Unit of work
             }
             catch (Exception dbEx)
             {
