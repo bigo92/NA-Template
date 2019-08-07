@@ -18,10 +18,11 @@ namespace NA.DataAccess.Bases
         private readonly TContext _context;
         private bool _disposed;
         private Dictionary<string, object> _repositories;
+        private readonly IServiceProvider _service;
 
-        public UnitOfWork(TContext context)
+        public UnitOfWork(IServiceProvider service)
         {
-            _context = context;
+            _service = service;
         }
 
         public Repository<T> Repository<T>() where T : class
