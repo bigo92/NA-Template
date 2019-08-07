@@ -15,6 +15,7 @@ namespace NA.DataAccess.Repository
         IEnumerable<T> Get();
         //IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        void Insert(T entity);
         void Delete(T entity);
         void Update(T entity);
     }
@@ -52,8 +53,6 @@ namespace NA.DataAccess.Repository
                 if (entity == null)
                     throw new ArgumentNullException("entity");
                 _entities.Add(entity);
-                //Context.SaveChanges(); commented out call to SaveChanges as Context save changes will be 
-                //called with Unit of work
             }
             catch (Exception dbEx)
             {

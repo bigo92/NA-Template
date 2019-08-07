@@ -1,42 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
+using NA.DataAccess.Models;
 using NA.DataAccess.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Transactions;
 
 namespace NA.DataAccess.Bases
 {
     public interface IUnitOfWork : IDisposable
     {
         void Save();
-        Repository<T> Repository<T>() where T : class;
+        IRepository<T> Repository<T>() where T : class;
+
+        TransactionScope BeginTransaction(Action<TransactionOptions> options = null);
     }
 
     public class UnitOfWork<TContext> : IUnitOfWork where TContext: DbContext
     {
-        private readonly TContext _context;
         private bool _disposed;
-        private Dictionary<string, object> _repositories;
+        private readonly TContext _context;
         private readonly IServiceProvider _service;
 
-        public UnitOfWork(IServiceProvider service)
+        public UnitOfWork(IServiceProvider service, TContext context)
         {
             _service = service;
+            _context = context;
         }
 
-        public Repository<T> Repository<T>() where T : class
+        public IRepository<T> Repository<T>() where T : class
         {
-            if (_repositories == null)
-                _repositories = new Dictionary<string, object>();
-            var type = typeof(T).Name;
-            if (!_repositories.ContainsKey(type))
+            return _service.GetService<IRepository<T>>();
+        }
+
+        public TransactionScope BeginTransaction(Action<TransactionOptions> options = null)
+        {
+            // option default
+            var option = new TransactionOptions {
+                IsolationLevel = IsolationLevel.RepeatableRead
+            };
+            if (options != null)
             {
-                var repositoryType = typeof(Repository<T>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
-                _repositories.Add(type, repositoryInstance);
+                options.Invoke(option);
             }
-            return (Repository<T>)_repositories[type];
+            return new TransactionScope(TransactionScopeOption.Required, option, TransactionScopeAsyncFlowOption.Enabled);
         }
 
         public void Commit()

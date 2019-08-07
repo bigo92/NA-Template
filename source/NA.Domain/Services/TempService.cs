@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using Newtonsoft.Json.Linq;
+using System.Transactions;
 
 namespace NA.Domain.Services
 {
@@ -34,19 +35,25 @@ namespace NA.Domain.Services
 
         public void Add<T>(T model)
         {
-            _unit.Repository<Template>().Insert(new Template
+            using (var tran = _unit.BeginTransaction())
             {
-                Info = JObject.FromObject(new
+                _unit.Repository<Template>().Insert(new Template
                 {
-                    name = "Nguyen Van A",
-                    age = 12
-                }).ToString(),
-                Address = JObject.FromObject(new {
-                    address = "bac giang",
-                    phone = "01734935934"
-                }).ToString()
-            });
-            _unit.Save();
+                    Id = Guid.NewGuid(),
+                    Info = JObject.FromObject(new
+                    {
+                        name = "Nguyen Van A",
+                        age = 12
+                    }).ToString(),
+                    Address = JObject.FromObject(new
+                    {
+                        address = "bac giang",
+                        phone = "01734935934"
+                    }).ToString()
+                });
+                _unit.Save();
+                tran.Complete();
+            }
         }
 
         public void Delete<T>(T model)
