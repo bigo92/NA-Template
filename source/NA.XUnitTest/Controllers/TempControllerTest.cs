@@ -16,16 +16,13 @@ namespace NA.XUnitTest.Controllers
 {
     public class TempControllerTest
     {
-        private readonly Mock<IDispatcherFactory> _dispatcherFactory;
         private readonly Mock<ITempService> _tempService;
         public TempControllerTest()
         {
             _tempService = new Mock<ITempService>();
-            _dispatcherFactory = new Mock<IDispatcherFactory>();
             
             //setup
             _tempService.Setup(x => x.FindOne()).Returns("123");
-            _dispatcherFactory.Setup(x => x.Service<ITempService,TempService>()).Returns(_tempService.Object);
         }
 
         [Fact]
@@ -63,7 +60,7 @@ namespace NA.XUnitTest.Controllers
         public async Task TestPost()
         {
             // Arrange
-            var controller = new TempController(_dispatcherFactory.Object);
+            var controller = new TempController(_tempService.Object);
             // Act
             var result = controller.Test(new TempModel { name = "123" });
 
@@ -76,7 +73,7 @@ namespace NA.XUnitTest.Controllers
         public async Task TestGet()
         {
             // Arrange
-            var controller = new TempController(_dispatcherFactory.Object);
+            var controller = new TempController(_tempService.Object);
             // Act
             var result = controller.Test();
 
