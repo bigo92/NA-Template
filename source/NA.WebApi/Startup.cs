@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NA.Common.Extentions;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using NA.Domain.Bases;
@@ -58,9 +59,9 @@ namespace NA.WebApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddScoped<IUnitOfWork, UnitOfWork<NATemplateContext>>();
-            services.AddScoped<IDispatcherFactory, DispatcherFactory>();
-            services.AddImplementInterfaceScoped<TempService>(Assembly.Load("NA.Domain"));
+            // Register Module
+            services.AddModule<DomainModule>();
+            services.AddModule<DataAccessModule>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -104,28 +105,6 @@ namespace NA.WebApi
             // router default      
             //app.UseHttpsRedirection();
             app.UseMvc();
-        }
-    }
-
-    public static class ServiceCollectionExtension {
-        public static void AddImplementInterfaceScoped<T>(this IServiceCollection services, params Assembly[] assemblies)
-        {
-            var serviceType = typeof(T);
-
-            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
-            {
-                services.AddScoped(serviceType, implementationType);
-            }
-        }
-
-        public static void AddImplementInterfaceSingleton<T>(this IServiceCollection services, params Assembly[] assemblies)
-        {
-            var serviceType = typeof(T);
-
-            foreach (var implementationType in assemblies.SelectMany(assembly => assembly.GetTypes()).Where(type => serviceType.IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract))
-            {
-                services.AddSingleton(serviceType, implementationType);
-            }
         }
     }
 }

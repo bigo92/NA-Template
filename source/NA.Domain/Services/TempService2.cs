@@ -12,11 +12,10 @@ namespace NA.Domain.Services
 
     public class TempService2 : ITempService2, IDisposable
     {
-        private readonly IDispatcherFactory _dp;
         private readonly ILogger<TempService2> _log;
-        public TempService2(IDispatcherFactory dp, ILogger<TempService2> log, string id)
+        public TempService2(ILogger<TempService2> log)
         {
-            _dp = dp; _log = log;
+            _log = log;
         }
 
         public void Get<T>(T model)
