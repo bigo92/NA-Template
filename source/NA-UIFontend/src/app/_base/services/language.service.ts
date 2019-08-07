@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { TableModelService } from 'src/app/_shared/services/table-model.service';
 
 @Injectable()
 export class LanguageService {
