@@ -2,7 +2,6 @@ import { AppConfigService } from './../../services/app-config.service';
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { BehaviorSubject } from 'rxjs';
-import { ExtensionService } from '../../services/extension.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import { ExtensionService } from '../../services/extension.service';
 export class AutService {
   private url = `${AppConfigService.settings.apiServer.physical}/api/Account`;
   private data = new BehaviorSubject<any>(null);
-  constructor(private http: HttpService, private ex: ExtensionService) {}
+  constructor(private http: HttpService) {}
 
   public getData() {
     return this.data.asObservable();
@@ -32,7 +31,6 @@ export class AutService {
   public async initData() {
     let url = `${this.url}/GetClaims`;
     let rs = await this.http.getApiAsync<any>(url, null);
-    this.ex.logDebug('GetClaims', rs);
     if (rs.success) {
       this.data.next(rs.data);
     } else {
