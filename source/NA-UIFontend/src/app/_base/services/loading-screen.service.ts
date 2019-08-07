@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { ExtensionService } from './extension.service';
 declare var $;
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,6 @@ export class LoadingScreenService {
   public maxTime: number;
   public count: number;
   constructor(
-    private ex: ExtensionService,
     private router: Router
   ) { }
 
@@ -39,12 +37,12 @@ export class LoadingScreenService {
 
   loadDone() {
     this.count--;
-    if (this.count > 0) { // block await component load done      
+    if (this.count > 0) { // block await component load done
       return;
     }
     setTimeout(() => {
       let dateNow = new Date();
-      let spanTime = this.ex.getDiffDate(dateNow, this.startTime).time;
+      let spanTime = 0.3;//this.ex.getDiffDate(dateNow, this.startTime).time;
       if (spanTime > this.minTime) {
         $('#loading-page').fadeOut();
       } else {
@@ -66,7 +64,6 @@ export class LoadingScreenService {
     let guiId = id;
     setTimeout(() => {
       if (guiId === this.guildId && this.status === true) {
-        this.ex.logDebug('closeloading');
         $('#loading-page').fadeOut();
       }
     }, this.maxTime);

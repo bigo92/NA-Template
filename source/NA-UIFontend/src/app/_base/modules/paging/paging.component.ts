@@ -1,12 +1,10 @@
 import { PlatformLocation } from '@angular/common';
 import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ExtensionService } from '../../services/extension.service';
 
 @Component({
   selector: 'app-paging',
   templateUrl: './paging.component.html',
-  styleUrls: ['./paging.component.scss'],
-  providers: [ExtensionService]
+  styleUrls: ['./paging.component.scss']
 })
 export class PagingComponent implements OnInit, OnChanges {
   @Input() data: any;
@@ -22,12 +20,12 @@ export class PagingComponent implements OnInit, OnChanges {
   totalItem: number = 0;
   itemsPerPage: number = 10;
 
-  constructor(private location: PlatformLocation, private ex: ExtensionService) { }
+  constructor(private location: PlatformLocation) { }
 
   ngOnInit(): void {
     //fix back browse load data page
     this.location.onPopState(() => {
-      let page = this.ex.getUrlParameter('page');
+      let page = 1;//this.ex.getUrlParameter('page');
       if (page != null) {
         this.onChange.emit(page);
       }
@@ -66,11 +64,11 @@ export class PagingComponent implements OnInit, OnChanges {
   }
 
   onChangeInput(page: number){
-    if (page < 1) { 
+    if (page < 1) {
       this.curentPage = 1;
       return;
     }
-    if (page > this.totalPage) { 
+    if (page > this.totalPage) {
       this.curentPage = this.totalPage;
       return;
     }

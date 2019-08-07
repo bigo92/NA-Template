@@ -4,7 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PagingModule } from '../paging/paging.module';
 import { RenderErrorModule } from '../render-error/render-error.module';
-import { TimeAgoPipe } from 'time-ago-pipe';
 import { NumToWords } from '../../pipe/money/money-words.pipe';
 import { MoneyFormat } from '../../pipe/money/money-format.pipe';
 import { DateFormat } from '../../pipe/date/date-format.pipe';
@@ -26,7 +25,7 @@ import { DateFormat } from '../../pipe/date/date-format.pipe';
     ReactiveFormsModule,
     PagingModule
   ],
-  declarations: [TimeAgoPipe, NumToWords, MoneyFormat, DateFormat]
+  declarations: [NumToWords, MoneyFormat, DateFormat]
 })
 export class FormModule {
 }
