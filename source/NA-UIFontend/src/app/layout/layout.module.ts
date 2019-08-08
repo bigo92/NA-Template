@@ -5,7 +5,7 @@ import { LayoutRoutes } from './layout.routing';
 import { MenuModule } from '../_shared/menu/menu.module';
 import { FooterModule } from '../_shared/footer/footer.module';
 import { NavbarModule } from '../_shared/navbar/navbar.module';
-import { PageHeaderModule } from '../_shared/page-header/page-header.module';
+import { BreadcrumbModule } from '../_shared/breadcrumb/breadcrumb.module';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { PageHeaderModule } from '../_shared/page-header/page-header.module';
     MenuModule,
     FooterModule,
     NavbarModule,
-    PageHeaderModule,
+    BreadcrumbModule,
     LayoutRoutes
   ],
   declarations: [LayoutComponent]
