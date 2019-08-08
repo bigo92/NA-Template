@@ -21,9 +21,6 @@ import { RenderErrorModule } from '../render-error/render-error.module';
     TranslateModule,
     ReactiveFormsModule,
     PagingModule
-  ],
-  declarations: [
-
   ]
 })
 export class FormModule {

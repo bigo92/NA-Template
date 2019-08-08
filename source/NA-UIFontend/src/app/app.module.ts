@@ -6,11 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HttpClientModule
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutes
   ],
   providers: [],

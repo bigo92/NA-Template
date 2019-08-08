@@ -33,9 +33,21 @@
               ]
             },
             "styles": [
+              "src/assets/css/icons/icomoon/styles.min.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/bootstrap_limitless.min.css",
+              "src/assets/css/layout.min.css",
+              "src/assets/css/components.min.css",
+              "src/assets/css/colors.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/main/jquery.min.js",
+              "src/assets/js/main/bootstrap.bundle.min.js",
+              "src/assets/js/plugins/loaders/blockui.min.js",
+              "src/assets/js/plugins/forms/styling/uniform.min.js",
+              "src/assets/js/app.js"
+            ]
           },
           "configurations": {
             "production": {

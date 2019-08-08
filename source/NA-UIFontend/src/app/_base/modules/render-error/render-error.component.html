@@ -1,5 +1,5 @@
 <div *ngIf="myControl.touched" [class]="className">
   <span class="help-block text-danger" *ngFor="let item of changeToArray(this.myControl)">
-    {{item.value | translate}}
+    {{item.value}}
   </span>
 </div>
