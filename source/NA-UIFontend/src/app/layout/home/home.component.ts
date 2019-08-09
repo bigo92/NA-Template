@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showDialog: boolean = false;
   paramsDialog: any = {};
   isDialogLoading: boolean = false;
-  constructor() { }
+  constructor(private modalService: NzModalService) { }
 
   ngOnInit() {
   }
@@ -43,11 +44,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.showDialog = true;
   }
 
-  handleCancel(): void {
+  deleteDialog(item: any){
+    this.modalService.confirm({
+      nzTitle: '<i>Do you Want to delete these items?</i>',
+      nzContent: '<b>Some descriptions</b>',
+      nzOnOk: () => console.log('OK')
+    });
+  }
+
+  closeDialog(): void {
     this.showDialog = false;
   }
 
-  handleOk(): void {
+  submitDialog(data): void {
     this.showDialog = false;
   }
 }

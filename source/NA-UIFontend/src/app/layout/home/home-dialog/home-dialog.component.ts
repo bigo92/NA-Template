@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class HomeDialogComponent implements OnInit {
 
   @Input('params') params: any;
-  @Output('nzOnOk') nzOnOk = new EventEmitter<void>();
+  @Output('nzOnOk') nzOnOk = new EventEmitter<any>();
   @Output('nzOnCancel') nzOnCancel = new EventEmitter<void>();
   isDialogLoading: boolean = false;
   constructor() { }
@@ -23,7 +23,7 @@ export class HomeDialogComponent implements OnInit {
   handleOk() {
     this.isDialogLoading = true;
     setTimeout(() => {
-      this.nzOnOk.emit();
+      this.nzOnOk.emit(null);
     }, 3000);
   }
 

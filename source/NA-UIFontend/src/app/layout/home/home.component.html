@@ -59,17 +59,17 @@
           <td>Alexander</td>
           <td class="text-center">
             <div class="list-icons list-icons-extended text-center">
-              <a class="list-icons-item" href="javascript:;">
+              <a class="list-icons-item" href="javascript:;" (click)="viewDialog(1)">
                 <span nz-tooltip nzTitle="Xem">
                   <i nz-icon nzType="eye" nzTheme="outline"></i>
                 </span>
               </a>
-              <a class="list-icons-item text-primary" href="javascript:;">
+              <a class="list-icons-item text-primary" href="javascript:;" (click)="editDialog(1)">
                 <span nz-tooltip nzTitle="Sửa">
                   <i nz-icon nzType="form" nzTheme="outline"></i>
                 </span>
               </a>
-              <a class="list-icons-item text-danger" href="javascript:;">
+              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
                 <span nz-tooltip nzTitle="Xóa">
                   <i nz-icon nzType="delete" nzTheme="outline"></i>
                 </span>
@@ -83,6 +83,6 @@
   <app-paging [data]="paging"></app-paging>
 </div>
 
-<nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="handleCancel()">
-  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"></app-home-dialog>
+<nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="closeDialog()">
+  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)"></app-home-dialog>
 </nz-modal>
