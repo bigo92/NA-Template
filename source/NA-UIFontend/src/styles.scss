@@ -28,3 +28,21 @@
 .mr-2{
   margin-right: 2px !important;
 }
+
+.form-control{
+  height: 32px;
+  padding: 4px 11px;
+  &.ant-input-number{
+    padding: unset;
+  }
+}
+
+.padding-bottom-0{
+  padding-bottom: 0
+}
+
+.content-wrapper{
+  >.content-body{
+    flex-grow: 1;
+  }
+}

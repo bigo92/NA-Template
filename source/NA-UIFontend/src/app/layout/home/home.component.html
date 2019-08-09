@@ -1,5 +1,5 @@
 <!-- Page header -->
-<div class="page-header page-header-light">
+<div class="page-header page-header-light border-bottom-0">
   <div class="page-header-content header-elements-md-inline">
     <div class="page-title d-flex">
       <h4><span class="font-weight-semibold">Template</span> Management</h4>
@@ -18,53 +18,71 @@
 
 <div class="content">
   <div class="card radius-0">
-    <div class="card-header header-elements-inline">
-      <h5 class="card-title">Basic table</h5>
+    <div class="card-header header-elements-inline padding-bottom-0">
+      <div class="navbar-expand-md width-100">
+        <div class="text-right d-md-none w-100 row">
+          <button class="navbar-toggler" data-target="#product-list" data-toggle="collapse" type="button">
+            <i nz-icon nzType="menu" nzTheme="outline"></i>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="product-list">
+          <form novalidate>
+            <button type="submit" hidden></button>
+            <div class="box-input d-md-flex flex-wrap">
+              <div class="mr-md-2">
+                <input-text></input-text>
+              </div>
+              <div class="mr-md-2">
+                <input-text-search></input-text-search>
+              </div>
+              <div class="mr-md-2">
+                <input-number></input-number>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
     <div class="card-body">
-      Example of a <code>basic</code> table. For basic styling (light padding and only horizontal dividers) add the base
-      class <code>.table</code> to any <code>&lt;table&gt;</code>. It may seem super redundant, but given the widespread
-      use of tables for other plugins like calendars and date pickers, we've opted to isolate our custom table styles.
-    </div>
-
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Eugene</td>
-            <td>Kopyov</td>
-            <td>@Kopyov</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Victoria</td>
-            <td>Baker</td>
-            <td>@Vicky</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>James</td>
-            <td>Alexander</td>
-            <td>@Alex</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Franklin</td>
-            <td>Morrison</td>
-            <td>@Frank</td>
-          </tr>
-        </tbody>
-      </table>
+        <hr>
+        <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Eugene</td>
+                  <td>Kopyov</td>
+                  <td>@Kopyov</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Victoria</td>
+                  <td>Baker</td>
+                  <td>@Vicky</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>James</td>
+                  <td>Alexander</td>
+                  <td>@Alex</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Franklin</td>
+                  <td>Morrison</td>
+                  <td>@Frank</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
     </div>
   </div>
 </div>
