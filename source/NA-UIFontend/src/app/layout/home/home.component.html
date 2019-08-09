@@ -1,4 +1,3 @@
-<!-- Page header -->
 <div class="page-header page-header-light border-bottom-0">
   <div class="page-header-content header-elements-md-inline">
     <div class="page-title d-flex">
@@ -7,82 +6,83 @@
     </div>
 
     <div class="header-elements d-none">
-      <button type="button" class="btn btn-primary"><i class="mr-2" nz-icon nzType="plus-circle" nzTheme="outline"></i>
+      <button type="button" class="btn btn-primary" (click)="createDialog()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>
         Create</button>
       <button type="button" class="btn btn-success"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
         Import Excel</button>
     </div>
   </div>
 </div>
-<!-- /page header -->
 
-<div class="content">
-  <div class="card radius-0">
-    <div class="card-header header-elements-inline padding-bottom-0">
-      <div class="navbar-expand-md width-100">
-        <div class="text-right d-md-none w-100 row">
-          <button class="navbar-toggler" data-target="#product-list" data-toggle="collapse" type="button">
-            <i nz-icon nzType="menu" nzTheme="outline"></i>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="product-list">
-          <form novalidate>
-            <button type="submit" hidden></button>
-            <div class="box-input d-md-flex flex-wrap">
-              <div class="mr-md-2">
-                <input-text></input-text>
-              </div>
-              <div class="mr-md-2">
-                <input-text-search></input-text-search>
-              </div>
-              <div class="mr-md-2">
-                <input-number></input-number>
-              </div>
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#product-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="product-list">
+        <form novalidate>
+          <button type="submit" hidden></button>
+          <div class="box-input d-md-flex flex-wrap">
+            <div class="form-group mr-md-2">
+              <input-text></input-text>
             </div>
-          </form>
-        </div>
+            <div class="form-group mr-md-2">
+              <input-text-search></input-text-search>
+            </div>
+            <div class="form-group mr-md-2">
+              <input-number></input-number>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="card-body">
-        <hr>
-        <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Eugene</td>
-                  <td>Kopyov</td>
-                  <td>@Kopyov</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Victoria</td>
-                  <td>Baker</td>
-                  <td>@Vicky</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>James</td>
-                  <td>Alexander</td>
-                  <td>@Alex</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Franklin</td>
-                  <td>Morrison</td>
-                  <td>@Frank</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-    </div>
   </div>
+  <hr class="mt-0 margin-bottom-10">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th class="action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>3</td>
+          <td>James</td>
+          <td>Alexander</td>
+          <td class="text-center">
+            <div class="list-icons list-icons-extended text-center">
+              <a class="list-icons-item" href="javascript:;">
+                <span nz-tooltip nzTitle="Xem">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-primary" href="javascript:;">
+                <span nz-tooltip nzTitle="Sửa">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-danger" href="javascript:;">
+                <span nz-tooltip nzTitle="Xóa">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-paging [data]="paging"></app-paging>
 </div>
+
+<nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="handleCancel()">
+  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"></app-home-dialog>
+</nz-modal>
