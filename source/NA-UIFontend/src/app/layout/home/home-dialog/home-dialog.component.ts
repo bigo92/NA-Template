@@ -14,6 +14,9 @@ export class HomeDialogComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.params.mode === 1) {
+      //view
+    }
   }
 
   handleCancel() {

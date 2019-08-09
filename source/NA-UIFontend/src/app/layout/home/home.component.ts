@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
-
+declare let $;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showDialog: boolean = false;
   paramsDialog: any = {};
   isDialogLoading: boolean = false;
-  constructor(private modalService: NzModalService) { }
+  constructor(private modalService: NzModalService) {}
 
   ngOnInit() {
   }
