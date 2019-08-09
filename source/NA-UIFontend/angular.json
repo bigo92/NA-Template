@@ -25,7 +25,12 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -33,6 +38,7 @@
               ]
             },
             "styles": [
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/css/icons/icomoon/styles.min.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/bootstrap_limitless.min.css",
