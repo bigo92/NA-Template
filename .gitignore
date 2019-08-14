@@ -9,3 +9,4 @@ source/NA.XUnitTest/obj/
 source/NA.Domain/bin/
 source/NA.WebApi/bin/
 source/NA.XUnitTest/bin/
+source/NA.WebApi/deploy/
