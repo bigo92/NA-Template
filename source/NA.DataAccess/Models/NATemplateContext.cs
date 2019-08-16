@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using NA.DataAccess.Bases;
+using Newtonsoft.Json;
+using static NA.DataAccess.Models.Template;
 
 namespace NA.DataAccess.Models
 {
@@ -36,13 +39,13 @@ namespace NA.DataAccess.Models
                     .HasColumnName("id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.Address).HasColumnName("address").IsJson();
 
                 entity.Property(e => e.DataDb).HasColumnName("data_db");
 
                 entity.Property(e => e.Files).HasColumnName("files");
 
-                entity.Property(e => e.Info).HasColumnName("info");
+                entity.Property(e => e.Info).HasColumnName("info").IsJson();
             });
         }
     }

@@ -40,16 +40,16 @@ namespace NA.Domain.Services
                 _unit.Repository<Template>().Insert(new Template
                 {
                     Id = Guid.NewGuid(),
-                    Info = JObject.FromObject(new
+                    Info = new Template.InfoJson
                     {
                         name = "Nguyen Van A",
                         age = 12
-                    }).ToString(),
-                    Address = JObject.FromObject(new
+                    },
+                    Address = new Template.AddressJson
                     {
-                        address = "bac giang",
-                        phone = "01734935934"
-                    }).ToString()
+                        address1 = "bac giang",
+                        address2 = "01734935934"
+                    }
                 });
                 _unit.Save();
                 tran.Complete();
