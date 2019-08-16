@@ -15,4 +15,7 @@ namespace NA.DataAccess.Bases
                     v => JsonConvert.DeserializeObject<T>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public class JsonDataAttribute : Attribute { }
 }
