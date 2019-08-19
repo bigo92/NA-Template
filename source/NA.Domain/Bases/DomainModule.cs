@@ -2,6 +2,7 @@
 using NA.Common.Extentions;
 using System.Reflection;
 using NA.Common.Interfaces;
+using NA.Domain.Cache;
 
 namespace NA.Domain.Bases
 {
@@ -14,6 +15,7 @@ namespace NA.Domain.Bases
                 option.lifeTime = ServiceLifetime.Scoped;
                 option.filter = (x => x.Namespace == "NA.Domain.Services");
             });
+            services.AddSingleton<ICacheService, CacheService>();
         }
     }
 
