@@ -18,6 +18,9 @@ namespace NA.DataAccess.Repository
         void Insert(T entity);
         void Delete(T entity);
         void Update(T entity);
+        IQueryable<T> Table { get; }
+        IEnumerable<T> GetAll();
+        T GetById(object id);
     }
 
     public class Repository<T> : IRepository<T> where T : class

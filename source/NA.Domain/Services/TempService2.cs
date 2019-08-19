@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
+using NA.DataAccess.Models;
 using NA.Domain.Bases;
 using NA.Domain.Interfaces;
 
 namespace NA.Domain.Services
 {
-    public interface ITempService2 : ICRUDService
+    public interface ITempService2 : ICRUDService<Template>
     {
 
     }
@@ -18,7 +19,7 @@ namespace NA.Domain.Services
             _log = log;
         }
 
-        public void Get<T>(T model)
+        public void Get(Template model)
         {
             throw new NotImplementedException();
         }
@@ -28,17 +29,17 @@ namespace NA.Domain.Services
             return "1231";
         }
 
-        public void Add<T>(T model)
+        public void Add(Template model)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete<T>(T model)
+        public void Delete(Template model)
         {
             throw new NotImplementedException();
         }
 
-        public void Edit<T>(T model)
+        public void Edit(Template model)
         {
             throw new NotImplementedException();
         }

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace NA.Domain.Interfaces
 {
-    public interface ICRUDService
+    public interface ICRUDService<T> where T: class
     {
-        void Get<T>(T model);
+        void Get(T model);
         string FindOne();
-        void Add<T>(T model);
-        void Delete<T>(T model);
-        void Edit<T>(T model);
+        void Add(T model);
+        void Delete(T model);
+        void Edit(T model);
     }
 }
