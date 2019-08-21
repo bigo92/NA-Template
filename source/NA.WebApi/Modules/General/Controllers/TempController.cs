@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NA.Domain.Bases;
+using NA.Domain.Models;
 using NA.Domain.Services;
 using NA.WebApi.Bases;
 using NA.WebApi.Bases.Services;
@@ -38,7 +39,7 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpPost]
-        public object Add([FromBody] object model)
+        public object Add([FromBody] Add_TempModel model)
         {
             if (ModelState.IsValid)
             {

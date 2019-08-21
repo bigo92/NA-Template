@@ -9,12 +9,13 @@ using System.Transactions;
 using NA.Domain.Cache;
 using System.Linq;
 using System.Collections.Generic;
+using NA.Domain.Models;
 
 namespace NA.Domain.Services
 {
     public interface ITempService : ICRUDService<Template>
     {
-
+        void Add(Add_TemplateServiceModel model);
     }
 
     public class TempService : ITempService, IDisposable
@@ -48,24 +49,17 @@ namespace NA.Domain.Services
             return _sv2.FindOne();
         }
 
-        public void Add(Template model)
+        public void Add(Add_TemplateServiceModel model)
+        {
+            _unit.Repository<Template>().Insert(model);
+            _unit.Save();
+        }
+
+        public void AddTransaction(Add_TemplateServiceModel model)
         {
             using (var tran = _unit.BeginTransaction())
             {
-                _unit.Repository<Template>().Insert(new Template
-                {
-                    Id = Guid.NewGuid(),
-                    Info = new Template.InfoJson
-                    {
-                        name = "Nguyen Van A",
-                        age = 12
-                    },
-                    Address = new Template.AddressJson
-                    {
-                        address1 = "bac giang",
-                        address2 = "01734935934"
-                    }
-                });
+                _unit.Repository<Template>().Insert(model);
                 _unit.Save();
                 tran.Complete();
             }
@@ -83,6 +77,11 @@ namespace NA.Domain.Services
         public void Dispose()
         {
             _log.LogError("Dispose Service");
+        }
+
+        public void Add(Template model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

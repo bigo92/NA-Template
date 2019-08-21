@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.DataAccess.Bases;
 using Newtonsoft.Json;
 using static NA.DataAccess.Models.Template;
@@ -48,6 +49,14 @@ namespace NA.DataAccess.Models
 
                 entity.Property(e => e.Info).HasColumnName("info").IsJson();
             });
+
+            //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    foreach (var property in entityType.GetProperties())
+            //    {
+            //        property.JsonConverter();
+            //    }
+            //}
         }
     }
 }
