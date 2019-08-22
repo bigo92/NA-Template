@@ -1,32 +1,31 @@
 ﻿using NA.Common.Extentions;
-using NA.DataAccess.Models;
 using NA.Domain.Models;
-using NA.WebApi.Bases;
-using Newtonsoft.Json.Linq;
+using NA.WebApi.Bases.Swagger;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using static NA.DataAccess.Models.Template;
 
 namespace NA.WebApi.Modules.General.Models
 {
     public class TempModel
     {
         [Required(ErrorMessage = "Not Required")]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 
     public class Add_TempModel : Add_TemplateServiceModel, IValidatableObject
     {
-        public override Guid Id { get => base.Id; set => base.Id = value; }
+        [Ingore]
+        public override Guid id { get => base.id; set => base.id = value; }
+
+        [Required(ErrorMessage = "Required data_db")]
+        public override string data_db { get => base.data_db; set => base.data_db = value; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             return ValidationResultExtension
-                .ValidChildren<Info_TempModel>(Info)
-                .ValidChildren<Address_TempModel>(Address);
+                .ValidChildren<Info_TempModel>(info)
+                .ValidChildren<Address_TempModel>(address);
         }
 
         public class Info_TempModel : InfoJson

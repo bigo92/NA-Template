@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,9 @@ using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using NA.Domain.Bases;
 using NA.Domain.Services;
+using NA.WebApi.Bases;
 using NA.WebApi.Bases.Services;
+using NA.WebApi.Bases.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace NA.WebApi
@@ -53,6 +56,8 @@ namespace NA.WebApi
                     Type = "apiKey"
                 });
 
+                c.SchemaFilter<SwaggerFilter>();
+
                 // Set the comments path for the Swagger JSON and UI.
                 var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "NA.WebApi.xml");
@@ -66,7 +71,7 @@ namespace NA.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

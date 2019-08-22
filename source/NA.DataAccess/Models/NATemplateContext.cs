@@ -37,17 +37,17 @@ namespace NA.DataAccess.Models
 
             modelBuilder.Entity<Template>(entity =>
             {
-                entity.Property(e => e.Id)
+                entity.Property(e => e.id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Address).HasColumnName("address").IsJson();
+                entity.Property(e => e.address).HasColumnName("address").IsJson();
 
-                entity.Property(e => e.DataDb).HasColumnName("data_db");
+                entity.Property(e => e.data_db).HasColumnName("data_db");
 
-                entity.Property(e => e.Files).HasColumnName("files");
+                entity.Property(e => e.files).HasColumnName("files");
 
-                entity.Property(e => e.Info).HasColumnName("info").IsJson();
+                entity.Property(e => e.info).HasColumnName("info").IsJson();
             });
 
             //foreach (var entityType in modelBuilder.Model.GetEntityTypes())

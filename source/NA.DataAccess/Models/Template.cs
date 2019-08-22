@@ -7,11 +7,11 @@ namespace NA.DataAccess.Models
 {
     public partial class Template
     {
-        public virtual Guid Id { get; set; }
-        public virtual InfoJson Info { get; set; }
-        public virtual AddressJson Address { get; set; }
-        public virtual string DataDb { get; set; }
-        public virtual string Files { get; set; }
+        public virtual Guid id { get; set; } = Guid.NewGuid();
+        public virtual InfoJson info { get; set; }
+        public virtual AddressJson address { get; set; }
+        public virtual string data_db { get; set; }
+        public virtual string files { get; set; }
 
         public class InfoJson
         {

@@ -30,7 +30,7 @@ namespace NA.XUnitTest.Controllers
         {
             var model = new TempModel
             {
-                name = ""
+                Name = ""
             };
             // Set some properties here
             var context = new ValidationContext(model, null, null);
@@ -45,7 +45,7 @@ namespace NA.XUnitTest.Controllers
         public void TestValidTrue()
         {
             var model = new TempModel {
-                name = "123"
+                Name = "123"
             };
             // Set some properties here
             var context = new ValidationContext(model, null, null);
@@ -62,7 +62,7 @@ namespace NA.XUnitTest.Controllers
             // Arrange
             var controller = new TempController(_tempService.Object);
             // Act
-            var result = controller.Test(new TempModel { name = "123" });
+            var result = controller.Test(new TempModel { Name = "123" });
 
             // Assert
             var viewResult = Assert.IsType<string>(result);

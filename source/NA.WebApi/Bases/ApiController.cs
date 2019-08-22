@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using NA.Common.Extentions;
 using NA.Common.Models;
 using Newtonsoft.Json.Linq;
@@ -68,6 +69,7 @@ namespace NA.WebApi.Bases
                 paging = paging
             };
         }
+
 
         //[ApiExplorerSettings(IgnoreApi = true)]
         //public async Task<ResultModel<dynamic>> BindForm(dynamic data)
