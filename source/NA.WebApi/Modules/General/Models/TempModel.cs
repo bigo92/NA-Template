@@ -28,12 +28,12 @@ namespace NA.WebApi.Modules.General.Models
                 .ValidChildren<Address_TempModel>(address);
         }
 
-        public class Info_TempModel : InfoJson
+        protected class Info_TempModel : InfoJson
         {
             [Required(ErrorMessage = "Required Name")]
             public override string name { get => base.name; set => base.name = value; }
         }
-        public class Address_TempModel : AddressJson
+        protected class Address_TempModel : AddressJson
         {
             [Required(ErrorMessage = "Required address1")]
             public override string address1 { get => base.address1; set => base.address1 = value; }

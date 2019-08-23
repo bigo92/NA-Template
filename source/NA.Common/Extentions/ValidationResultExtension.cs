@@ -13,7 +13,7 @@ namespace NA.Common.Extentions
             var result = new List<ValidationResult>();
             var model = JToken.FromObject(value).ToObject<T>();
             var context = new ValidationContext(model, null, null);
-            Validator.TryValidateObject(model, context, result, true);
+            Validator.TryValidateObject(model, context, result, false);
             return result;
         }
 
