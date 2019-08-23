@@ -39,13 +39,14 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpPost]
-        public object Add([FromBody] Add_TempModel model)
+        public async Task<object> Add([FromBody] Add_TempModel model)
         {
+            ModelState.AddModelError("", "hehee");
             if (ModelState.IsValid)
             {
                 _sv.Add(model);
             }
-            return 123;
+            return await BindData();
         }
     }
 }

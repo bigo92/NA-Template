@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +56,7 @@ namespace NA.Common.Models
 
         public bool success { get; set; }
 
-        public List<ErrorModel> error { get; set; }
+        public SerializableError error { get; set; }
 
         public T data { get; set; }
 

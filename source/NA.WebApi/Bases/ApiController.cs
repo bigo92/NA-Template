@@ -5,6 +5,7 @@ using NA.Common.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NA.WebApi.Bases
@@ -30,42 +31,24 @@ namespace NA.WebApi.Bases
 
         protected async Task<ResultModel<dynamic>> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
         {
-            var lstError = new List<ErrorModel>();
-
-            lstError = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new ErrorModel { key = x.Key, value = x.Value.Errors[0].ErrorMessage }).ToList();
-            if (errors != null)
+            if(errors != null)
             {
-                lstError.AddRange(errors);
-            }
-            //fix key 
-            foreach (var item in lstError)
-            {
-                item.key = item.key == "" ? "" : item.key;
-            }
-
-            if (data == null)
-            {
-                return new ResultModel<dynamic>
+                foreach (var item in errors)
                 {
-                    success = lstError.Count == 0,
-                    error = lstError,
-                    data = data,
-                    paging = paging
-                };
+                    ModelState.AddModelError(item.key, item.value);
+                }
             }
-
-            JToken dataResult = JToken.FromObject(data);
-            if (data != null && (dataResult is JObject || dataResult is JArray))
+          
+            if (!ModelState.IsValid)
             {
-                JsonExtention.ConvertJsonData(dataResult);
-                //dataResult = tci.common.Extentions.JsonExtention.TolowerKeyName(dataResult);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
 
             return new ResultModel<dynamic>
             {
-                success = lstError.Count == 0,
-                error = lstError,
-                data = dataResult,
+                success = ModelState.IsValid,
+                error = new SerializableError(ModelState),
+                data = data,
                 paging = paging
             };
         }

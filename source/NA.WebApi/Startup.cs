@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NA.Common.Extentions;
+using NA.Common.Models;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using NA.Domain.Bases;
-using NA.Domain.Services;
-using NA.WebApi.Bases;
-using NA.WebApi.Bases.Services;
 using NA.WebApi.Bases.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -68,7 +56,26 @@ namespace NA.WebApi
             services.AddModule<DomainModule>();
             services.AddModule<DataAccessModule>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                    .ConfigureApiBehaviorOptions(options =>
+                    {
+                        options.SuppressMapClientErrors = true;
+                        options.InvalidModelStateResponseFactory = context =>
+                        {
+                            var result = new ResultModel<dynamic>
+                            {
+                                success = false,
+                                data = null,
+                                error = new SerializableError(context.ModelState)
+                            };
+
+                            return new BadRequestObjectResult(result);
+                        };
+                        
+                        options.ClientErrorMapping[404].Link =
+                            "https://httpstatuses.com/404";
+                    });
         }
 
 
