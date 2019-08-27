@@ -24,8 +24,8 @@ namespace NA.WebApi.Modules.General.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             return ValidationResultExtension
-                .ValidChildren<Info_TempModel>(info)
-                .ValidChildren<Address_TempModel>(address);
+                .ValidModel<Info_TempModel>(info)
+                .ValidModel<Address_TempModel>(address);
         }
 
         protected class Info_TempModel : InfoJson
