@@ -69,4 +69,40 @@ namespace NA.Common.Models
 
         public string value { get; set; }
     }
+
+    public class DataDbModel
+    {
+        public virtual int status { get; set; }
+
+        public virtual DateTime creationTime { get; set; }
+
+        public virtual long creationBy { get; set; }
+
+        public virtual DateTime modificationTime { get; set; }
+
+        public virtual long modificationBy { get; set; }
+
+        public virtual DateTime delectationTime { get; set; }
+
+        public virtual long delectationBy { get; set; }
+    }
+
+    public class DataFilesModel
+    {
+        public virtual Guid id { get; set; }
+
+        public virtual string name { get; set; }
+
+        public virtual string keyName { get; set; }
+
+        public virtual string extension { get; set; }
+
+        public virtual string flag { get; set; }
+
+        public virtual string url { get; set; }
+
+        public virtual long size { get; set; }
+
+        public virtual DateTime date { get; set; }
+    }
 }

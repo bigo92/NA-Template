@@ -1,16 +1,22 @@
 ﻿using System;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using NA.Common.Extentions;
 using NA.Common.Models;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using NA.Domain.Bases;
+using NA.WebApi.Bases.JWT;
+using NA.WebApi.Bases.Policies;
 using NA.WebApi.Bases.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -30,6 +36,69 @@ namespace NA.WebApi
         {
             services.AddDbContext<NATemplateContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
+            // Add Identity
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<NATemplateContext>()
+            .AddDefaultTokenProviders();
+
+            // Configure Identity
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            // Configure JwtBearer
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters =
+                     new TokenValidationParameters
+                     {
+                         ValidateIssuer = true,
+                         ValidateAudience = true,
+                         ValidateLifetime = true,
+                         ValidateIssuerSigningKey = true,
+                         // If you want to allow a certain amount of clock drift, set that here:
+                         //ClockSkew = TimeSpan.Zero,
+                         ValidIssuer = JwtOption.issuer,
+                         ValidAudience = JwtOption.audience,
+                         IssuerSigningKey = JwtOption.SigningKey()
+                     };
+            });
+
+            // Add link police for tci sofware
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.AddPolicy("link", policy => policy.Requirements.Add(new LinkPolice()));
+            });
+
+            //apply all cors call api        
+            services.AddCors(options => options.AddPolicy("Cors",
+            builder =>
+            {
+                builder.
+                SetIsOriginAllowed((host) => true).
+                AllowAnyMethod().
+                AllowAnyHeader().
+                AllowCredentials();
+            }));
 
             // Register the Swagger generator, defining one or more Swagger documents        
             services.AddSwaggerGen(c =>

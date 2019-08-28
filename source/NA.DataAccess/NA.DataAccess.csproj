@@ -12,9 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\na.common\NA.Common.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

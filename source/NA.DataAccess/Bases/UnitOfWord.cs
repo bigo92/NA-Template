@@ -14,43 +14,23 @@ namespace NA.DataAccess.Bases
     {
         void Save();
         IRepository<T> Repository<T>() where T : class;
-
-        TransactionScope BeginTransaction(Action<TransactionOptions> options = null);
     }
 
     public class UnitOfWork<TContext> : IUnitOfWork where TContext: DbContext
     {
         private bool _disposed;
-        private readonly TContext _context;
+        public readonly TContext db;
         private readonly IServiceProvider _service;
 
         public UnitOfWork(IServiceProvider service, TContext context)
         {
             _service = service;
-            _context = context;
+            db = context;
         }
 
         public IRepository<T> Repository<T>() where T : class
         {
             return _service.GetService<IRepository<T>>();
-        }
-
-        public TransactionScope BeginTransaction(Action<TransactionOptions> options = null)
-        {
-            // option default
-            var option = new TransactionOptions {
-                IsolationLevel = IsolationLevel.RepeatableRead
-            };
-            if (options != null)
-            {
-                options.Invoke(option);
-            }
-            return new TransactionScope(TransactionScopeOption.Required, option, TransactionScopeAsyncFlowOption.Enabled);
-        }
-
-        public void Commit()
-        {
-            
         }
 
         public void Dispose()
@@ -71,16 +51,11 @@ namespace NA.DataAccess.Bases
             _disposed = true;
         }
 
-        public void Rollback()
-        {
-            
-        }
-
         public void Save()
         {
             try
             {
-                _context.SaveChanges();
+                db.SaveChanges();
             }
             catch (Exception dbEx)
             {

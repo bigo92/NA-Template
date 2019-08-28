@@ -29,6 +29,16 @@ namespace NA.WebApi.Bases
             return key;
         }
 
+        protected long GetUserId()
+        {
+            var key = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                key = User.Claims.FirstOrDefault(x=>x.Type == "id").Value;
+            }
+            return key.HasValue()? long.Parse(key) : 0;
+        }
+
         protected async Task<ResultModel<dynamic>> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
         {
             if(errors != null)

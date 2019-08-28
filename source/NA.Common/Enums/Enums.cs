@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace tci.common.Enums
+namespace Na.Common.Enums
 {
     public class Enums
     {
