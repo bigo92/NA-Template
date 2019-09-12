@@ -8,13 +8,10 @@
 
   <ItemGroup>
     <Compile Remove="Constants\**" />
-    <Compile Remove="Enums\**" />
     <Compile Remove="Extentions\**" />
     <EmbeddedResource Remove="Constants\**" />
-    <EmbeddedResource Remove="Enums\**" />
     <EmbeddedResource Remove="Extentions\**" />
     <None Remove="Constants\**" />
-    <None Remove="Enums\**" />
     <None Remove="Extentions\**" />
   </ItemGroup>
 
@@ -26,11 +23,12 @@
     <Compile Include="Extentions\ServiceCollectionExtension.cs" />
     <Compile Include="Extentions\StringBuilderExtention.cs" />
     <Compile Include="Extentions\StringExtention.cs" />
+    <Compile Include="Extentions\TransactionScopeExtention.cs" />
     <Compile Include="Extentions\ValidationResultExtension.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="140.17283.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
