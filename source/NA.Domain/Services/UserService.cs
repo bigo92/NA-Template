@@ -9,6 +9,7 @@ using NA.DataAccess.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static NA.Domain.Models.UsserServiceModel;
@@ -89,29 +90,37 @@ namespace NA.Domain.Services
         public async Task<(JObject data, List<ErrorModel> errors)> RegisterAccount(RegisterAccountModel model)
         {
             var errors = new List<ErrorModel>();
-            var checkUser = await db.Select("id").From("aut.Users").WhereRaw($"email = '{modelSettingData.Value<string>("email")}'").First();
+            var checkUser = await _unit.db.Select("id").From("aut.Users").WhereRaw($"email = '{model.Email}'").First();
             if (checkUser != null)
             {
                 errors.Add(new ErrorModel { key = "data.setting.email", value = "staff.email.exist" });
                 return (null, errors);
             }
-            checkUser = await db.Select("id").From("aut.Users").WhereRaw($"userName = '{modelSettingData.Value<string>("userName")}'").First();
+            checkUser = await _unit.db.Select("id").From("aut.Users").WhereRaw($"userName = '{model.UserName}'").First();
             if (checkUser != null)
             {
                 errors.Add(new ErrorModel { key = "data.setting.userName", value = "staff.userName.exist" });
                 return (null, errors);
             }
 
-            var user = new ApplicationUser
+            var result = await _userManager.CreateAsync(model, model.password);
+            if (result.Succeeded)
             {
-                PhoneNumber = modelSettingData.Value<string>("phone"),
-                UserName = modelSettingData.Value<string>("userName"),
-                Email = modelSettingData.Value<string>("email"),
-                Data_db = (new DataTableJson() { creationTime = model.data_db.creationTime, status = model.data_db.status, creationBy = userId, language = language, branchId = branchId, branchFlag = branchFlag }).JsonToString(),
-                Files = "[]",
-                TwoFactorEnabled = false,
-                LockoutEnabled = false
-            };
+                var roleData = await _unit.db.Select("id").From("aut.Roles").WhereRaw($"id = {model.roleType}").First();
+                if (roleData == null)
+                {
+                    roleData = await _unit.db.Select("id").From("aut.Roles").WhereRaw($"normalizedName = 'user'").First();
+                }
+                if (roleData != null)
+                {
+                    await _unit.db.Insert(new { userId = model.Id, roleId = roleData.Value<long>("id") }, "INSERTED.userId").From("aut.UserRoles").ExecuteScalar<long>();
+                }
+            }
+            else
+            {
+                errors.Add(new ErrorModel { key = "data.setting.password", value = result.Errors.ElementAt(0).Description });
+            }
+
             return (null, errors);
         }
     }
