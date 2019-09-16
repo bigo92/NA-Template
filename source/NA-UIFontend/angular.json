@@ -38,13 +38,13 @@
               ]
             },
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/css/icons/icomoon/styles.min.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/bootstrap_limitless.min.css",
               "src/assets/css/layout.min.css",
               "src/assets/css/components.min.css",
               "src/assets/css/colors.min.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -147,6 +147,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "NA-UIFontend"
+    }
+  },
+  "defaultProject": "NA-UIFontend",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

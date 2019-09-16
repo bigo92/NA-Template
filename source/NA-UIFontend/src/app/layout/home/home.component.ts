@@ -8,7 +8,7 @@ declare let $;
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  paging: any ={
+  paging: any = {
     page: 1,
     count: 100,
     totalPage: 50,
@@ -17,7 +17,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showDialog: boolean = false;
   paramsDialog: any = {};
   isDialogLoading: boolean = false;
-  constructor(private modalService: NzModalService) {}
+  listOfData = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    }
+  ];
+  constructor(private modalService: NzModalService) { }
 
   ngOnInit() {
   }
@@ -26,25 +46,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
     console.log('ngAfterViewInit home');
   }
 
-  createDialog(){
+  createDialog() {
     this.paramsDialog.mode = 1;
     this.paramsDialog.id = null;
     this.showDialog = true;
   }
 
-  editDialog(item: any){
+  editDialog(item: any) {
     this.paramsDialog.mode = 2;
     this.paramsDialog.id = item.id;
     this.showDialog = true;
   }
 
-  viewDialog(item: any){
+  viewDialog(item: any) {
     this.paramsDialog.mode = 3;
     this.paramsDialog.id = item.id;
     this.showDialog = true;
   }
 
-  deleteDialog(item: any){
+  deleteDialog(item: any) {
     this.modalService.confirm({
       nzTitle: '<i>Do you Want to delete these items?</i>',
       nzContent: '<b>Some descriptions</b>',

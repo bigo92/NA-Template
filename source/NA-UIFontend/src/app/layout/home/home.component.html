@@ -6,11 +6,12 @@
     </div>
 
     <div class="header-elements d-none">
-      <button type="button" class="btn btn-primary" (click)="createDialog()"><i class="mr-2" nz-icon
-          nzType="plus-circle" nzTheme="outline"></i>
-        Create</button>
-      <button type="button" class="btn btn-success"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
-        Import Excel</button>
+      <button nz-button nzType="primary">
+        <i nz-icon nzType="plus-circle"></i>Create
+      </button>
+      <button nz-button class="bg-success ml-2">
+        <i nz-icon nzType="file-excel"></i>Import Excel
+      </button>
     </div>
   </div>
 </div>
@@ -43,46 +44,35 @@
   </div>
   <hr class="mt-0 margin-bottom-10">
   <div class="table-responsive">
-    <table class="table table-bordered">
+    <nz-table #basicTable [nzShowPagination]="false" [nzData]="listOfData">
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th class="action">Action</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>3</td>
-          <td>James</td>
-          <td>Alexander</td>
-          <td class="text-center">
-            <div class="list-icons list-icons-extended text-center">
-              <a class="list-icons-item" href="javascript:;" (click)="viewDialog(1)">
-                <span nz-tooltip nzTitle="Xem">
-                  <i nz-icon nzType="eye" nzTheme="outline"></i>
-                </span>
-              </a>
-              <a class="list-icons-item text-primary" href="javascript:;" (click)="editDialog(1)">
-                <span nz-tooltip nzTitle="Sửa">
-                  <i nz-icon nzType="form" nzTheme="outline"></i>
-                </span>
-              </a>
-              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
-                <span nz-tooltip nzTitle="Xóa">
-                  <i nz-icon nzType="delete" nzTheme="outline"></i>
-                </span>
-              </a>
-            </div>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.address }}</td>
+          <td>
+            <a>Action 一 {{ data.name }}</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a>Delete</a>
           </td>
         </tr>
       </tbody>
-    </table>
+    </nz-table>
   </div>
-  <app-paging [data]="paging"></app-paging>
+  <nz-pagination class="float-right mt-2" [nzPageSize]="12" [nzPageIndex]="paging.page" [nzTotal]="paging.totalPage">
+  </nz-pagination>
+
 </div>
 
 <nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="closeDialog()">
-  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)"></app-home-dialog>
+  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)">
+  </app-home-dialog>
 </nz-modal>
