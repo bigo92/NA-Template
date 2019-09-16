@@ -7,20 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NA.WebApi.Bases;
 using Newtonsoft.Json.Linq;
-using tci.common.Extentions;
-using tci.entites.Bases;
-using tci.repository;
-using tci.repository.Bases;
-using tci.repository.Models;
-using tci.server.Bases;
 using static tci.server.Modules.Aut.Models.RolesModel;
 
 namespace tci.server.Modules.Aut.Controllers
 {
     [Route("/api/[controller]/[action]")]
     [Authorize]
-    public class RolesController : BaseController
+    public class RolesController : ApiController
     {
         ILogger log;
         public RolesController(UnitOfWork unit, ILoggerFactory loggerFactory, IConfiguration config, IHttpContextAccessor httpContextAccessor) : base(unit, loggerFactory, config, httpContextAccessor)

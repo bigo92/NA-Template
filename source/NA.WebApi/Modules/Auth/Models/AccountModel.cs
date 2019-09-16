@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static tci.repository.Models.UserRepositoryModel;
 
 namespace tci.server.Modules.Aut.Models
 {

@@ -10,6 +10,7 @@ using NA.Domain.Cache;
 using System.Linq;
 using System.Collections.Generic;
 using NA.Domain.Models;
+using NA.Common.Extentions;
 
 namespace NA.Domain.Services
 {
@@ -57,7 +58,7 @@ namespace NA.Domain.Services
 
         public void AddTransaction(Add_TemplateServiceModel model)
         {
-            using (var tran = _unit.BeginTransaction())
+            using (var tran = TransactionScopeExtention.BeginTransactionScope())
             {
                 _unit.Repository<Template>().Insert(model);
                 _unit.Save();
