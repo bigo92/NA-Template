@@ -9,7 +9,9 @@ namespace NA.Domain.Models
     {
         public class RegisterAccountModel : ApplicationUser
         {
-           
+           public virtual string password { get; set; }
+
+            public virtual string roleType { get; set; }
         }
     }
 }
