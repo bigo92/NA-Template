@@ -5,7 +5,7 @@ import { Directive, Output, EventEmitter, HostListener, ElementRef, Input } from
 })
 export class InputTextDirective {
 
-  @Output('onDelay') onDelay = new EventEmitter<any>(null);
+  @Output() onDelay = new EventEmitter<any>(null);
   timeout: any;
   @Input() delay = 1000;
   constructor(
