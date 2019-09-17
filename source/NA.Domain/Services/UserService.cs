@@ -29,6 +29,8 @@ namespace NA.Domain.Services
         Task<(long data, List<ErrorModel> errors)> GetId(string email);
 
         Task<(JObject data, List<ErrorModel> errors)> GetFiles(long id);
+
+        Task<(JObject data, List<ErrorModel> errors)> RegisterAccount(Register_UsserServiceModel model);
     }
 
     public class UserService : IUserService
@@ -105,12 +107,17 @@ namespace NA.Domain.Services
             await _unit.SaveChange();
         }
 
-        public async Task<(JObject data, List<ErrorModel> errors)> RegisterAccount(RegisterAccountModel model)
+        public async Task<(JObject data, List<ErrorModel> errors)> RegisterAccount(Register_UsserServiceModel model)
         {
             var errors = new List<ErrorModel>();
+            var user = new ApplicationUser
+            {
+                Email = model.email,
+                UserName = model.email,
+            };
             var checkUser = await _unit.Repository<ApplicationUser>()
                 .Select("id")
-                .WhereRaw($"email = '{model.Email}'")
+                .WhereRaw($"email = '{user.Email}'")
                 .First();
             if (checkUser != null)
             {
@@ -119,7 +126,7 @@ namespace NA.Domain.Services
             }
             checkUser = await _unit.Repository<ApplicationUser>()
                 .Select("id")
-                .WhereRaw($"userName = '{model.UserName}'")
+                .WhereRaw($"userName = '{user.UserName}'")
                 .First();
             if (checkUser != null)
             {
@@ -127,7 +134,7 @@ namespace NA.Domain.Services
                 return (null, errors);
             }
 
-            var result = await _userManager.CreateAsync(model, model.password);
+            var result = await _userManager.CreateAsync(user, model.password);
             if (result.Succeeded)
             {
                 var roleData = await _unit
@@ -145,7 +152,7 @@ namespace NA.Domain.Services
                 }
                 if (roleData != null)
                 {
-                    await _unit.db.Insert(new { userId = model.Id, roleId = roleData.Value<long>("id") }, "INSERTED.userId").From("aut.UserRoles").ExecuteScalar<long>();
+                    await _unit.db.Insert(new { userId = user.Id, roleId = roleData.Value<long>("id") }, "INSERTED.userId").From("aut.UserRoles").ExecuteScalar<long>();
                 }
             }
             else

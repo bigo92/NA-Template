@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static NA.Domain.Models.UsserServiceModel;
 
 namespace tci.server.Modules.Aut.Models
 {
@@ -52,6 +53,13 @@ namespace tci.server.Modules.Aut.Models
             [Required(ErrorMessage = "change_password_form.confirm_password.required")]
             [Compare("Password", ErrorMessage = "change_password_form.confirm_password.not_match")]
             public string ConfirmPassword { get; set; }
+        }
+
+        public class RegisterAccountModel: Register_UsserServiceModel
+        {
+            public override string email { get => base.email; set => base.email = value; }
+
+            public override string password { get => base.password; set => base.password = value; }
         }
     }
 }

@@ -7,9 +7,10 @@ namespace NA.Domain.Models
 {
     public class UsserServiceModel
     {
-        public class RegisterAccountModel : ApplicationUser
+        public class Register_UsserServiceModel
         {
-           public virtual string password { get; set; }
+            public virtual string email { get; set; }
+            public virtual string password { get; set; }
 
             public virtual string roleType { get; set; }
         }

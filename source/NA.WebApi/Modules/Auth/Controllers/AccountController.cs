@@ -434,6 +434,18 @@ namespace tci.server.Modules.Aut.Controllers
             return await BindData();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<object> Register([FromBody] RegisterAccountModel model)
+        {
+            if (ModelState.IsValid)
+            {
+               var result = await _userService.RegisterAccount(model);
+                return await BindData(result.data, result.errors);
+            }
+            return await BindData();
+        }
+
         #region Helpers
 
 

@@ -44,7 +44,7 @@ namespace NA.Domain.Services
 
         private async Task<JArray> GetAllTemplate()
         {
-            return await _unit.Repository<Template>().Select().Excute();
+            return await _unit.Repository<Template>().Select("*").Excute();
         }
 
         public string FindOne()
@@ -63,6 +63,7 @@ namespace NA.Domain.Services
             using (var tran = TransactionScopeExtention.BeginTransactionScope())
             {
                 _unit.Repository<Template>().Add(model);
+                _unit.Repository<Template>().Add(model);
                 _unit.SaveChange();
                 tran.Complete();
             }
@@ -70,6 +71,7 @@ namespace NA.Domain.Services
 
         public void Delete(Template model)
         {
+
         }
 
         public void Edit(Template model)
