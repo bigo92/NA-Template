@@ -98,7 +98,7 @@ namespace NA.Domain.Services
                 .WhereRaw($"id = {user.Id}");
             await _unit.SaveChange();
         }
-
+         
         public async Task UpdateQrCode(ApplicationUser user, string value)
         {
             _unit.Repository<ApplicationUser>()
