@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-declare var App;
+declare var App: any;
 
 @Component({
   selector: 'app-layout',
@@ -12,16 +12,13 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('ngOnInit laypout');
     App.initBeforeLoad();
-    window.addEventListener('load', function () {
-      console.log('load laypout');
+    window.addEventListener('load', () => {
       App.initAfterLoad();
     });
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit laypout');
     App.initCore();
   }
 
