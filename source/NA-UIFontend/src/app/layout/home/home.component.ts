@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
+import { BehaviorSubject, Subject } from 'rxjs';
 declare let $;
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showDialog: boolean = false;
   paramsDialog: any = {};
   isDialogLoading: boolean = false;
+  onSave = new EventEmitter<boolean>();
   listOfData = [
     {
       key: '1',
@@ -78,5 +80,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   submitDialog(data): void {
     this.showDialog = false;
+  }
+
+  onSave1() {
+    this.onSave.emit(true);
   }
 }

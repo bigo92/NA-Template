@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home-dialog',
@@ -7,9 +8,10 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class HomeDialogComponent implements OnInit {
 
-  @Input('params') params: any;
-  @Output('nzOnOk') nzOnOk = new EventEmitter<any>();
-  @Output('nzOnCancel') nzOnCancel = new EventEmitter<void>();
+  @Input() params: any;
+  @Output() nzOnOk = new EventEmitter<any>();
+  @Output() nzOnCancel = new EventEmitter<void>();
+  @Input() onSave: EventEmitter<boolean>;
   isDialogLoading: boolean = false;
   constructor() { }
 
@@ -17,6 +19,7 @@ export class HomeDialogComponent implements OnInit {
     if (this.params.mode === 1) {
       //view
     }
+    this.onSave.subscribe(x => console.log(x));
   }
 
   handleCancel() {

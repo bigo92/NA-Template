@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'input-text',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputTextComponent implements OnInit {
 
+  @Input() placeholder: string;
+  @Input() size = 'default';
   constructor() { }
 
   ngOnInit() {
+  }
+
+  logDelay(value: any) {
+    console.log(value);
   }
 
 }
