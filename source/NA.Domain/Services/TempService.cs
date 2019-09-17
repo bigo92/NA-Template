@@ -11,6 +11,8 @@ using System.Linq;
 using System.Collections.Generic;
 using NA.Domain.Models;
 using NA.Common.Extentions;
+using Na.DataAcess.Bases;
+using System.Threading.Tasks;
 
 namespace NA.Domain.Services
 {
@@ -35,16 +37,16 @@ namespace NA.Domain.Services
             
         }
 
-
-        public List<Template> Test_Cache()
+        public Task<JArray> Test_Cache()
         {
-            return _cache.GetOrAdd("ALL_Template", () => { return GetAllTemplate(); },TimeSpan.FromDays(30));
+            return _cache.GetOrAdd("ALL_Template", () => { return  GetAllTemplate(); },TimeSpan.FromDays(30));
         }
 
-        private List<Template> GetAllTemplate()
+        private async Task<JArray> GetAllTemplate()
         {
-            return _unit.Repository<Template>().GetAll().ToList();
+            return await _unit.Repository<Template>().Select().Excute();
         }
+
         public string FindOne()
         {
             return _sv2.FindOne();
@@ -52,16 +54,16 @@ namespace NA.Domain.Services
 
         public void Add(Add_TemplateServiceModel model)
         {
-            _unit.Repository<Template>().Insert(model);
-            _unit.Save();
+            _unit.Repository<Template>().Add(model);
+            _unit.SaveChange();
         }
 
         public void AddTransaction(Add_TemplateServiceModel model)
         {
             using (var tran = TransactionScopeExtention.BeginTransactionScope())
             {
-                _unit.Repository<Template>().Insert(model);
-                _unit.Save();
+                _unit.Repository<Template>().Add(model);
+                _unit.SaveChange();
                 tran.Complete();
             }
         }

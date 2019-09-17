@@ -268,7 +268,7 @@ namespace Na.DataAcess.Bases
             return source;
         }
 
-        public static (DbContext, string) WhereRaw(this (DbContext db, string query) source, string where = null)
+        public static (DbContext db, string query) WhereRaw(this (DbContext db, string query) source, string where = null)
         {
             if (where.HasValue())
             {
@@ -341,7 +341,7 @@ namespace Na.DataAcess.Bases
             return source;
         }
 
-        public static (DbContext, string) From<T>(this (DbContext db, string query) source)
+        public static (DbContext db, string query) From<T>(this (DbContext db, string query) source)
         {
             var mapping = source.db.Model.FindEntityType(typeof(T)).Relational();
             source.query = source.query.Insert(source.query.IndexOf("[FROM-END]"), $"{mapping.Schema}.{mapping.TableName}");

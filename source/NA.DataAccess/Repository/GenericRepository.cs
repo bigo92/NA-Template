@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Na.DataAcess.Bases;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Models;
 using System;
@@ -12,44 +13,34 @@ namespace NA.DataAccess.Repository
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> Get();
-        //IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
         void Add(T entity);
-        void Insert(T entity);
-        void Delete(T entity);
-        void Update(T entity);
-        IQueryable<T> Table { get; }
-        IEnumerable<T> GetAll();
-        T GetById(object id);
+        void AddRange(IEnumerable<T> entities);
+        (DbContext db, string query) Delete();
+        (DbContext db, string query) Select(string query = null); 
+        (DbContext db, string query) Update(string query);
     }
 
     public class Repository<T> : IRepository<T> where T : class
     {
         private DbSet<T> _entities;
-        private NATemplateContext _context { get; set; }
+        private readonly NATemplateContext _context;
+        private readonly UnitOfWork<DbContext> _unit;
 
-        public Repository(NATemplateContext context)
+        public Repository(
+            NATemplateContext context,
+            UnitOfWork<DbContext> unit)
         {
             _context = context;
+            _unit = unit;
             _entities = _context.Set<T>();
         }
 
-        public virtual IQueryable<T> Table
+        public virtual (DbContext db, string query) Select(string query = null)
         {
-            get { return _entities; }
+            return _context.Select(query).From<T>();
         }
 
-        public virtual IEnumerable<T> GetAll()
-        {
-            return _entities.ToList();
-        }
-
-        public virtual T GetById(object id)
-        {
-            return _entities.Find(id);
-        }
-
-        public virtual void Insert(T entity)
+        public virtual void Add(T entity)
         {
             try
             {
@@ -62,7 +53,7 @@ namespace NA.DataAccess.Repository
                 throw new Exception(dbEx.Message, dbEx);
             }
         }
-        public void BulkInsert(IEnumerable<T> entities)
+        public void AddRange(IEnumerable<T> entities)
         {
             try
             {
@@ -79,45 +70,30 @@ namespace NA.DataAccess.Repository
                 throw new Exception(dbEx.Message, dbEx);
             }
         }
-        public virtual void Update(T entity)
+
+        public virtual (DbContext db, string query) Update(string query)
         {
-            try
-            {
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
-                SetEntryModified(entity);
-            }
-            catch (Exception dbEx)
-            {
-                throw new Exception(dbEx.Message, dbEx);
-            }
-        }
-        public virtual void Delete(T entity)
-        {
-            try
-            {
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
-                _entities.Remove(entity);
-            }
-            catch (Exception dbEx)
-            {
-                throw new Exception(dbEx.Message, dbEx);
-            }
-        }
-        public virtual void SetEntryModified(T entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
+            var newQuery = _context.Set(query).From<T>();
+            var idQuery = Guid.NewGuid();
+            _unit.lstQuery.Add(new UQuery {
+                id = idQuery,
+                type = (int) UType.Update,
+                query = newQuery.query
+            });
+            return (_context, _unit.lstQuery.Find(x=>x.id == idQuery).query);
         }
 
-        public IEnumerable<T> Get()
+        public virtual (DbContext db, string query) Delete()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Add(T entity)
-        {
-            throw new NotImplementedException();
+            var newQuery = _context.Delete().From<T>();
+            var idQuery = Guid.NewGuid();
+            _unit.lstQuery.Add(new UQuery
+            {
+                id = idQuery,
+                type = (int)UType.Delete,
+                query = newQuery.query
+            });
+            return (_context, _unit.lstQuery.Find(x => x.id == idQuery).query);
         }
     }
 }

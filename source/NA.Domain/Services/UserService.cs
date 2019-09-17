@@ -49,21 +49,30 @@ namespace NA.Domain.Services
 
         public async Task AccessFailedCount(ApplicationUser user, int value)
         {
-            await _unit.db.Set($"accessFailedCount = {value}").From("aut.Users").WhereRaw($"id = {user.Id}").ExecuteNonQuery();
+            _unit.Repository<ApplicationUser>()
+                .Update($"accessFailedCount = {value}")
+                .WhereRaw($"id = {user.Id}");
+            await _unit.SaveChange();
         }
 
         public async Task<(JObject data, List<ErrorModel> errors)> FindOne(long id)
         {
             var errors = new List<ErrorModel>();
 
-            var result = await _unit.db.Select("*").From("aut.Users").WhereRaw($"id = {id}").First();
+            var result = await _unit.Repository<ApplicationUser>()
+                .Select("*")
+                .WhereRaw($"id = {id}")
+                .First();
             return (result, errors);
         }
 
         public async Task<(JObject data, List<ErrorModel> errors)> GetFiles(long id)
         {
             var errors = new List<ErrorModel>();
-            var result = await _unit.db.Select("files, JSON_VALUE(data, '$.fullName') as fullName").From("aut.Users").WhereRaw($"id = '{id}'").First();
+            var result = await _unit.Repository<ApplicationUser>()
+                .Select("files, JSON_VALUE(data, '$.fullName') as fullName")
+                .WhereRaw($"id = '{id}'")
+                .First();
 
             return (result, errors);
         }
@@ -72,31 +81,46 @@ namespace NA.Domain.Services
         {
             var errors = new List<ErrorModel>();
 
-            var result = await _unit.db.Select("id").From("aut.Users").WhereRaw($"email = {email}").First();
+            var result = await _unit.Repository<ApplicationUser>()
+                .Select("id")
+                .WhereRaw($"email = {email}")
+                .First();
             return (result != null ? result.Value<long>("id") : 0, errors);
         }
 
         public async Task UpadteLockoutEnd(ApplicationUser user, DateTime value)
         {
-            await _unit.db.Set($"lockoutEnd = '{value.ToISOString()}'")
-                .From("aut.Users").WhereRaw($"id = {user.Id}").ExecuteNonQuery();
+            _unit.Repository<ApplicationUser>()
+                .Update($"lockoutEnd = '{value.ToISOString()}'")
+                .From("aut.Users")
+                .WhereRaw($"id = {user.Id}");
+            await _unit.SaveChange();
         }
 
         public async Task UpdateQrCode(ApplicationUser user, string value)
         {
-            await _unit.db.Set($"data = JSON_MODIFY(data, '$.qrCode', N'{value}')").From("aut.Users").WhereRaw($"id = {user.Id}").ExecuteNonQuery();
+            _unit.Repository<ApplicationUser>()
+                 .Update($"data = JSON_MODIFY(data, '$.qrCode', N'{value}')")
+                 .WhereRaw($"id = {user.Id}");
+            await _unit.SaveChange();
         }
 
         public async Task<(JObject data, List<ErrorModel> errors)> RegisterAccount(RegisterAccountModel model)
         {
             var errors = new List<ErrorModel>();
-            var checkUser = await _unit.db.Select("id").From("aut.Users").WhereRaw($"email = '{model.Email}'").First();
+            var checkUser = await _unit.Repository<ApplicationUser>()
+                .Select("id")
+                .WhereRaw($"email = '{model.Email}'")
+                .First();
             if (checkUser != null)
             {
                 errors.Add(new ErrorModel { key = "data.setting.email", value = "staff.email.exist" });
                 return (null, errors);
             }
-            checkUser = await _unit.db.Select("id").From("aut.Users").WhereRaw($"userName = '{model.UserName}'").First();
+            checkUser = await _unit.Repository<ApplicationUser>()
+                .Select("id")
+                .WhereRaw($"userName = '{model.UserName}'")
+                .First();
             if (checkUser != null)
             {
                 errors.Add(new ErrorModel { key = "data.setting.userName", value = "staff.userName.exist" });
@@ -106,10 +130,18 @@ namespace NA.Domain.Services
             var result = await _userManager.CreateAsync(model, model.password);
             if (result.Succeeded)
             {
-                var roleData = await _unit.db.Select("id").From("aut.Roles").WhereRaw($"id = {model.roleType}").First();
+                var roleData = await _unit
+                    .Select("id")
+                    .From("aut.Roles")
+                    .WhereRaw($"id = {model.roleType}")
+                    .First();
                 if (roleData == null)
                 {
-                    roleData = await _unit.db.Select("id").From("aut.Roles").WhereRaw($"normalizedName = 'user'").First();
+                    roleData = await _unit
+                        .Select("id")
+                        .From("aut.Roles")
+                        .WhereRaw($"normalizedName = 'user'")
+                        .First();
                 }
                 if (roleData != null)
                 {
