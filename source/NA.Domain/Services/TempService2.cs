@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using NA.DataAccess.Models;
 using NA.Domain.Bases;
@@ -19,10 +20,7 @@ namespace NA.Domain.Services
             _log = log;
         }
 
-        public void Get(Template model)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public string FindOne()
         {
@@ -47,6 +45,11 @@ namespace NA.Domain.Services
         public void Dispose()
         {
             _log.LogError("Dispose Service 2");
+        }
+
+        public List<Template> Get()
+        {
+            throw new NotImplementedException();
         }
     }
 }

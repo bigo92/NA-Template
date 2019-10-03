@@ -33,6 +33,8 @@ namespace NA.DataAccess.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDbFunction(() => JsonExtensions.JsonValue(default, default));
+
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
             modelBuilder.Entity<Template>(entity =>
@@ -47,7 +49,7 @@ namespace NA.DataAccess.Models
 
                 entity.Property(e => e.files).HasColumnName("files");
 
-                entity.Property(e => e.info).HasColumnName("info").IsJson();
+                entity.Property(e => e.info).HasColumnName("info");
             });
 
             //foreach (var entityType in modelBuilder.Model.GetEntityTypes())

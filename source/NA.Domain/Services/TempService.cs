@@ -24,20 +24,20 @@ namespace NA.Domain.Services
         private readonly ILogger<TempService> _log;
         private readonly ITempService2 _sv2;
         private ICacheService _cache;
-        public TempService(IUnitOfWork unit, ILogger<TempService> log, ITempService2 sv2, ICacheService cache)
+        private readonly NATemplateContext _db;
+        public TempService(IUnitOfWork unit, ILogger<TempService> log, ITempService2 sv2, ICacheService cache, NATemplateContext db)
         {
-            _unit = unit; _log = log; _sv2 = sv2;_cache = cache;
+            _unit = unit; _log = log; _sv2 = sv2; _cache = cache; _db = db;
         }
-        public void Get(Template model)
+        public List<Template> Get()
         {
-            throw new NotImplementedException();
-            
+            return _db.Template.Where(x=> JsonExtensions.JsonValue(x.info,"$.name")== "5f7b78bd-4aac-4731-b196-3e9438f7b98a").ToList();
         }
 
 
         public List<Template> Test_Cache()
         {
-            return _cache.GetOrAdd("ALL_Template", () => { return GetAllTemplate(); },TimeSpan.FromDays(30));
+            return _cache.GetOrAdd("ALL_Template", () => { return GetAllTemplate(); }, TimeSpan.FromDays(30));
         }
 
         private List<Template> GetAllTemplate()
@@ -51,8 +51,26 @@ namespace NA.Domain.Services
 
         public void Add(Add_TemplateServiceModel model)
         {
-            _unit.Repository<Template>().Insert(model);
-            _unit.Save();
+        //    _db.Template.Add(new Template
+        //    {
+        //        address = new Template.AddressJson
+        //        {
+        //            address1 = Guid.NewGuid().ToString(),
+        //            address2 = Guid.NewGuid().ToString(),
+        //            address3 = Guid.NewGuid().ToString()
+        //        },
+        //        data_db = Guid.NewGuid().ToString(),
+        //        files = Guid.NewGuid().ToString(),
+        //        info = new Template.InfoJson
+        //        {
+        //            age = 18,
+        //            name = Guid.NewGuid().ToString()
+        //        }
+        //    });
+        //    _db.SaveChanges();
+            //var data = model as Template;
+            //_unit.Repository<Template>().Insert(data);
+            //_unit.Save();
         }
 
         public void AddTransaction(Add_TemplateServiceModel model)
