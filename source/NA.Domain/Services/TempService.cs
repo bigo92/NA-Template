@@ -31,7 +31,9 @@ namespace NA.Domain.Services
         }
         public List<Template> Get()
         {
-            return _db.Template.Where(x=> JsonExtensions.JsonValue(x.info,"$.name")== "5f7b78bd-4aac-4731-b196-3e9438f7b98a").ToList();
+            return _db.Template
+                .Where(x=> JsonExtensions.JsonValue((string)(object)x.info,"$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6")
+                .ToList();
         }
 
 

@@ -49,7 +49,7 @@ namespace NA.DataAccess.Models
 
                 entity.Property(e => e.files).HasColumnName("files");
 
-                entity.Property(e => e.info).HasColumnName("info");
+                entity.Property(e => e.info).HasColumnName("info").IsJson();
             });
 
             //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
