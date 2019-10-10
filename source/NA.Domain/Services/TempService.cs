@@ -31,9 +31,11 @@ namespace NA.Domain.Services
         }
         public List<Template> Get()
         {
-            return _db.Template
-                .Where(x=> JsonExtensions.JsonValue((string)(object)x.info,"$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6")
-                .ToList();
+            var query = _db.Template.AsQueryable();
+            query = query.Where(x => JsonExtensions.JsonValue((string)(object)x.info, "$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6");
+            query = query.WhereLoopback("files", "68a77924-0191-4db3-87b7-7da2299a49d6");
+            query = query.OrderBy("id", true);
+            return query.ToList();
         }
 
 
