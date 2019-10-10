@@ -17,7 +17,7 @@ namespace NA.Domain.Bases
             if (searchProperty == null) throw new ArgumentException("property");
 
             //STEP 2: Create property selector
-            var parameter = Expression.Parameter(typeof(T), "x");
+            var parameter = Expression.Parameter(typeof(T), "x");  
             var equal = Expression.Equal(Expression.Property(parameter, property), Expression.Constant(value));
 
             //STEP 3: Update the IQueryable expression to include OrderBy
