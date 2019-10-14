@@ -1,4 +1,5 @@
 ﻿using NA.Common.Extentions;
+using NA.Common.Models;
 using NA.Domain.Models;
 using NA.WebApi.Bases.Swagger;
 using System;
@@ -7,6 +8,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NA.WebApi.Modules.General.Models
 {
+
+    public class Search_TempModel : SearchModel
+    {
+
+    }
+
     public class TempModel
     {
         [Required(ErrorMessage = "Not Required")]

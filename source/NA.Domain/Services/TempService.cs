@@ -55,23 +55,15 @@ namespace NA.Domain.Services
 
         public void Add(Add_TemplateServiceModel model)
         {
-        //    _db.Template.Add(new Template
-        //    {
-        //        address = new Template.AddressJson
-        //        {
-        //            address1 = Guid.NewGuid().ToString(),
-        //            address2 = Guid.NewGuid().ToString(),
-        //            address3 = Guid.NewGuid().ToString()
-        //        },
-        //        data_db = Guid.NewGuid().ToString(),
-        //        files = Guid.NewGuid().ToString(),
-        //        info = new Template.InfoJson
-        //        {
-        //            age = 18,
-        //            name = Guid.NewGuid().ToString()
-        //        }
-        //    });
-        //    _db.SaveChanges();
+            _db.Template.Add(new Template
+            {
+                data = new Template.DataJson { name = Guid.NewGuid().ToString()},
+                files = new List<Common.Models.FileModel>(),
+                language = default,
+                data_db = new Common.Models.DataDb(),
+                tag = default
+            });
+            _db.SaveChanges();
             //var data = model as Template;
             //_unit.Repository<Template>().Insert(data);
             //_unit.Save();

@@ -44,8 +44,15 @@ namespace NA.Common.Models
 
     public class PagingModel : IPagingModel
     {
-        public int totalPage { get; set; }
-        public long count { get; set; }
+        public virtual int totalPage { get; set; }
+        public virtual long count { get; set; }
+    }
+
+    public class SearchModel: PagingModel
+    {
+        public virtual object where { get; set; }
+
+        public virtual object select { get; set; }
     }
 
     public class ResultModel<T>

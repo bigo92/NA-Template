@@ -22,7 +22,7 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpGet]
-        public object Test()
+        public object Test(Search_TempModel model)
         {
            var result = _sv.Get();
            return result;
@@ -41,7 +41,6 @@ namespace NA.WebApi.Modules.General.Controllers
         [HttpPost]
         public async Task<object> Add(Add_TempModel model)
         {
-            //ModelState.AddModelError("", "hehee");
             if (ModelState.IsValid)
             {
                 _sv.Add(model);
