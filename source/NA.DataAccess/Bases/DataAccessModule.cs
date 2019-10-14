@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NA.Common.Interfaces;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using NA.DataAccess.Repository;
 
 namespace NA.DataAccess.Bases

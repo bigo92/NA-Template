@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using NA.Domain.Bases;
 using NA.Domain.Interfaces;
 

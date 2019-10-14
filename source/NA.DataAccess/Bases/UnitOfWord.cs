@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using NA.DataAccess.Repository;
 using System;
 using System.Collections.Generic;

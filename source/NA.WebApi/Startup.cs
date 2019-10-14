@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NA.Common.Extentions;
 using NA.Common.Models;
 using NA.DataAccess.Bases;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using NA.Domain.Bases;
 using NA.WebApi.Bases.Swagger;
 using Swashbuckle.AspNetCore.Swagger;

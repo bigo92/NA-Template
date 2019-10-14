@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.DataAccess.Bases;
 using Newtonsoft.Json;
-using static NA.DataAccess.Models.Template;
+using static NA.DataAccess.Contexts.Template;
 
-namespace NA.DataAccess.Models
+namespace NA.DataAccess.Contexts
 {
     public partial class NATemplateContext : DbContext
     {
@@ -33,32 +33,29 @@ namespace NA.DataAccess.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDbFunction(() => JsonExtensions.JsonValue(default, default));
+            modelBuilder.HasDbFunction(() => DbFunction.JsonValue(default, default));
 
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
             modelBuilder.Entity<Template>(entity =>
             {
                 entity.Property(e => e.id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                     .HasColumnName("id")
+                     .ValueGeneratedNever();
 
-                entity.Property(e => e.address).HasColumnName("address").IsJson();
+                entity.Property(e => e.data).HasColumnName("data").IsJson();
 
-                entity.Property(e => e.data_db).HasColumnName("data_db");
+                entity.Property(e => e.data_db).HasColumnName("data_db").IsJson();
 
-                entity.Property(e => e.files).HasColumnName("files");
+                entity.Property(e => e.files).HasColumnName("files").IsJson();
 
-                entity.Property(e => e.info).HasColumnName("info").IsJson();
+                entity.Property(e => e.language).HasColumnName("language");
+
+                entity.Property(e => e.tag)
+                    .HasColumnName("tag")
+                    .HasMaxLength(25);
             });
 
-            //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            //{
-            //    foreach (var property in entityType.GetProperties())
-            //    {
-            //        property.JsonConverter();
-            //    }
-            //}
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NA.DataAccess.Bases;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -3,7 +3,7 @@ using NA.Domain.Interfaces;
 using NA.Domain.Bases;
 using Microsoft.Extensions.Logging;
 using NA.DataAccess.Bases;
-using NA.DataAccess.Models;
+using NA.DataAccess.Contexts;
 using Newtonsoft.Json.Linq;
 using System.Transactions;
 using NA.Domain.Cache;
@@ -32,7 +32,7 @@ namespace NA.Domain.Services
         public List<Template> Get()
         {
             var query = _db.Template.AsQueryable();
-            query = query.Where(x => JsonExtensions.JsonValue((string)(object)x.info, "$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6");
+            query = query.Where(x => DbFunction.JsonValue((string)(object)x.data, "$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6");
             query = query.WhereLoopback("files", "68a77924-0191-4db3-87b7-7da2299a49d6");
             query = query.OrderBy("id", true);
             return query.ToList();
