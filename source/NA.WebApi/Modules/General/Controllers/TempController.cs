@@ -22,10 +22,14 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpGet]
-        public object Test([FromQuery] Search_TempModel model)
+        public async Task<IActionResult> Test([FromQuery] Search_TempModel model)
         {
-           var result = _sv.Get();
-           return result;
+            if (ModelState.IsValid)
+            {
+                var result = _sv.Get();
+                return await BindData(result);
+            }
+            return await BindData();
         }
 
         [HttpPost]
