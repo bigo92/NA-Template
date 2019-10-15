@@ -22,7 +22,7 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpGet]
-        public object Test(Search_TempModel model)
+        public object Test([FromQuery] Search_TempModel model)
         {
            var result = _sv.Get();
            return result;

@@ -57,7 +57,11 @@ namespace NA.WebApi
             services.AddModule<DataAccessModule>();
 
             services.AddMvc()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)                    
+                    .AddJsonOptions(options =>
+                    {
+                        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    })
                     .ConfigureApiBehaviorOptions(options =>
                     {
                         options.SuppressMapClientErrors = true;
