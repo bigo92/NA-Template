@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace NA.Common.Extentions
+namespace NA.DataAccess.Bases
 {
     public static class QueryableExtention
     {
@@ -199,44 +199,61 @@ namespace NA.Common.Extentions
             return expression;
         }
 
-        public static IQueryable<T> WhereDynamic<T>(this IQueryable<T> source,
-                                       string property,
-                                       string value) where T : class
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, JArray order) where T : class
         {
-            //STEP 1: Validate MORE!
-            var searchProperty = typeof(T).GetProperty(property);
-            if (searchProperty == null) throw new ArgumentException("property");
+            var table = Expression.Parameter(typeof(T), "x");
+            foreach (JObject param in order)
+            {
+                foreach (var item in param)
+                {
+                    var k = item.Key.ToString().Split('.');
+                    var v = item.Value;
+                    var t = v.GetType();
 
-            //STEP 2: Create property selector
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var equal = Expression.Equal(Expression.Property(parameter, property), Expression.Constant(value));
+                    var field = "";
+                    var pathJson = "$";
+                    if (k.Length == 1)
+                    {
+                        field = k[0];
+                    }
+                    else
+                    {
+                        for (int j = 0; j < k.Length; j++)
+                        {
+                            if (j == 0)
+                            {
+                                field = k[j];
+                            }
+                            else
+                            {
+                                pathJson += $".{k[j]}";
+                            }
+                        }
+                    }
 
-            //STEP 3: Update the IQueryable expression to include OrderBy
-            var lambda = Expression.Lambda<Func<T, bool>>(equal, parameter);
+                    Expression property = default;
+                    if (pathJson == "$")
+                    {
+                        property = Expression.Property(table, field);
+                    }
+                    else
+                    {
+                        var p = Expression.Property(table, field);
+                        var jsonFC = typeof(NA.DataAccess.Bases.DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
+                        property = Expression.Call(jsonFC, p, Expression.Constant(pathJson));
+                    }
 
-            return source.Where(lambda);
-        }
-
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source,
-                                       string property,
-                                       bool asc = true) where T : class
-        {
-            //STEP 1: Validate MORE!
-            var searchProperty = typeof(T).GetProperty(property);
-            if (searchProperty == null) throw new ArgumentException("property");
-
-            //STEP 2: Create the OrderBy property selector
-            var parameter = Expression.Parameter(typeof(T), "o");
-            var selectorExpr = Expression.Lambda(Expression.Property(parameter, property), parameter);
-
-            //STEP 3: Update the IQueryable expression to include OrderBy
-            Expression queryExpr = source.Expression;
-            queryExpr = Expression.Call(typeof(Queryable), asc ? "OrderBy" : "OrderByDescending",
-                                          new Type[] { source.ElementType, searchProperty.PropertyType },
+                    var selectorExpr = Expression.Lambda(property);
+                    var queryExpr = source.Expression;
+                    queryExpr = Expression.Call(typeof(Queryable), v.Value<bool>() ? "OrderBy" : "OrderByDescending",
+                                          new Type[] { source.ElementType, typeof(Guid) },
                                          queryExpr,
-                                        selectorExpr);
+                                        selectorExpr);                    
+                    source = source.Provider.CreateQuery<T>(queryExpr);
+                }
+            }
 
-            return source.Provider.CreateQuery<T>(queryExpr);
+            return source;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace NA.WebApi.Bases
             return key;
         }
 
-        protected async Task<ResultModel<dynamic>> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
+        protected async Task<IActionResult> BindData(dynamic data = null, List<ErrorModel> errors = null, PagingModel paging = null)
         {
             if(errors != null)
             {
@@ -41,16 +41,22 @@ namespace NA.WebApi.Bases
           
             if (!ModelState.IsValid)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return BadRequest(new ResultModel<dynamic>
+                {
+                    success = ModelState.IsValid,
+                    error = new SerializableError(ModelState),
+                    data = data,
+                    paging = paging
+                });
             }
 
-            return new ResultModel<dynamic>
+            return Ok(new ResultModel<dynamic>
             {
                 success = ModelState.IsValid,
                 error = new SerializableError(ModelState),
                 data = data,
                 paging = paging
-            };
+            });
         }       
     }
 }

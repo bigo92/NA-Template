@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace NA.WebApi.Modules.General.Models
 {
 
-    public class Search_TempModel : SearchModel
+    public class Search_TempModel : Search_TemplateServiceModel
     {
 
     }

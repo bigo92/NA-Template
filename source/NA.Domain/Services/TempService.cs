@@ -10,11 +10,13 @@ using NA.Domain.Cache;
 using System.Linq;
 using System.Collections.Generic;
 using NA.Domain.Models;
+using NA.Common.Models;
 
 namespace NA.Domain.Services
 {
-    public interface ITempService : ICRUDService<Template>
+    public interface ITempService
     {
+        (dynamic data,List<ErrorModel> errors, PagingModel paging) Get(Search_TemplateServiceModel model);
         void Add(Add_TemplateServiceModel model);
     }
 
@@ -29,13 +31,19 @@ namespace NA.Domain.Services
         {
             _unit = unit; _log = log; _sv2 = sv2; _cache = cache; _db = db;
         }
-        public List<Template> Get()
+        public (dynamic data, List<ErrorModel> errors, PagingModel paging) Get(Search_TemplateServiceModel model)
         {
+            var errors = new List<ErrorModel>();
+
             var query = _db.Template.AsQueryable();
             query = query.Where(x => DbFunction.JsonValue((string)(object)x.data, "$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6");
-            query = query.WhereLoopback("files", "68a77924-0191-4db3-87b7-7da2299a49d6");
-            query = query.OrderBy("id", true);
-            return query.ToList();
+            if (model.where != null)
+            {
+                query = query.WhereLoopback(model.where);
+            }
+            query = query.OrderBy(model.order);
+            var result = query.ToPaging(model);
+            return (result.data, errors, result.paging);
         }
 
 

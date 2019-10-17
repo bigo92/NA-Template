@@ -13,12 +13,14 @@ namespace NA.Common.Models
     {
         public IPagingModel()
         {
-            order = "id desc";
+            order = JArray.FromObject(new List<object> { JObject.FromObject(new {
+                id = false
+            })});
             page = 1;
             size = 25;
         }
 
-        public virtual string order { get; set; }
+        public virtual JArray order { get; set; }
 
         public virtual int page { get; set; }
 
@@ -50,9 +52,9 @@ namespace NA.Common.Models
 
     public class SearchModel: IPagingModel
     {
-        public virtual object where { get; set; }
+        public virtual JObject where { get; set; }
 
-        public virtual object select { get; set; }
+        public virtual JArray select { get; set; }
     }
 
     public class ResultModel<T>
