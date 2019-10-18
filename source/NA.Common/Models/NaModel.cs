@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NA.Common.Extentions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,14 +15,20 @@ namespace NA.Common.Models
     {
         public IPagingModel()
         {
-            order = JArray.FromObject(new List<object> { JObject.FromObject(new {
+            order = JsonConvert.SerializeObject(new List<object> { new {
                 id = false
-            })});
+            }});
             page = 1;
             size = 25;
         }
 
-        public virtual JArray order { get; set; }
+        public virtual string order { get; set; }
+
+        [JsonIgnore]
+        public virtual JArray orderLoopback
+        {
+            get { return order.HasValue()? JsonConvert.DeserializeObject<JArray>(order) : null; }
+        }
 
         public virtual int page { get; set; }
 
@@ -50,11 +58,23 @@ namespace NA.Common.Models
         public virtual long? count { get; set; }
     }
 
-    public class SearchModel: IPagingModel
+    public class SearchModel : IPagingModel
     {
-        public virtual JObject where { get; set; }
+        public virtual string where { get; set; }
 
-        public virtual JArray select { get; set; }
+        [JsonIgnore]
+        public virtual JObject whereLoopback
+        {
+            get { return where.HasValue()? JsonConvert.DeserializeObject<JObject>(where) : null; }
+        }
+
+        public virtual string select { get; set; }
+
+        [JsonIgnore]
+        public virtual JObject selectLoopback
+        {
+            get { return select.HasValue() ? JsonConvert.DeserializeObject<JObject>(select) : null; }
+        }
     }
 
     public class ResultModel<T>

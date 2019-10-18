@@ -36,12 +36,13 @@ namespace NA.Domain.Services
             var errors = new List<ErrorModel>();
 
             var query = _db.Template.AsQueryable();
-            query = query.Where(x => DbFunction.JsonValue((string)(object)x.data, "$.name") == "68a77924-0191-4db3-87b7-7da2299a49d6");
+            
+            query = query.Where(x => DbFunction.JsonValue((string)(object)x.data, "$.name") == "tesst");
             if (model.where != null)
             {
-                query = query.WhereLoopback(model.where);
+                query = query.WhereLoopback(model.whereLoopback);
             }
-            query = query.OrderBy(model.order);
+            query = query.OrderBy(model.orderLoopback);           
             var result = query.ToPaging(model);
             return (result.data, errors, result.paging);
         }

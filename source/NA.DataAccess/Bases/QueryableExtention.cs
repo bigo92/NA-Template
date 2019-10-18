@@ -83,116 +83,92 @@ namespace NA.DataAccess.Bases
             }
             else
             {
-                foreach (var item in param)
+                var resultKey = param.ReadKeyObject();
+
+                Expression property = default;
+                Type propertyType = default;
+                if (resultKey.pathJson == "$")
                 {
-                    var k = item.Key.ToString().Split('.');
-                    var v = item.Value;
-                    var t = v.GetType();
+                    property = Expression.Property(table, resultKey.property);
+                    propertyType = property.Type;
+                }
+                else
+                {
+                    var p = Expression.Property(table, resultKey.field);
+                    var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
+                    property = Expression.Call(jsonFC, p, Expression.Constant(resultKey.pathJson));
+                    propertyType = Expression.Property(table, resultKey.property).Type;
+                }
 
-                    var field = "";
-                    var pathJson = "$";
-                    if (k.Length == 1)
+                if (resultKey.value.GetType() == typeof(JObject))
+                {
+                    foreach (var v2value in resultKey.value.Value<JObject>())
                     {
-                        field = k[0];
-                    }
-                    else
-                    {
-                        for (int j = 0; j < k.Length; j++)
+                        var valueEx = Convert.ChangeType(v2value.Value, propertyType);
+                        switch (v2value.Key)
                         {
-                            if (j == 0)
-                            {
-                                field = k[j];
-                            }
-                            else
-                            {
-                                pathJson += $".{k[j]}";
-                            }
+                            case "gt":
+                                expression = Expression.GreaterThan(property, Expression.Constant(valueEx));
+                                break;
+                            case "gte":
+                                expression = Expression.GreaterThanOrEqual(property, Expression.Constant(valueEx));
+                                break;
+                            case "lt":
+                                expression = Expression.LessThan(property, Expression.Constant(valueEx));
+                                break;
+                            case "lte":
+                                expression = Expression.LessThanOrEqual(property, Expression.Constant(valueEx));
+                                break;
+                            case "neq":
+                                expression = Expression.NotEqual(property, Expression.Constant(valueEx));
+                                break;
+                            case "like":
+                                var mi = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
+                                expression = Expression.Call(property, mi, Expression.Constant(valueEx));
+                                break;
+                            case "nlike":
+                                mi = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
+                                expression = Expression.Not(Expression.Call(property, mi, Expression.Constant(valueEx)));
+                                break;
+                            //case "insplit":
+                            //    lstWhere += $"{part}{v2value.Value} in (select * from STRING_SPLIT({rk},','))";
+                            //    part = " and ";
+                            //    break;
+                            //case "ninsplit":
+                            //    lstWhere += $"{part}{v2value.Value} not in (select * from STRING_SPLIT({rk},','))";
+                            //    part = " and ";
+                            //    break;
+                            //case "inarray":
+                            //    lstWhere += $"{part}{v2value.Value} in (select t.* from  {rk.Replace("JSON_VALUE", "OPENJSON")} WITH(id nvarchar(max) '$') as t)";
+                            //    part = " and ";
+                            //    break;
+                            //case "ninarray":
+                            //    lstWhere += $"{part}{v2value.Value} not in (select t.* from  {rk.Replace("JSON_VALUE", "OPENJSON")} WITH(id nvarchar(max) '$') as t)";
+                            //    part = " and ";
+                            //    break;
+                            //case "in":
+                            //    lstWhere += $"{part}{rk} in ({string.Join(',', v2value.Value)})";
+                            //    part = " and ";
+                            //    break;
+                            //case "nin":
+                            //    lstWhere += $"{part}{rk} not in ({string.Join(',', v2value.Value)})";
+                            //    part = " and ";
+                            //    break;
+                            case "startwith":
+                                mi = typeof(string).GetMethods().First(m => m.Name == "StartsWith" && m.GetParameters().Length == 1);
+                                expression = Expression.Call(property, mi, Expression.Constant(valueEx));
+                                break;
+                            case "endwith":
+                                mi = typeof(string).GetMethods().First(m => m.Name == "EndsWith" && m.GetParameters().Length == 1);
+                                expression = Expression.Call(property, mi, Expression.Constant(valueEx));
+                                break;
                         }
                     }
-
-                    Expression property = default;
-                    if (pathJson == "$")
-                    {
-                        property = Expression.Property(table, field);
-                    }
-                    else
-                    {
-                        var p = Expression.Property(table, field);
-                        var jsonFC = typeof(NA.DataAccess.Bases.DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                        property = Expression.Call(jsonFC, p, Expression.Constant(pathJson));
-                    }
-
-                    if (t == typeof(JObject))
-                    {
-                        foreach (var v2value in v as JObject)
-                        {
-                            var valueEx = Convert.ChangeType(v2value.Value, property.Type);
-                            switch (v2value.Key)
-                            {
-                                case "gt":
-                                    expression = Expression.GreaterThan(property, Expression.Constant(valueEx));
-                                    break;
-                                case "gte":
-                                    expression = Expression.GreaterThanOrEqual(property, Expression.Constant(valueEx));
-                                    break;
-                                case "lt":
-                                    expression = Expression.LessThan(property, Expression.Constant(valueEx));
-                                    break;
-                                case "lte":
-                                    expression = Expression.LessThanOrEqual(property, Expression.Constant(valueEx));
-                                    break;
-                                case "neq":
-                                    expression = Expression.NotEqual(property, Expression.Constant(valueEx));
-                                    break;
-                                case "like":
-                                    var mi = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
-                                    expression = Expression.Call(property, mi, Expression.Constant(valueEx));
-                                    break;
-                                case "nlike":
-                                    mi = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
-                                    expression = Expression.Not(Expression.Call(property, mi, Expression.Constant(valueEx)));
-                                    break;
-                                //case "insplit":
-                                //    lstWhere += $"{part}{v2value.Value} in (select * from STRING_SPLIT({rk},','))";
-                                //    part = " and ";
-                                //    break;
-                                //case "ninsplit":
-                                //    lstWhere += $"{part}{v2value.Value} not in (select * from STRING_SPLIT({rk},','))";
-                                //    part = " and ";
-                                //    break;
-                                //case "inarray":
-                                //    lstWhere += $"{part}{v2value.Value} in (select t.* from  {rk.Replace("JSON_VALUE", "OPENJSON")} WITH(id nvarchar(max) '$') as t)";
-                                //    part = " and ";
-                                //    break;
-                                //case "ninarray":
-                                //    lstWhere += $"{part}{v2value.Value} not in (select t.* from  {rk.Replace("JSON_VALUE", "OPENJSON")} WITH(id nvarchar(max) '$') as t)";
-                                //    part = " and ";
-                                //    break;
-                                //case "in":
-                                //    lstWhere += $"{part}{rk} in ({string.Join(',', v2value.Value)})";
-                                //    part = " and ";
-                                //    break;
-                                //case "nin":
-                                //    lstWhere += $"{part}{rk} not in ({string.Join(',', v2value.Value)})";
-                                //    part = " and ";
-                                //    break;
-                                case "startwith":
-                                    mi = typeof(string).GetMethods().First(m => m.Name == "StartsWith" && m.GetParameters().Length == 1);
-                                    expression = Expression.Call(property, mi, Expression.Constant(valueEx));
-                                    break;
-                                case "endwith":
-                                    mi = typeof(string).GetMethods().First(m => m.Name == "EndsWith" && m.GetParameters().Length == 1);
-                                    expression = Expression.Call(property, mi, Expression.Constant(valueEx));
-                                    break;
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        var valueEx = Convert.ChangeType(v, property.Type);
-                        expression = Expression.Equal(property, Expression.Constant(valueEx));
-                    }
+                }
+                else
+                {
+                    var valueEx = Convert.ChangeType(resultKey.value.Value<object>(), propertyType);
+                    expression = Expression.Equal(property, Expression.Constant(valueEx));
                 }
             }
 
@@ -204,56 +180,62 @@ namespace NA.DataAccess.Bases
             var table = Expression.Parameter(typeof(T), "x");
             foreach (JObject param in order)
             {
-                foreach (var item in param)
+                var resultKey = param.ReadKeyObject();
+
+                Expression property = default;
+                Type propertyType = default;
+                if (resultKey.pathJson == "$")
                 {
-                    var k = item.Key.ToString().Split('.');
-                    var v = item.Value;
-                    var t = v.GetType();
-
-                    var field = "";
-                    var pathJson = "$";
-                    if (k.Length == 1)
-                    {
-                        field = k[0];
-                    }
-                    else
-                    {
-                        for (int j = 0; j < k.Length; j++)
-                        {
-                            if (j == 0)
-                            {
-                                field = k[j];
-                            }
-                            else
-                            {
-                                pathJson += $".{k[j]}";
-                            }
-                        }
-                    }
-
-                    Expression property = default;
-                    if (pathJson == "$")
-                    {
-                        property = Expression.Property(table, field);
-                    }
-                    else
-                    {
-                        var p = Expression.Property(table, field);
-                        var jsonFC = typeof(NA.DataAccess.Bases.DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                        property = Expression.Call(jsonFC, p, Expression.Constant(pathJson));
-                    }
-
-                    var selectorExpr = Expression.Lambda(property);
-                    var queryExpr = source.Expression;
-                    queryExpr = Expression.Call(typeof(Queryable), v.Value<bool>() ? "OrderBy" : "OrderByDescending",
-                                          new Type[] { source.ElementType, typeof(Guid) },
-                                         queryExpr,
-                                        selectorExpr);                    
-                    source = source.Provider.CreateQuery<T>(queryExpr);
+                    property = Expression.Property(table, resultKey.property);
+                    propertyType = property.Type;
                 }
+                else
+                {
+                    var p = Expression.Property(table, resultKey.field);
+                    var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
+                    property = Expression.Call(jsonFC, p, Expression.Constant(resultKey.pathJson));
+                    propertyType = Expression.Property(table, resultKey.property).Type;
+                }
+
+                var queryExpr = source.Expression;
+                var selectorExpr = Expression.Lambda(property, table);
+                queryExpr = Expression.Call(typeof(Queryable), resultKey.value.Value<bool>() ? "OrderBy" : "OrderByDescending",
+                                      new Type[] { source.ElementType, propertyType },
+                                     queryExpr,
+                                    selectorExpr);
+                source = source.Provider.CreateQuery<T>(queryExpr);
             }
 
             return source;
+        }
+
+        private static (string field, JToken value, string property, string pathJson) ReadKeyObject(this JObject source)
+        {
+            var field = "";
+            var pathJson = "$";
+            var property = "";
+            JToken vaule = null;
+
+            foreach (var item in source)
+            {
+                var k = item.Key.ToString().Split('.');
+                vaule = item.Value;
+
+                for (int j = 0; j < k.Length; j++)
+                {
+                    if (j == 0)
+                    {
+                        field = k[j];
+                        property = k[j];
+                    }
+                    else
+                    {
+                        pathJson += $".{k[j]}";
+                        property += $".{k[j]}";
+                    }
+                }
+            }
+            return (field, vaule, property, pathJson);
         }
     }
 }
