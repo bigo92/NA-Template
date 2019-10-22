@@ -37,12 +37,11 @@ namespace NA.Domain.Services
 
             var query = _db.Template.AsQueryable();
             
-            query = query.Where(x => DbFunction.JsonValue((string)(object)x.data, "$.name") == "tesst");
             if (model.where != null)
             {
                 query = query.WhereLoopback(model.whereLoopback);
             }
-            query = query.OrderBy(model.orderLoopback);           
+            query = query.OrderByLoopback(model.orderLoopback);                      
             var result = query.ToPaging(model);
             return (result.data, errors, result.paging);
         }

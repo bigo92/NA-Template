@@ -44,6 +44,48 @@ namespace NA.DataAccess.Bases
             return source;
         }
 
+        public static IQueryable<T> OrderByLoopback<T>(this IQueryable<T> source, JArray order) where T : class
+        {
+            var table = Expression.Parameter(typeof(T), "x");
+            var fisrt = true;
+            foreach (JObject param in order)
+            {
+                var resultKey = param.ReadKeyObject();
+
+                Expression property = default;
+                Type propertyType = default;
+
+                if (resultKey.pathJson == "$")
+                {
+                    property = GetProperty(table, resultKey.property);
+                    propertyType = property.Type;
+                }
+                else
+                {
+                    var propertyJson = Expression.Property(table, resultKey.field);
+                    var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
+                    var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
+                    property = Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson));
+
+                    var propertyDetail = GetProperty(table, resultKey.property);
+                    propertyType = propertyDetail.Type;
+                }
+
+                var queryExpr = source.Expression;
+                var selectorExpr = Expression.Lambda(property, table);
+                var funcName = fisrt ? resultKey.value.Value<bool>() ? "OrderBy" : "OrderByDescending" : resultKey.value.Value<bool>() ? "ThenBy" : "ThenByDescending";
+                queryExpr = Expression.Call(typeof(Queryable), funcName,
+                                      new Type[] { source.ElementType, propertyType },
+                                     queryExpr,
+                                    selectorExpr);
+                source = source.Provider.CreateQuery<T>(queryExpr);
+                fisrt = false;
+            }
+
+            return source;
+        }
+
+        //-- private func extension
         private static Expression ExpressionAnd(ParameterExpression table, JObject param)
         {
             Expression expression = default;
@@ -94,10 +136,13 @@ namespace NA.DataAccess.Bases
                 }
                 else
                 {
-                    var p = Expression.Property(table, resultKey.field);
+                    var propertyJson = Expression.Property(table, resultKey.field);
                     var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                    property = Expression.Call(jsonFC, p, Expression.Constant(resultKey.pathJson));
-                    propertyType = Expression.Property(table, resultKey.property).Type;
+                    var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
+                    property = Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson));
+
+                    var propertyDetail = GetProperty(table, resultKey.property);
+                    propertyType = propertyDetail.Type;
                 }
 
                 if (resultKey.value.GetType() == typeof(JObject))
@@ -175,39 +220,17 @@ namespace NA.DataAccess.Bases
             return expression;
         }
 
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, JArray order) where T : class
+        private static Expression GetProperty(ParameterExpression table, string property)
         {
-            var table = Expression.Parameter(typeof(T), "x");
-            foreach (JObject param in order)
+            string[] properties = property.Split('.');
+            Expression lastMember = table;
+            for (int i = 0; i < properties.Length; i++)
             {
-                var resultKey = param.ReadKeyObject();
-
-                Expression property = default;
-                Type propertyType = default;
-                if (resultKey.pathJson == "$")
-                {
-                    property = Expression.Property(table, resultKey.property);
-                    propertyType = property.Type;
-                }
-                else
-                {
-                    var p = Expression.Property(table, resultKey.field);
-                    var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                    property = Expression.Call(jsonFC, p, Expression.Constant(resultKey.pathJson));
-                    propertyType = Expression.Property(table, resultKey.property).Type;
-                }
-
-                var queryExpr = source.Expression;
-                var selectorExpr = Expression.Lambda(property, table);
-                queryExpr = Expression.Call(typeof(Queryable), resultKey.value.Value<bool>() ? "OrderBy" : "OrderByDescending",
-                                      new Type[] { source.ElementType, propertyType },
-                                     queryExpr,
-                                    selectorExpr);
-                source = source.Provider.CreateQuery<T>(queryExpr);
+                MemberExpression member = Expression.Property(lastMember, properties[i]);
+                lastMember = member;
             }
-
-            return source;
-        }
+            return lastMember;
+        }        
 
         private static (string field, JToken value, string property, string pathJson) ReadKeyObject(this JObject source)
         {

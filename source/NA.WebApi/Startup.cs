@@ -33,7 +33,7 @@ namespace NA.WebApi
 
             // Register the Swagger generator, defining one or more Swagger documents        
             services.AddSwaggerGen(c =>
-            {
+            {                
                 c.SwaggerDoc("v1", null);
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme

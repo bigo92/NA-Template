@@ -2,6 +2,7 @@
 using NA.Common.Models;
 using NA.Domain.Models;
 using NA.WebApi.Bases.Swagger;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,14 @@ namespace NA.WebApi.Modules.General.Models
 
     public class Search_TempModel : Search_TemplateServiceModel
     {
+        [IngoreAttribute]
+        public override JArray orderLoopback => base.orderLoopback;
 
+        [IngoreAttribute]
+        public override JObject selectLoopback => base.selectLoopback;
+
+        [IngoreAttribute]
+        public override JObject whereLoopback => base.whereLoopback;
     }
 
     public class TempModel
