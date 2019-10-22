@@ -11,6 +11,8 @@ using System.Linq;
 using System.Collections.Generic;
 using NA.Domain.Models;
 using NA.Common.Models;
+using tci.common.Enums;
+using NA.Common.Extentions;
 
 namespace NA.Domain.Services
 {
@@ -23,24 +25,34 @@ namespace NA.Domain.Services
     public class TempService : ITempService, IDisposable
     {
         private readonly IUnitOfWork _unit;
-        private readonly ILogger<TempService> _log;
-        private readonly ITempService2 _sv2;
+        private readonly ILogger<TempService> _log;        
         private ICacheService _cache;
         private readonly NATemplateContext _db;
-        public TempService(IUnitOfWork unit, ILogger<TempService> log, ITempService2 sv2, ICacheService cache, NATemplateContext db)
+        public TempService(IUnitOfWork unit, ILogger<TempService> log, NATemplateContext db)
         {
-            _unit = unit; _log = log; _sv2 = sv2; _cache = cache; _db = db;
+            _unit = unit; _log = log; _db = db;
         }
+
         public (dynamic data, List<ErrorModel> errors, PagingModel paging) Get(Search_TemplateServiceModel model)
         {
             var errors = new List<ErrorModel>();
 
             var query = _db.Template.AsQueryable();
-            
+
+            query = query.Where(x =>
+                    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == 0);
             if (model.where != null)
             {
                 query = query.WhereLoopback(model.whereLoopback);
+
+                if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
+                {
+                    var statusActive = (int)Enums.Status_db.Nomal;
+                    query = query.Where(x =>
+                    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == statusActive);
+                }
             }
+
             query = query.OrderByLoopback(model.orderLoopback);                      
             var result = query.ToPaging(model);
             return (result.data, errors, result.paging);
@@ -55,10 +67,6 @@ namespace NA.Domain.Services
         private List<Template> GetAllTemplate()
         {
             return _unit.Repository<Template>().GetAll().ToList();
-        }
-        public string FindOne()
-        {
-            return _sv2.FindOne();
         }
 
         public void Add(Add_TemplateServiceModel model)

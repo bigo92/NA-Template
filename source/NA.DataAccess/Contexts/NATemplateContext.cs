@@ -33,7 +33,7 @@ namespace NA.DataAccess.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDbFunction(() => DbFunction.JsonValue(default, default));
+            modelBuilder.HasDbFunction(() => DbFunction.JsonValue(default, default));            
 
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 

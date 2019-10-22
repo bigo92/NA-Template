@@ -32,7 +32,7 @@ namespace NA.DataAccess.Bases
             return (data, paging);
         }
 
-        public static IQueryable<T> WhereLoopback<T>(this IQueryable<T> source, JObject where, string type = "and")
+        public static IQueryable<T> WhereLoopback<T>(this IQueryable<T> source, JObject where)
         {
             var parameter = Expression.Parameter(typeof(T), "x");
 
@@ -40,7 +40,7 @@ namespace NA.DataAccess.Bases
 
             var lambda = Expression.Lambda<Func<T, bool>>(expression, parameter);
             source = source.Where(lambda);
-
+           
             return source;
         }
 
@@ -62,13 +62,13 @@ namespace NA.DataAccess.Bases
                 }
                 else
                 {
+                    var propertyDetail = GetProperty(table, resultKey.property);
+                    propertyType = propertyDetail.Type;
+
                     var propertyJson = Expression.Property(table, resultKey.field);
                     var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
                     var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
-                    property = Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson));
-
-                    var propertyDetail = GetProperty(table, resultKey.property);
-                    propertyType = propertyDetail.Type;
+                    property = Expression.Convert(Expression.Convert(Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson)), typeof(object)), propertyType);
                 }
 
                 var queryExpr = source.Expression;
@@ -136,13 +136,13 @@ namespace NA.DataAccess.Bases
                 }
                 else
                 {
+                    var propertyDetail = GetProperty(table, resultKey.property);
+                    propertyType = propertyDetail.Type;
+
                     var propertyJson = Expression.Property(table, resultKey.field);
                     var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
                     var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
-                    property = Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson));
-
-                    var propertyDetail = GetProperty(table, resultKey.property);
-                    propertyType = propertyDetail.Type;
+                    property = Expression.Convert(Expression.Convert(Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson)), typeof(object)), propertyType);   
                 }
 
                 if (resultKey.value.GetType() == typeof(JObject))
