@@ -1,46 +1,21 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-  private lstmodalRef: any[] = [];
-  private lstConfirmDialog: string[] = [];
-  private configDialog = {
-    animated: false,
-    keyboard: false,
-    backdrop: true,
-    ignoreBackdropClick: true,
-    class: 'modal-dialog-centered'
-  };
-  constructor(
+
+  constructor(private modalService: NzModalService
   ) { }
 
-  public openModal(template: TemplateRef<any>, isOneDialog: boolean = false) {
-    const index = this.lstmodalRef.findIndex(x => x.temp === template);
-    if (index === -1) {
-      //const itemModel = this.bsModalSv.show(template, Object.assign({}, this.configDialog));
-      //this.lstmodalRef.push({ temp: template, model: itemModel });
-    }
-    if (isOneDialog) {
-      this.lstmodalRef.filter(x => x.temp !== template).forEach(x => {
-        this.closeModal(x.temp);
+  public confirm(title: string, content: string) {   
+    return new Promise<boolean>((resolve, reject) => {
+      this.modalService.confirm({
+        nzTitle: title,
+        nzContent: content,
+        nzOnOk: () => resolve(true),
+        nzOnCancel: () => resolve(false)
       });
-    }
-  }
-
-
-  public closeModal(template: TemplateRef<any> = null) {
-    if (template !== null) {
-      const index = this.lstmodalRef.findIndex(x => x.temp === template);
-      if (index !== -1) {
-        this.lstmodalRef[index].model.hide();
-        this.lstmodalRef.splice(index, 1);
-      }
-    } else {
-      while (this.lstmodalRef.length > 0) {
-        this.lstmodalRef[0].model.hide();
-        this.lstmodalRef.splice(0, 1);
-      }
-    }
+    });
   }
 }

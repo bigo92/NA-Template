@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NA.Common.Extentions;
+﻿using Microsoft.AspNetCore.Mvc;
 using NA.Common.Models;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace NA.WebApi.Bases

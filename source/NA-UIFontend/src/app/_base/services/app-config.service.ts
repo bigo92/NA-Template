@@ -9,7 +9,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) {}
 
   load() {
-    const jsonFile = `assets/config/config.json`;
+    const jsonFile = `appsetting.json`;
 
     return new Promise<void>((resolve, reject) => {
       this.http

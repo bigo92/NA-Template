@@ -1,3 +1,88 @@
-<p>
-  template works!
-</p>
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Template</span> Management</h4>
+      <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+    </div>
+
+    <div class="header-elements d-none">
+      <button type="button" class="btn btn-primary" (click)="addDialog()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>
+        Create</button>
+      <button type="button" class="btn btn-success"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
+        Import Excel</button>
+    </div>
+  </div>
+</div>
+
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#product-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="product-list">
+        <form novalidate>
+          <button type="submit" hidden></button>
+          <div class="box-input d-md-flex flex-wrap">
+            <div class="form-group mr-md-2">
+              <input-text></input-text>
+            </div>
+            <div class="form-group mr-md-2">
+              <input-text-search></input-text-search>
+            </div>
+            <div class="form-group mr-md-2">
+              <input-number></input-number>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-0 margin-bottom-10">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th class="action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>3</td>
+          <td>James</td>
+          <td>Alexander</td>
+          <td class="text-center">
+            <div class="list-icons list-icons-extended text-center">
+              <a class="list-icons-item" href="javascript:;" (click)="viewDialog(1)">
+                <span nz-tooltip nzTitle="Xem">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-primary" href="javascript:;" (click)="editDialog(1)">
+                <span nz-tooltip nzTitle="Sửa">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+                <span nz-tooltip nzTitle="Xóa">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-paging [data]="paging"></app-paging>
+</div>
+
+<nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="closeDialog()" [nzFooter]="null">
+  <app-template-dialog [params]="paramsDialog" (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)"></app-template-dialog>
+</nz-modal>

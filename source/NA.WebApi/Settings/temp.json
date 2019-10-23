@@ -1,0 +1,101 @@
+﻿{
+	tag: "template",
+	list:{
+		button:{
+			add: {
+				title: "Thêm"
+			},
+			delete: {
+				title: "Xóa Dữ liệu đã chọn",
+				confirm: "Bạn có chắc chắn muốn xóa dữ liệu đã chọn không?"
+			}			
+		},
+		action:{
+			edit: {
+				title: "Sửa"				
+			},
+			delete: {
+				title: "Xóa",
+				confirm: "Bạn có chắc chắn muốn xóa dữ liệu này không?"
+			}
+		}
+		search:{
+			buttonSearch:{
+				title: "Tìm kiếm",
+				show: false
+			},
+			form:[
+				{
+					groupName: null,
+					controls: [
+						{
+							label: "Tên nhân viên",
+							placeholder: "Nhập tên"
+							name: "data.name"
+							type: 2,
+							class: "col-md-6"
+						},
+						{
+							label: "Tuổi nhân viên",
+							placeholder: "Nhập tuổi"
+							name: "data.age"
+							type: 1,
+							class: "col-md-6"
+						}
+					]
+				}
+			]			
+		},
+		table:[
+			{
+				title: "Mã nhân viên",
+				data: "id",
+				fomat: null
+			},
+			{
+				title: "Tên nhân viên",
+				data: "data.name",
+				fomat: null
+			},
+			{
+				title: "Tuổi nhân viên",
+				data: "data.name",
+				fomat: null
+			}
+		],
+		loading:{
+			isloading: "Đang tải...",
+			dataEmpty: "Không tìm thấy dữ liệu"
+		}
+	},
+	add:{
+		title: "Thêm Dữ Liệu",
+		form:[
+			{
+				groupName: null,
+				controls: [
+					{
+						label: "Tên nhân viên",
+						placeholder: "Nhập tên"
+						name: "data.name"
+						type: 2,
+						class: "col-md-6"
+					},
+					{
+						label: "Tuổi nhân viên",
+						placeholder: "Nhập tuổi"
+						name: "data.age"
+						type: 1,
+						class: "col-md-6"
+					}
+				]
+			}
+		]
+	},
+	edit: {
+		title: "Sửa dữ liệu"
+	},
+	view: {
+		title: "Xem Dữ liệu"
+	}
+}
