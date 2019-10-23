@@ -78,14 +78,7 @@ namespace NA.Common.Models
     }
 
     public class ResultModel<T>
-    {
-        public ResultModel()
-        {
-            success = true;
-        }
-
-        public bool success { get; set; }
-
+    {               
         public SerializableError error { get; set; }
 
         public T data { get; set; }

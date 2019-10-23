@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using NA.Domain.Services;
 using NA.WebApi.Bases;
 using NA.WebApi.Modules.General.Models;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NA.WebApi.Modules.General.Controllers
 {
@@ -16,11 +17,11 @@ namespace NA.WebApi.Modules.General.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Setting()
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "settings", "temp.json");
-            var data = await File.ReadAllTextAsync(path);
-            return await BindData(data);
+            return PhysicalFile(path, "application/json");
         }
 
         [HttpGet]

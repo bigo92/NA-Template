@@ -38,20 +38,21 @@ namespace NA.WebApi.Bases
             {
                 return BadRequest(new ResultModel<dynamic>
                 {
-                    success = ModelState.IsValid,
                     error = new SerializableError(ModelState),
                     data = data,
                     paging = paging
                 });
             }
 
-            return Ok(new ResultModel<dynamic>
+            if (paging != null)
             {
-                success = ModelState.IsValid,
-                error = new SerializableError(ModelState),
-                data = data,
-                paging = paging
-            });
+                return Ok(new ResultModel<dynamic>
+                {
+                    data = data,
+                    paging = paging
+                });
+            }
+            return Ok(data);
         }       
     }
 }

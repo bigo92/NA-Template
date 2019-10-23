@@ -69,8 +69,6 @@ namespace NA.WebApi
                         {
                             var result = new ResultModel<dynamic>
                             {
-                                success = false,
-                                data = null,
                                 error = new SerializableError(context.ModelState)
                             };
 
