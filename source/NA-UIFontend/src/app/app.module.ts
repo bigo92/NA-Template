@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { TokenInterceptor } from './_base/interceptors/token.interceptor';
 import { ErrorInterceptor } from './_base/interceptors/error.interceptor';
+import { AppConfigService, loadConfigurations } from './_base/services/app-config.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -32,6 +33,12 @@ registerLocaleData(en);
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfigurations,
+      deps: [AppConfigService],
       multi: true
     },
     { provide: NZ_I18N, useValue: en_US }

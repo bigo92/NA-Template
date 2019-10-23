@@ -7,6 +7,5 @@ export class HttpModel<T> {
         public error: ErrorModel[],
         public data: T,
         public paging: PagingModel,
-        public script: boolean
     ) {}
 }

@@ -18,7 +18,7 @@ export class HttpService {
   ) { }
 
   // getApi
-  getApiAsync<T>(url: string, params: any, showErrorDialog: boolean = false, pushState: boolean = false) {
+  getApiAsync<T>(url: string, params: any = null) {
     let result: Promise<HttpModel<T>>;
     let lstError: ErrorModel[];
 
@@ -28,12 +28,20 @@ export class HttpService {
       params: params
     }).toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }
@@ -46,12 +54,20 @@ export class HttpService {
     result = this.http.post(url, body, { headers: this.postHeaders() })
       .toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }
@@ -63,12 +79,20 @@ export class HttpService {
     result = this.http.patch(url, body, { headers: this.postHeaders() })
       .toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }
@@ -79,12 +103,20 @@ export class HttpService {
     result = this.http.put(url, body, { headers: this.postHeaders() })
       .toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }
@@ -96,12 +128,20 @@ export class HttpService {
     result = this.http.post(url, form, { headers: this.uploadHeaders() })
       .toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }
@@ -120,12 +160,20 @@ export class HttpService {
     result = this.http.delete(url, { headers: this.getHeaders() })
       .toPromise()
       .then(response => {
-        let data: HttpModel<T> = JSON.parse(response.toString());
-        return data;
+        let data = JSON.parse(response.toString());
+        if (data.paging) {
+          return new HttpModel<T>(true,null,data.data, data.paging);
+        }
+        return new HttpModel<T>(true,null,data, null);
       })
       .catch(err => {
-        lstError = this.handleError(err);
-        return new HttpModel<T>(false, lstError, null, null, false);
+        try {
+          lstError = this.handleError(err);
+          return new HttpModel<T>(false,lstError,null,null);
+        } catch (error) {
+          return new HttpModel<T>(false,[],err,null);
+        }
+        
       });
     return result;
   }

@@ -5,16 +5,15 @@ import { HttpService } from '../../_base/services/http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TableModelService {
+export class TableService {  
   private url = `${
     AppConfigService.settings.apiServer.physical
-  }/api/TableModel`;
+  }/api`;
   constructor(private http: HttpService) {}
 
-  public InitGet(search: string) {
-    let url = `${this.url}/GetForm`;
-    var params = this.http.SearchTojson(search);
-    return this.http.getApiAsync<any>(url, params);
+  public Setting(tag: string) {
+    let url = `${this.url}/${tag}/setting`;
+    return this.http.getApiAsync<any>(url);
   }
 
   public getData(params: any = null, pushState: boolean = false) {

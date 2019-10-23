@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IAppConfig } from '../models/IAppConfig';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppConfigService {
   static settings: IAppConfig;
 
   constructor(private http: HttpClient) {}
 
   load() {
-    const jsonFile = `appsetting.json`;
-
+    const jsonFile = `assets/appsetting.json`;
     return new Promise<void>((resolve, reject) => {
       this.http
         .get(jsonFile)
@@ -27,4 +28,9 @@ export class AppConfigService {
         });
     });
   }
+}
+
+
+export function loadConfigurations(configService: AppConfigService) {
+  return () => configService.load();
 }

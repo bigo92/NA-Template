@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'src/app/_base/services/dialog.service';
+import { ExtensionService } from 'src/app/_base/services/extension.service';
+import { TableService } from 'src/app/_shared/services/table.service';
 
 @Component({
   selector: 'app-template',
@@ -7,7 +9,7 @@ import { DialogService } from 'src/app/_base/services/dialog.service';
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
-
+  setting: any;
   paging: any ={
     page: 1,
     count: 100,
@@ -17,13 +19,26 @@ export class TemplateComponent implements OnInit {
   showDialog: boolean = false;
   paramsDialog: any = {};
   isDialogLoading: boolean = false;
-  constructor(private dl: DialogService) {}
+  constructor(
+    private dl: DialogService,
+    private sv: TableService,
+    private ex: ExtensionService
+    ) {}
 
   ngOnInit() {
+    this.getSetting();
   }
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit home');
+  }
+
+  async getSetting(){
+    let rs = await this.sv.Setting('temp');
+    this.ex.logDebug('getSetting', rs);
+    if (rs.success) {
+      this.setting = rs.data;
+    }
   }
 
   addDialog(){

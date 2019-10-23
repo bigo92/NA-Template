@@ -37,7 +37,7 @@ namespace NA.WebApi.Modules.General.Controllers
 
 
         [HttpPost]
-        public string Test([FromBody] TempModel model)
+        public string List([FromBody] TempModel model)
         {
             if (ModelState.IsValid)
             {

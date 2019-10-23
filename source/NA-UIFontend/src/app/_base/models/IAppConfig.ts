@@ -7,6 +7,7 @@ export interface IAppConfig {
 
   apiServer: {
     physical: string;
-    virtual: string;
   };
+
+  deploy: string;
 }
