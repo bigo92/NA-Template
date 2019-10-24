@@ -39,18 +39,16 @@ namespace NA.Domain.Services
 
             var query = _db.Template.AsQueryable();
 
-            query = query.Where(x =>
-                    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == 0);
             if (model.where != null)
             {
                 query = query.WhereLoopback(model.whereLoopback);
 
-                if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
-                {
-                    var statusActive = (int)Enums.Status_db.Nomal;
-                    query = query.Where(x =>
-                    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == statusActive);
-                }
+                //if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
+                //{
+                //    var statusActive = (int)Enums.Status_db.Nomal;
+                //    query = query.Where(x =>
+                //    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == statusActive);
+                //}
             }
 
             query = query.OrderByLoopback(model.orderLoopback);                      

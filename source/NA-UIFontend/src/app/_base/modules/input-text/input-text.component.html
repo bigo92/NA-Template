@@ -1,1 +1,3 @@
-<input class="form-control" nz-input placeholder="Basic usage"/>
+<input nz-input type="text" [class]="class" [placeholder]="placeholder" 
+    [(ngModel)]="controlValue" (change)="onChange()" (blur)="onBlur()" [disabled]="disabled" [readonly]="readonly"
+    [hidden]="hidden"/>

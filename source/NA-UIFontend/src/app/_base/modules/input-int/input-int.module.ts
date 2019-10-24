@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputNumberComponent } from './input-number.component';
+import { InputIntComponent } from './input-int.component';
 import { NzInputNumberModule } from 'ng-zorro-antd';
 
 @NgModule({
@@ -9,8 +9,8 @@ import { NzInputNumberModule } from 'ng-zorro-antd';
     NzInputNumberModule
   ],
   exports:[
-    InputNumberComponent
+    InputIntComponent
   ],
-  declarations: [InputNumberComponent]
+  declarations: [InputIntComponent]
 })
-export class InputNumberModule { }
+export class InputIntModule { }

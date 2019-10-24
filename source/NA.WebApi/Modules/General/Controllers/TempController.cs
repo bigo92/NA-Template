@@ -30,6 +30,11 @@ namespace NA.WebApi.Modules.General.Controllers
             if (ModelState.IsValid)
             {
                 var result = _sv.Get(model);
+                if (result.errors.Count == 0)
+                {
+                    //new task  sent mail
+                    //push notification
+                }
                 return await BindData(result.data, result.errors, result.paging);
             }
             return await BindData();

@@ -13,6 +13,6 @@ namespace NA.Domain.Models
 
     public class Add_TemplateServiceModel: Template
     {
-        
+
     }
 }

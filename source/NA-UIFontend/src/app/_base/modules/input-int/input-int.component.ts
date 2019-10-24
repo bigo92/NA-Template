@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, forwardRef, OnChanges, Input, Output, EventEmitter, ElementRef, AfterViewInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, forwardRef, AfterViewInit, OnChanges, Input, Output, EventEmitter, ElementRef, SimpleChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { InputTextComponent } from '../input-text/input-text.component';
 
 declare var $;
 @Component({
-  selector: 'input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.scss'],
+  selector: 'input-int',
+  templateUrl: './input-int.component.html',
+  styleUrls: ['./input-int.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -14,7 +15,7 @@ declare var $;
       multi: true,
     }]
 })
-export class InputTextComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+export class InputIntComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
 
   @Input() class: any = '';
   @Input() placeholder: any = '';

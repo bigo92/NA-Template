@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,6 +79,40 @@ namespace NA.WebApi
                         options.ClientErrorMapping[404].Link =
                             "https://httpstatuses.com/404";
                     });
+
+            //apply all cors call api        
+            services.AddCors(options => options.AddPolicy("Cors",
+            builder =>
+            {
+                builder.
+                AllowAnyOrigin().
+                AllowAnyMethod().
+                AllowAnyHeader().
+                AllowCredentials();
+            }));
+
+            //gzip
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddResponseCompression(options =>
+            {
+                options.MimeTypes = new[]
+                {
+                    // Default
+                    "text/plain",
+                    "text/css",
+                    "application/javascript",
+                    "text/html",
+                    "application/xml",
+                    "text/xml",
+                    "application/json",
+                    "text/json",
+                    // Custom
+                    "image/svg+xml",
+                    "image/jpeg",
+                    "image/png"
+                };
+                options.EnableForHttps = true;
+            });
         }
 
 
@@ -96,6 +131,11 @@ namespace NA.WebApi
                 //app.UseHsts();
                 app.UseExceptionHandler("/api/error");
             }
+
+            //enable gzip
+            app.UseResponseCompression();
+
+            app.UseCors("Cors");
 
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.

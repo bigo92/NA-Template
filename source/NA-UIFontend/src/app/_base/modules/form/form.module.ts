@@ -6,8 +6,7 @@ import { PagingModule } from '../paging/paging.module';
 import { RenderErrorModule } from '../render-error/render-error.module';
 import { InputTextModule } from '../input-text/input-text.module';
 import { InputTextSearchModule } from '../input-text-search/input-text-search.module';
-import { InputNumber } from 'ng-zorro-antd';
-import { InputNumberModule } from '../input-number/input-number.module';
+import { InputIntModule } from '../input-int/input-int.module';
 
 @NgModule({
   imports: [
@@ -19,7 +18,7 @@ import { InputNumberModule } from '../input-number/input-number.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputNumberModule
+    InputIntModule
   ],
   exports: [
     FormsModule,
@@ -30,7 +29,7 @@ import { InputNumberModule } from '../input-number/input-number.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputNumberModule
+    InputIntModule
   ]
 })
 export class FormModule {

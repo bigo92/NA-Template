@@ -39,7 +39,7 @@ namespace NA.WebApi.Bases
                 return BadRequest(new ResultModel<dynamic>
                 {
                     error = new SerializableError(ModelState),
-                    data = data,
+                    data = data,//todo remve
                     paging = paging
                 });
             }

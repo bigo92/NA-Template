@@ -28,7 +28,7 @@ export class HttpService {
       params: params
     }).toPromise()
       .then(response => {
-        let data = JSON.parse(response.toString());
+        let data: any = response;
         if (data.paging) {
           return new HttpModel<T>(true,null,data.data, data.paging);
         }
@@ -40,8 +40,7 @@ export class HttpService {
           return new HttpModel<T>(false,lstError,null,null);
         } catch (error) {
           return new HttpModel<T>(false,[],err,null);
-        }
-        
+        }        
       });
     return result;
   }
