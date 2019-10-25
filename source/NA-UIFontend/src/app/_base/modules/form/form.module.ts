@@ -7,6 +7,7 @@ import { RenderErrorModule } from '../render-error/render-error.module';
 import { InputTextModule } from '../input-text/input-text.module';
 import { InputTextSearchModule } from '../input-text-search/input-text-search.module';
 import { InputIntModule } from '../input-int/input-int.module';
+import { InputNumberModule } from '../input-number/input-number.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { InputIntModule } from '../input-int/input-int.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputIntModule
+    InputIntModule,
+    InputNumberModule
   ],
   exports: [
     FormsModule,
@@ -29,7 +31,8 @@ import { InputIntModule } from '../input-int/input-int.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputIntModule
+    InputIntModule,
+    InputNumberModule
   ]
 })
 export class FormModule {

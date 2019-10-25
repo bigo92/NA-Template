@@ -6,7 +6,7 @@ import { AppRoutes } from './app.routing';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DecimalPipe } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { TokenInterceptor } from './_base/interceptors/token.interceptor';
 import { ErrorInterceptor } from './_base/interceptors/error.interceptor';
@@ -41,7 +41,8 @@ registerLocaleData(en);
       deps: [AppConfigService],
       multi: true
     },
-    { provide: NZ_I18N, useValue: en_US }
+    { provide: NZ_I18N, useValue: en_US },
+    DecimalPipe
   ],
   bootstrap: [AppComponent]
 })

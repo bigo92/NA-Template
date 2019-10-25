@@ -32,5 +32,4 @@ export class TemplateDialogComponent implements OnInit {
       this.nzOnOk.emit(null);
     }, 3000);
   }
-
 }

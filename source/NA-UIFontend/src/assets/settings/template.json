@@ -78,11 +78,21 @@
 	},
 	"add":{
 		"title": "Thêm Dữ Liệu",
+		"width": 768,
 		"form":[
 			{
 				"type": "row",
 				"legend": null,
 				"child":[
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 1,
+							"label": "Tuổi nhân viên",
+							"placeholder": "Nhập tuổi",
+							"name": "data.age"	
+						}
+					},
 					{
 						"type": "col-md-4",
 						"control":{
@@ -95,12 +105,75 @@
 					{
 						"type": "col-md-4",
 						"control":{
-							"type": 1,
-							"label": "Tuổi nhân viên",
-							"placeholder": "Nhập tuổi",
-							"name": "data.age"	
+							"type": 3,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
 						}
-					}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 4,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 5,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 6,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 7,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 8,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 9,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 10,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					}					
 				]					
 			}
 		]

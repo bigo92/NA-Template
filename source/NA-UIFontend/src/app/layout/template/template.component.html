@@ -74,7 +74,7 @@
 </div>
 
 <nz-modal *ngIf="setting" class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false"
-  (nzOnCancel)="closeDialog()"
+  (nzOnCancel)="closeDialog()" [nzWidth]="setting.add.width"
   [nzTitle]="paramsDialog.mode === 1? setting.add.title : paramsDialog.mode === 2? setting.add.title : setting.view.title"
   [nzFooter]="null">
   <app-template-dialog [template]="renderForm" [setting]="setting.add" [params]="paramsDialog"
@@ -107,7 +107,7 @@
               <ng-container *ngSwitchCase="1">
                 <div class="form-group">
                   <label>{{item.control.label}}</label>
-                  <input-int class="form-control" [placeholder]="item.control.placeholder"></input-int>
+                  <input-number class="form-control" [placeholder]="item.control.placeholder"></input-number>
                 </div>
               </ng-container>
               <ng-container *ngSwitchCase="2">
