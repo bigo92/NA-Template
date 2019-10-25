@@ -14,15 +14,7 @@ namespace NA.WebApi.Modules.General.Controllers
         public TempController(ITempService sv)
         {
             this._sv = sv;
-        }
-
-        [HttpGet]
-        [ResponseCache(NoStore = true)]
-        public async Task<IActionResult> Setting()
-        {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "settings", "temp.json");
-            return PhysicalFile(path, "application/json");
-        }
+        }       
 
         [HttpGet]
         public async Task<IActionResult> Test([FromQuery] Search_TempModel model)

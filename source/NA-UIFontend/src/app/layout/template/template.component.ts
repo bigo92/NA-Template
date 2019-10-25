@@ -34,7 +34,7 @@ export class TemplateComponent implements OnInit {
   }
 
   async getSetting(){
-    let rs = await this.sv.Setting('temp');
+    let rs = await this.sv.Setting('template');
     this.ex.logDebug('getSetting', rs);
     if (rs.success) {
       this.setting = rs.data;

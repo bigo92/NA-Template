@@ -88,3 +88,13 @@ body {
     outline: none;
   }
 }
+
+nz-input-number{
+  padding: 0px !important;
+  .ant-input-number-handler-wrap{
+    right: 11px;
+    height: 30px;
+    top: 27px;
+    opacity: 0.5;
+  }
+}

@@ -12,7 +12,7 @@ export class TableService {
   constructor(private http: HttpService) {}
 
   public Setting(tag: string) {
-    let url = `${this.url}/${tag}/setting`;
+    let url = `assets/settings/${tag}.json`;
     return this.http.getApiAsync<any>(url);
   }
 
@@ -20,7 +20,7 @@ export class TableService {
     let url = `${this.url}`;
     if (params.where != null && typeof params.where !== 'string') {
       params.where = JSON.stringify(params.where);
-    }
+    } 
     return this.http.getApiAsync<any[]>(url, params);
   }
 

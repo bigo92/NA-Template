@@ -21,14 +21,16 @@ export class InputIntComponent implements OnInit, AfterViewInit, ControlValueAcc
   @Input() placeholder: any = '';
   @Input() disabled: boolean = false;
   @Input() hidden: boolean = false;
-  @Input() readonly: boolean = false;
+  @Input() min: number;
+  @Input() max: number;
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur =  new EventEmitter<void>();
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
   public controlValue: any = '';
-
+  public parserDollar = (value: string) => value.replace('$ ', '');
+  public formatterDollar = (value: number) => `$ ${value}`;
   constructor(
     private el: ElementRef
   ) { }

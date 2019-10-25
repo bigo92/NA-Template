@@ -1,1 +1,3 @@
-<nz-input-number [class]="class" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+<nz-input-number [class]="class" [nzMin]="min" [nzMax]="max" [nzStep]="1" [nzPlaceHolder]="placeholder"
+[(ngModel)]="controlValue" (ngModelChange)="onChange()" (nzBlur)="onBlur()" [nzDisabled]="disabled"
+[hidden]="hidden" [nzFormatter]="formatterDollar" [nzParser]="parserDollar"></nz-input-number>

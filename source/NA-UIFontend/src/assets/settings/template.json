@@ -33,7 +33,7 @@
 						{
 							"type": "col-md-4",
 							"control":{
-								"type": 2,
+								"type": 1,
 								"label": "Tuổi nhân viên",
 								"placeholder": "Nhập tuổi",
 								"name": "data.age"	
