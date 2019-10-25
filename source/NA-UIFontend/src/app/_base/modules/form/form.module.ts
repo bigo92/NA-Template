@@ -6,7 +6,6 @@ import { PagingModule } from '../paging/paging.module';
 import { RenderErrorModule } from '../render-error/render-error.module';
 import { InputTextModule } from '../input-text/input-text.module';
 import { InputTextSearchModule } from '../input-text-search/input-text-search.module';
-import { InputIntModule } from '../input-int/input-int.module';
 import { InputNumberModule } from '../input-number/input-number.module';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { InputNumberModule } from '../input-number/input-number.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputIntModule,
     InputNumberModule
   ],
   exports: [
@@ -31,7 +29,6 @@ import { InputNumberModule } from '../input-number/input-number.module';
     PagingModule,
     InputTextModule,
     InputTextSearchModule,
-    InputIntModule,
     InputNumberModule
   ]
 })

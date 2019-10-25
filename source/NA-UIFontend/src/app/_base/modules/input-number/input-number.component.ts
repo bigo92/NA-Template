@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, forwardRef, AfterViewInit, OnChanges, Input, Output, EventEmitter, ElementRef, SimpleChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { InputTextComponent } from '../input-text/input-text.component';
-import { DecimalPipe } from '@angular/common';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 declare var $;
@@ -28,6 +27,8 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   @Input() min: number;
   @Input() max: number;
   @Input() step: number = 1;
+  @Input() symbol: string = ',';
+  @Input() prefix: string = '';
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur =  new EventEmitter<void>();
   eventBaseChange = (_: any) => { };
@@ -35,18 +36,16 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
 
   public controlValue: any = ''; 
   public maskFomat = createNumberMask({
-    prefix: '',
+    prefix: this.prefix,
     allowNegative: true,
     allowDecimal: false,
-    thousandsSeparatorSymbol: ","
+    thousandsSeparatorSymbol: this.symbol
   }); 
   constructor(
-    private el: ElementRef,
-    private decimalPipe: DecimalPipe
+    private el: ElementRef
   ) { }
 
-  ngOnInit() {
-    let a = this.decimalPipe.transform('1234', '1.0');
+  ngOnInit() {   
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -73,9 +72,10 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
     this.eventOnBlur.emit();
   }
 
-  onChange() {
-    this.eventBaseChange(this.controlValue);
-    this.eventOnChange.emit(this.controlValue);
+  onChange() {    
+    let val = this.getValue();
+    this.eventBaseChange(+val);
+    this.eventOnChange.emit(+val);
   }
 
   setDisabledState?(isDisabled: boolean): void {
@@ -83,13 +83,23 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   }
 
   pushValue(){
-    if (this.max && +this.controlValue >= this.max) return;
-    this.controlValue++;
+    let val = this.getValue();
+    if (this.max && +val >= this.max) return;    
+    this.controlValue = +val + this.step;  
   }
 
   minusValue(){
-    if (this.min && +this.controlValue <= this.min) return;
-    this.controlValue--;
+    let val = this.getValue();
+    if (this.min && +val <= this.min) return;
+    this.controlValue = +val - this.step;
+  }
+
+  private getValue(){
+    let val = (this.controlValue+'').replace(new RegExp(this.symbol, 'g'),'');
+    if (this.prefix !== '') {
+      val = val.replace(new RegExp(this.prefix, 'g'),'.');
+    }
+    return +val;
   }
 }
 
