@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputDateTimeComponent } from './input-date-time.component';
+import { InputMonthComponent } from './input-month.component';
 import { FormsModule } from '@angular/forms';
 import { NzDatePickerModule } from 'ng-zorro-antd';
 
@@ -11,8 +11,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd';
     NzDatePickerModule
   ],
   exports:[
-    InputDateTimeComponent
+    InputMonthComponent
   ],
-  declarations: [InputDateTimeComponent]
+  declarations: [InputMonthComponent]
 })
-export class InputDateTimeModule { }
+export class InputMonthModule { }

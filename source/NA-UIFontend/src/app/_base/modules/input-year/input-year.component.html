@@ -1,3 +1,4 @@
-<p>
-  input-year works!
-</p>
+<nz-year-picker [nzClassName]="class" [(ngModel)]="controlValue" [nzPlaceHolder]="placeholder"
+  [nzAllowClear]="allowClear" [nzDisabled]="disabled"
+  (ngModelChange)="onChange()" (focusin)="onBlur()" (focusout)="onUnBlur()">
+</nz-year-picker>

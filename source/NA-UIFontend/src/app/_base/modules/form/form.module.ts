@@ -8,6 +8,9 @@ import { InputTextModule } from '../input-text/input-text.module';
 import { InputTextSearchModule } from '../input-text-search/input-text-search.module';
 import { InputNumberModule } from '../input-number/input-number.module';
 import { InputDateModule } from '../input-date/input-date.module';
+import { InputMonthModule } from '../input-month/input-month.module';
+import { InputYearModule } from '../input-year/input-year.module';
+import { InputDateTimeModule } from '../input-date-time/input-date-time.module';
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { InputDateModule } from '../input-date/input-date.module';
     InputTextModule,
     InputTextSearchModule,
     InputNumberModule,
-    InputDateModule
+    InputDateModule,
+    InputDateTimeModule,
+    InputMonthModule,
+    InputYearModule
   ],
   exports: [
     FormsModule,
@@ -32,7 +38,10 @@ import { InputDateModule } from '../input-date/input-date.module';
     InputTextModule,
     InputTextSearchModule,
     InputNumberModule,
-    InputDateModule
+    InputDateModule,
+    InputDateTimeModule,
+    InputMonthModule,
+    InputYearModule
   ]
 })
 export class FormModule {

@@ -3,25 +3,26 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 declare let $;
 @Component({
-  selector: 'input-year',
-  templateUrl: './input-year.component.html',
-  styleUrls: ['./input-year.component.scss'],
+  selector: 'input-month',
+  templateUrl: './input-month.component.html',
+  styleUrls: ['./input-month.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputYearComponent),
+      useExisting: forwardRef(() => InputMonthComponent),
       multi: true,
     }
   ]
 })
-export class InputYearComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+export class InputMonthComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
 
   @Input() class: any = '';
   @Input() placeholder: any = '';
   @Input() disabled: boolean = false;
   @Input() hidden: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() format: string = 'MM/yyyy';
   @Input() allowClear: boolean = true;
   @Input() min: number;
   @Input() max: number;
@@ -38,6 +39,7 @@ export class InputYearComponent implements OnInit, AfterViewInit, ControlValueAc
   ) { }
 
   ngOnInit() {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
