@@ -116,6 +116,12 @@
                   <input-text class="form-control" [placeholder]="item.control.placeholder"></input-text>
                 </div>
               </ng-container>
+              <ng-container *ngSwitchCase="3">
+                <div class="form-group">
+                  <label>{{item.control.label}}</label>
+                  <input-date></input-date>
+                </div>
+              </ng-container>
             </ng-container>
           </div>
         </ng-container>

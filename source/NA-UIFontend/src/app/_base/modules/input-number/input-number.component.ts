@@ -12,7 +12,7 @@ declare var $;
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
+      useExisting: forwardRef(() => InputNumberComponent),
       multi: true,
     }
   ]
@@ -31,21 +31,22 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   @Input() prefix: string = '';
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur =  new EventEmitter<void>();
+  @Output('onUnBlur') eventOnUnBlur =  new EventEmitter<void>();
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: any = ''; 
+  public controlValue: any = '';
   public maskFomat = createNumberMask({
     prefix: this.prefix,
     allowNegative: true,
     allowDecimal: false,
     thousandsSeparatorSymbol: this.symbol
-  }); 
+  });
   constructor(
     private el: ElementRef
   ) { }
 
-  ngOnInit() {   
+  ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,7 +73,11 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
     this.eventOnBlur.emit();
   }
 
-  onChange() {    
+  onUnBlur(){
+    this.eventOnUnBlur.emit();
+  }
+
+  onChange() {
     let val = this.getValue();
     this.eventBaseChange(+val);
     this.eventOnChange.emit(+val);
@@ -84,14 +89,16 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
 
   pushValue(){
     let val = this.getValue();
-    if (this.max && +val >= this.max) return;    
-    this.controlValue = +val + this.step;  
+    if (this.max && +val >= this.max) return;
+    this.controlValue = +val + this.step;
+    this.onChange();
   }
 
   minusValue(){
     let val = this.getValue();
     if (this.min && +val <= this.min) return;
     this.controlValue = +val - this.step;
+    this.onChange();
   }
 
   private getValue(){

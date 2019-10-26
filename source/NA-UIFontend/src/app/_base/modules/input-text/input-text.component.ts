@@ -23,6 +23,7 @@ export class InputTextComponent implements OnInit, AfterViewInit, ControlValueAc
   @Input() readonly: boolean = false;
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur =  new EventEmitter<void>();
+  @Output('onUnBlur') eventOnUnBlur = new EventEmitter<void>();
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
@@ -57,6 +58,10 @@ export class InputTextComponent implements OnInit, AfterViewInit, ControlValueAc
   onBlur() {
     this.eventBaseTouched();
     this.eventOnBlur.emit();
+  }
+
+  onUnBlur(){
+    this.eventOnUnBlur.emit();
   }
 
   onChange() {

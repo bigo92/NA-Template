@@ -1,7 +1,7 @@
-<div class="input-group">
-    <input type="text" [class]="class" [(ngModel)]="controlValue" [textMask]="{mask: maskFomat}" 
-    [disabled]="disabled" [readonly]="readonly" [hidden]="hidden" [placeholder]="placeholder" 
-    (blur)="onBlur()" (change)="onChange()">
+<div class="input-group" (focusin)="onBlur()" (focusout)="onUnBlur()">
+    <input type="text" [class]="class" [(ngModel)]="controlValue" [textMask]="{mask: maskFomat}"
+    [disabled]="disabled" [readonly]="readonly" [hidden]="hidden" [placeholder]="placeholder"
+    (change)="onChange()">
     <div class="input-group-append">
         <div class="actions" (click)="pushValue()">
             <i class="fas fa-angle-up"></i>
