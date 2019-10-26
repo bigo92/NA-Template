@@ -12,6 +12,7 @@ import { InputMonthModule } from '../input-month/input-month.module';
 import { InputYearModule } from '../input-year/input-year.module';
 import { InputDateTimeModule } from '../input-date-time/input-date-time.module';
 import { InputTimeModule } from '../input-time/input-time.module';
+import { InputFloatModule } from '../input-float/input-float.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { InputTimeModule } from '../input-time/input-time.module';
     InputDateTimeModule,
     InputMonthModule,
     InputYearModule,
-    InputTimeModule
+    InputTimeModule,
+    InputFloatModule
   ],
   exports: [
     FormsModule,
@@ -44,7 +46,8 @@ import { InputTimeModule } from '../input-time/input-time.module';
     InputDateTimeModule,
     InputMonthModule,
     InputYearModule,
-    InputTimeModule
+    InputTimeModule,
+    InputFloatModule
   ]
 })
 export class FormModule {

@@ -146,6 +146,12 @@
                   <input-time class="form-control" [placeholder]="item.control.placeholder"></input-time>
                 </div>
               </ng-container>
+              <ng-container *ngSwitchCase="8">
+                <div class="form-group">
+                  <label>{{item.control.label}}</label>
+                  <input-float class="form-control" [placeholder]="item.control.placeholder"></input-float>
+                </div>
+              </ng-container>
             </ng-container>
           </div>
         </ng-container>

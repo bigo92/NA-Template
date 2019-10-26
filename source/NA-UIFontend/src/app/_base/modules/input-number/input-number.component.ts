@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, forwardRef, AfterViewInit, OnChanges, Input, Output, EventEmitter, ElementRef, SimpleChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { InputTextComponent } from '../input-text/input-text.component';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 declare var $;
@@ -27,7 +26,7 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   @Input() min: number;
   @Input() max: number;
   @Input() step: number = 1;
-  @Input() symbol: string = ',';
+  @Input() symbol: string = ' ';
   @Input() prefix: string = '';
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur =  new EventEmitter<void>();
@@ -102,9 +101,11 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   }
 
   private getValue(){
-    let val = (this.controlValue+'').replace(new RegExp(this.symbol, 'g'),'');
+    let val: any = this.controlValue;
+    if(!val) val = '';
+    val = val.toString().replace(new RegExp(this.symbol, 'g'),'');
     if (this.prefix !== '') {
-      val = val.replace(new RegExp(this.prefix, 'g'),'.');
+      val = val.replace(new RegExp(this.prefix, 'g'),'');
     }
     return +val;
   }
