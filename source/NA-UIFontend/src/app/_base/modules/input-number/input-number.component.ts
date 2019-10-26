@@ -35,7 +35,7 @@ export class InputNumberComponent implements OnInit, AfterViewInit, ControlValue
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: any = '';
+  public controlValue: number | null = null;
   public maskFomat = createNumberMask({
     prefix: this.prefix,
     allowNegative: true,

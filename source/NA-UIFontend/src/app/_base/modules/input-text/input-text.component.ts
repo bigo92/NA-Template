@@ -27,7 +27,7 @@ export class InputTextComponent implements OnInit, AfterViewInit, ControlValueAc
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: any = '';
+  public controlValue: string | null = null;
 
   constructor(
     private el: ElementRef
