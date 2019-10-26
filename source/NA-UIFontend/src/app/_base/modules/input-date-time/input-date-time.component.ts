@@ -32,7 +32,7 @@ export class InputDateTimeComponent implements OnInit, AfterViewInit, ControlVal
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: any = '';
+  public controlValue: Date | null = null;
   private isFocus: boolean;
   constructor(
     private el: ElementRef
@@ -46,6 +46,7 @@ export class InputDateTimeComponent implements OnInit, AfterViewInit, ControlVal
 
   ngAfterViewInit() {
     $(this.el.nativeElement).removeClass(this.class);
+    $(this.el.nativeElement).find('.ant-calendar-picker').css({'width':'100%'})
   }
 
   writeValue(obj: any) {

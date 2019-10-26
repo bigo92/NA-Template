@@ -3,19 +3,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 declare let $;
 @Component({
-  selector: 'input-year',
-  templateUrl: './input-year.component.html',
-  styleUrls: ['./input-year.component.scss'],
+  selector: 'input-time',
+  templateUrl: './input-time.component.html',
+  styleUrls: ['./input-time.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputYearComponent),
+      useExisting: forwardRef(() => InputTimeComponent),
       multi: true,
-    }
-  ]
+    }]
 })
-export class InputYearComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+export class InputTimeComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
 
   @Input() class: any = '';
   @Input() placeholder: any = '';
@@ -25,13 +24,14 @@ export class InputYearComponent implements OnInit, AfterViewInit, ControlValueAc
   @Input() allowClear: boolean = true;
   @Input() min: number;
   @Input() max: number;
+  @Input() format: string = 'HH:mm:ss';
   @Output('onChange') eventOnChange = new EventEmitter<any>();
   @Output('onBlur') eventOnBlur = new EventEmitter<void>();
   @Output('onUnBlur') eventOnUnBlur = new EventEmitter<void>();
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: Date | null = null;
+  public controlValue: Date | null =  null;
   private isFocus: boolean;
   constructor(
     private el: ElementRef
@@ -45,6 +45,7 @@ export class InputYearComponent implements OnInit, AfterViewInit, ControlValueAc
 
   ngAfterViewInit() {
     $(this.el.nativeElement).removeClass(this.class);
+    $(this.el.nativeElement).find('input').addClass(this.class);
   }
 
   writeValue(obj: any) {

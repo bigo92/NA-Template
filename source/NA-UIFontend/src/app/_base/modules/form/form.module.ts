@@ -11,6 +11,7 @@ import { InputDateModule } from '../input-date/input-date.module';
 import { InputMonthModule } from '../input-month/input-month.module';
 import { InputYearModule } from '../input-year/input-year.module';
 import { InputDateTimeModule } from '../input-date-time/input-date-time.module';
+import { InputTimeModule } from '../input-time/input-time.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { InputDateTimeModule } from '../input-date-time/input-date-time.module';
     InputDateModule,
     InputDateTimeModule,
     InputMonthModule,
-    InputYearModule
+    InputYearModule,
+    InputTimeModule
   ],
   exports: [
     FormsModule,
@@ -41,7 +43,8 @@ import { InputDateTimeModule } from '../input-date-time/input-date-time.module';
     InputDateModule,
     InputDateTimeModule,
     InputMonthModule,
-    InputYearModule
+    InputYearModule,
+    InputTimeModule
   ]
 })
 export class FormModule {

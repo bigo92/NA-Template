@@ -12,8 +12,11 @@ import { TemplateDialogModule } from './template-dialog/template-dialog.module';
     NzIconModule,
     FormModule,
     NzModalModule,
-    TemplateDialogModule,    
+    TemplateDialogModule,
     TemplateRoutes
+  ],
+  exports:[
+    TemplateComponent
   ],
   declarations: [TemplateComponent]
 })

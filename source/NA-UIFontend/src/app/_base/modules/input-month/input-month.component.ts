@@ -32,7 +32,7 @@ export class InputMonthComponent implements OnInit, AfterViewInit, ControlValueA
   eventBaseChange = (_: any) => { };
   eventBaseTouched = () => { };
 
-  public controlValue: any = '';
+  public controlValue: Date | null = null;
   private isFocus: boolean;
   constructor(
     private el: ElementRef
