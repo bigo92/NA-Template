@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NA.DataAccess.Bases;
 using Newtonsoft.Json;
@@ -33,7 +35,9 @@ namespace NA.DataAccess.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDbFunction(() => DbFunction.JsonValue(default, default));            
+            modelBuilder.HasDbFunction(typeof(DbFunction).GetMethod(nameof(DbFunction.JsonValue)))
+            .HasName("JSON_VALUE")
+            .HasSchema("");
 
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
