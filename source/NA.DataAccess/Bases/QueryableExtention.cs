@@ -27,7 +27,7 @@ namespace NA.DataAccess.Bases
                 size = model.size,
                 totalPage = totalPage,
                 count = totalRecord,
-                order = model.order
+                order = model.order                
             };
             return (data, paging);
         }
