@@ -58,7 +58,7 @@ namespace NA.Common.Models
         public virtual long? count { get; set; }
     }
 
-    public class SearchModel : IPagingModel
+    public class SearchModel: IPagingModel
     {
         public virtual string where { get; set; }
 

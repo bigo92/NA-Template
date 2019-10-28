@@ -58,4 +58,14 @@ namespace NA.WebApi.Modules.General.Models
         //    public override string address3 { get => base.address3; set => base.address3 = value; }
         //}
     }
+
+    public class Edit_TempModel: Edit_TemplateServiceModel
+    {
+
+    }
+
+    public class Count_TempModel: Count_TemplateServiceModel
+    {
+
+    }
 }

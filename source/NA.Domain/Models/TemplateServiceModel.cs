@@ -7,7 +7,8 @@ using static NA.DataAccess.Contexts.Template;
 
 namespace NA.Domain.Models
 {
-    public class Search_TemplateServiceModel: SearchModel { 
+    public class Search_TemplateServiceModel: SearchModel
+    { 
     
     }
 
@@ -15,4 +16,19 @@ namespace NA.Domain.Models
     {
 
     }
+
+    public class Edit_TemplateServiceModel: Template
+    {
+       
+    }
+
+    public class Delete_TemplateServiceModel
+    {
+        public virtual Guid id { get; set; }
+    }
+
+    public class Count_TemplateServiceModel: SearchModel
+    {      
+    }
+
 }

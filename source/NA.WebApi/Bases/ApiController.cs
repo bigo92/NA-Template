@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NA.WebApi.Bases
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ApiController: ControllerBase
     {
