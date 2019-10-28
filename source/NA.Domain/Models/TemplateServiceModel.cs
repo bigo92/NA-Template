@@ -27,7 +27,7 @@ namespace NA.Domain.Models
         public virtual Guid id { get; set; }
     }
 
-    public class Count_TemplateServiceModel: SearchModel
+    public class Count_TemplateServiceModel: WhereModel
     {      
     }
 

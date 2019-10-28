@@ -123,7 +123,6 @@ namespace NA.Domain.Services
                    (int)DbFunction.JsonValue(x.data_db, "$.status") == statusActive);
             }
 
-            query = query.OrderByLoopback(model.orderLoopback);
             var result = await query.CountAsync();
             return (result, errors);
         }

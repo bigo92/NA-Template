@@ -10,7 +10,7 @@ namespace NA.DataAccess.Bases
 {
     public static class QueryableExtention
     {
-        public static (IList<T> data, PagingModel paging) ToPaging<T>(this IQueryable<T> source, IPagingModel model)
+        public static (IList<T> data, PagingModel paging) ToPaging<T>(this IQueryable<T> source, IPagingSizeModel model)
         {
             var skip = model.page * model.size - model.size;
             //DUCNV: tong so trang
