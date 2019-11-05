@@ -1,1 +1,88 @@
-home work
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Centered card</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form action="#">
+            <div class="form-group">
+                <label>Enter your name:</label>
+                <input-text class="form-control" placeholder="Eugene Kopyov"></input-text>
+            </div>
+
+            <div class="form-group">
+                <label>money:</label>
+                <input-float class="form-control" placeholder="Eugene Kopyov"></input-float>
+                <input-date class="form-control" placeholder="Eugene Kopyov"></input-date>
+                <input-month class="form-control" placeholder="Eugene Kopyov"></input-month>
+                <input-year class="form-control" placeholder="Eugene Kopyov"></input-year>
+                <input-time class="form-control" placeholder="Eugene Kopyov"></input-time>
+            </div>
+
+            <div class="form-group">
+                <label>Select your state:</label>
+                <select data-placeholder="Select your state"
+                    class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1"
+                    aria-hidden="true">
+                    <option></option>
+                    <optgroup label="Alaskan/Hawaiian Time Zone">
+                        <option value="AK">Alaska</option>
+                        <option value="HI">Hawaii</option>
+                    </optgroup>
+                    <optgroup label="Pacific Time Zone">
+                        <option value="CA">California</option>
+                        <option value="NV">Nevada</option>
+                        <option value="WA">Washington</option>
+                    </optgroup>
+                    <optgroup label="Mountain Time Zone">
+                        <option value="AZ">Arizona</option>
+                        <option value="CO">Colorado</option>
+                        <option value="ID">Idaho</option>
+                    </optgroup>
+                    <optgroup label="Central Time Zone">
+                        <option value="AL">Alabama</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                    </optgroup>
+                    <optgroup label="Eastern Time Zone">
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="WV">West Virginia</option>
+                    </optgroup>
+                </select><span class="select2 select2-container select2-container--default" dir="ltr"
+                    style="width: 100%;"><span class="selection"><span
+                            class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true"
+                            aria-expanded="false" tabindex="0" aria-labelledby="select2-6oxm-container"><span
+                                class="select2-selection__rendered" id="select2-6oxm-container"><span
+                                    class="select2-selection__placeholder">Select your state</span></span><span
+                                class="select2-selection__arrow" role="presentation"><b
+                                    role="presentation"></b></span></span></span><span class="dropdown-wrapper"
+                        aria-hidden="true"></span></span>
+            </div>
+
+            <div class="form-group">
+                <label>Attach screenshot:</label>
+                <div class="uniform-uploader"><input type="file" class="form-input-styled" data-fouc=""><span
+                        class="filename" style="user-select: none;">No file selected</span><span
+                        class="action btn bg-pink-400" style="user-select: none;">Choose File</span></div>
+                <span class="form-text text-muted">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+            </div>
+
+            <div class="form-group">
+                <label>Your message:</label>
+                <textarea rows="5" cols="5" class="form-control" placeholder="Enter your message here"></textarea>
+            </div>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
