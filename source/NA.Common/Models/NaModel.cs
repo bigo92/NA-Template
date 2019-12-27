@@ -11,61 +11,41 @@ using tci.common.Enums;
 
 namespace NA.Common.Models
 {
-    public class IPagingModel
+    public interface IPagingSizeModel
     {
-        public IPagingModel()
-        {
-            order = JsonConvert.SerializeObject(new List<object> { new {
-                id = false
-            }});
-            page = 1;
-            size = 25;
-        }
+        string order { get; set; }
 
-        public virtual string order { get; set; }
+        int page { get; set; }
 
-        [JsonIgnore]
-        public virtual JArray orderLoopback
-        {
-            get { return order.HasValue()? JsonConvert.DeserializeObject<JArray>(order) : null; }
-        }
-
-        public virtual int page { get; set; }
-
-        private int _size;
-
-        public virtual int size
-        {
-            get { return _size; }
-            set
-            {
-                if (_size != value)
-                {
-                    _size = value;
-                    if (_size >= 100)
-                    {
-                        _size = 100;
-                    }
-                }
-            }
-        }
+        int size { get; set; }
 
     }
 
-    public class PagingModel : IPagingModel
+    public interface IPagingCountModel
     {
-        public virtual int? totalPage { get; set; }
-        public virtual long? count { get; set; }
+        int? totalPage { get; set; }
+        long? count { get; set; }
     }
 
-    public class SearchModel : IPagingModel
+    public class PagingModel : IPagingSizeModel, IPagingCountModel
+    {
+        
+        public int? totalPage { get; set; }
+        public long? count { get; set; }
+        public string order { get; set; }
+        public int page { get; set; }
+        public int size { get; set; }
+
+    }    
+
+    public class WhereModel
     {
         public virtual string where { get; set; }
 
         [JsonIgnore]
         public virtual JObject whereLoopback
         {
-            get { return where.HasValue()? JsonConvert.DeserializeObject<JObject>(where) : null; }
+            get { return where.HasValue() ? JsonConvert.DeserializeObject<JObject>(where) : null; }
         }
 
         public virtual string select { get; set; }
@@ -77,8 +57,23 @@ namespace NA.Common.Models
         }
     }
 
+    public class SearchModel : WhereModel, IPagingSizeModel
+    {
+        [JsonIgnore]
+        public virtual JArray orderLoopback
+        {
+            get { return order.HasValue() ? JsonConvert.DeserializeObject<JArray>(order) : null; }
+        }
+
+        public virtual string order { get; set; }
+        public virtual int page { get; set; }
+
+        private int _size;
+        public virtual int size { get { return _size; } set { if (value > 100) { _size = 100; } else { _size = value; } } }
+    }
+
     public class ResultModel<T>
-    {               
+    {
         public SerializableError error { get; set; }
 
         public T data { get; set; }

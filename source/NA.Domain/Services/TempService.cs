@@ -1,41 +1,46 @@
 ﻿using System;
-using NA.Domain.Interfaces;
-using NA.Domain.Bases;
 using Microsoft.Extensions.Logging;
 using NA.DataAccess.Bases;
 using NA.DataAccess.Contexts;
-using Newtonsoft.Json.Linq;
-using System.Transactions;
-using NA.Domain.Cache;
 using System.Linq;
 using System.Collections.Generic;
 using NA.Domain.Models;
 using NA.Common.Models;
 using tci.common.Enums;
 using NA.Common.Extentions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace NA.Domain.Services
 {
     public interface ITempService
     {
-        (dynamic data,List<ErrorModel> errors, PagingModel paging) Get(Search_TemplateServiceModel model);
-        void Add(Add_TemplateServiceModel model);
+        Task<(dynamic data, List<ErrorModel> errors, PagingModel paging)> Get(Search_TemplateServiceModel model);
+        Task<(dynamic data, List<ErrorModel> errors)> Add(Add_TemplateServiceModel model);
+
+        Task<(dynamic data, List<ErrorModel> errors)> Edit(Edit_TemplateServiceModel model);
+
+        Task<(dynamic data, List<ErrorModel> errors)> Patch(Guid id, JObject model);
+
+        Task<(dynamic data, List<ErrorModel> errors)> Delete(Guid id);
+
+        Task<(int data, List<ErrorModel> errors)> Count(Count_TemplateServiceModel model);
     }
 
-    public class TempService : ITempService, IDisposable
+    public class TempService : ITempService
     {
-        private readonly IUnitOfWork _unit;
-        private readonly ILogger<TempService> _log;        
-        private ICacheService _cache;
+        private readonly ILogger<TempService> _log;
         private readonly NATemplateContext _db;
-        public TempService(IUnitOfWork unit, ILogger<TempService> log, NATemplateContext db)
+        public TempService(ILogger<TempService> log, NATemplateContext db)
         {
-            _unit = unit; _log = log; _db = db;
+            _log = log; _db = db;
         }
 
-        public (dynamic data, List<ErrorModel> errors, PagingModel paging) Get(Search_TemplateServiceModel model)
+        public async Task<(dynamic data, List<ErrorModel> errors, PagingModel paging)> Get(Search_TemplateServiceModel model)
         {
             var errors = new List<ErrorModel>();
+            var statusActive = (int)Enums.Status_db.Nomal;
 
             var query = _db.Template.AsQueryable();
 
@@ -43,73 +48,83 @@ namespace NA.Domain.Services
             {
                 query = query.WhereLoopback(model.whereLoopback);
 
-                //if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
-                //{
-                //    var statusActive = (int)Enums.Status_db.Nomal;
-                //    query = query.Where(x =>
-                //    (int)(object)DbFunction.JsonValue((string)(object)x.data_db, "$.status") == statusActive);
-                //}
+                if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
+                {
+                    query = query.Where(x =>
+                   (int)DbFunction.JsonValue(x.data_db, "$.status") == statusActive);
+                }
+            }
+            else
+            {
+                query = query.Where(x =>
+                   (int)DbFunction.JsonValue(x.data_db, "$.status") == statusActive);
             }
 
-            query = query.OrderByLoopback(model.orderLoopback);                      
+            query = query.OrderByLoopback(model.orderLoopback);
             var result = query.ToPaging(model);
             return (result.data, errors, result.paging);
         }
 
 
-        public List<Template> Test_Cache()
+        public async Task<(dynamic data, List<ErrorModel> errors)> Add(Add_TemplateServiceModel model)
         {
-            return _cache.GetOrAdd("ALL_Template", () => { return GetAllTemplate(); }, TimeSpan.FromDays(30));
+            var errors = new List<ErrorModel>();
+            _db.Template.Add(model);
+            var result = await _db.SaveChangesAsync();
+            return (result, errors);
         }
 
-        private List<Template> GetAllTemplate()
+        public async Task<(dynamic data, List<ErrorModel> errors)> Edit(Edit_TemplateServiceModel model)
         {
-            return _unit.Repository<Template>().GetAll().ToList();
+            var errors = new List<ErrorModel>();
+            _db.Entry(await _db.Template.FirstOrDefaultAsync(x => x.id == model.id)).CurrentValues.SetValues(model);
+            var result = await _db.SaveChangesAsync();
+            return (result, errors);
         }
 
-        public void Add(Add_TemplateServiceModel model)
+        public async Task<(dynamic data, List<ErrorModel> errors)> Patch(Guid id, JObject model)
         {
-            _db.Template.Add(new Template
+            var errors = new List<ErrorModel>();
+            _db.Entry(await _db.Template.FirstOrDefaultAsync(x => x.id == id)).CurrentValues.SetValues(model);
+            var result = await _db.SaveChangesAsync();
+            return (result, errors);
+        }
+
+        public async Task<(dynamic data, List<ErrorModel> errors)> Delete(Guid id)
+        {
+            var errors = new List<ErrorModel>();
+            var data = new Template() { id = id };
+            _db.Template.Attach(data);
+            _db.Template.Remove(data);
+            var result = await _db.SaveChangesAsync();
+            return (result, errors);
+        }
+
+        public async Task<(int data, List<ErrorModel> errors)> Count(Count_TemplateServiceModel model)
+        {
+            var errors = new List<ErrorModel>();
+            var statusActive = (int)Enums.Status_db.Nomal;
+
+            var query = _db.Template.AsQueryable();
+
+            if (model.where != null)
             {
-                data = new Template.DataJson { name = Guid.NewGuid().ToString()},
-                files = new List<Common.Models.FileModel>(),
-                language = default,
-                data_db = new Common.Models.DataDb(),
-                tag = default
-            });
-            _db.SaveChanges();
-            //var data = model as Template;
-            //_unit.Repository<Template>().Insert(data);
-            //_unit.Save();
-        }
+                query = query.WhereLoopback(model.whereLoopback);
 
-        public void AddTransaction(Add_TemplateServiceModel model)
-        {
-            using (var tran = _unit.BeginTransaction())
-            {
-                _unit.Repository<Template>().Insert(model);
-                _unit.Save();
-                tran.Complete();
+                if (!model.whereLoopback.HaveWhereStatusDb()) //default where statusdb is active
+                {
+                    query = query.Where(x =>
+                   (int)DbFunction.JsonValue(x.data_db, "$.status") == statusActive);
+                }
             }
-        }
+            else
+            {
+                query = query.Where(x =>
+                   (int)DbFunction.JsonValue(x.data_db, "$.status") == statusActive);
+            }
 
-        public void Delete(Template model)
-        {
-        }
-
-        public void Edit(Template model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            _log.LogError("Dispose Service");
-        }
-
-        public void Add(Template model)
-        {
-            throw new NotImplementedException();
+            var result = await query.CountAsync();
+            return (result, errors);
         }
     }
 }

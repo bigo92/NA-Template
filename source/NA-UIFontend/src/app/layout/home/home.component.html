@@ -1,88 +1,88 @@
-<div class="page-header page-header-light border-bottom-0">
-  <div class="page-header-content header-elements-md-inline">
-    <div class="page-title d-flex">
-      <h4><span class="font-weight-semibold">Template</span> Management</h4>
-      <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Centered card</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+            </div>
+        </div>
     </div>
 
-    <div class="header-elements d-none">
-      <button type="button" class="btn btn-primary" (click)="createDialog()"><i class="mr-2" nz-icon
-          nzType="plus-circle" nzTheme="outline"></i>
-        Create</button>
-      <button type="button" class="btn btn-success"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
-        Import Excel</button>
-    </div>
-  </div>
-</div>
+    <div class="card-body">
+        <form action="#">
+            <div class="form-group">
+                <label>Enter your name:</label>
+                <input-text class="form-control" placeholder="Eugene Kopyov"></input-text>
+            </div>
 
-<div class="content pt-0">
-  <div class="header-elements-inline">
-    <div class="navbar-expand-md w-100">
-      <div class="padding-left-15 text-right d-md-none w-100 row">
-        <button class="navbar-toggler" data-target="#product-list" data-toggle="collapse" type="button">
-          <i nz-icon nzType="menu" nzTheme="outline"></i>
-        </button>
-      </div>
-      <div class="navbar-collapse collapse" id="product-list">
-        <form novalidate>
-          <button type="submit" hidden></button>
-          <div class="box-input d-md-flex flex-wrap">
-            <div class="form-group mr-md-2">
-              <input-text></input-text>
+            <div class="form-group">
+                <label>money:</label>
+                <input-float class="form-control" placeholder="Eugene Kopyov"></input-float>
+                <input-date class="form-control" placeholder="Eugene Kopyov"></input-date>
+                <input-month class="form-control" placeholder="Eugene Kopyov"></input-month>
+                <input-year class="form-control" placeholder="Eugene Kopyov"></input-year>
+                <input-time class="form-control" placeholder="Eugene Kopyov"></input-time>
             </div>
-            <div class="form-group mr-md-2">
-              <input-text-search></input-text-search>
+
+            <div class="form-group">
+                <label>Select your state:</label>
+                <select data-placeholder="Select your state"
+                    class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1"
+                    aria-hidden="true">
+                    <option></option>
+                    <optgroup label="Alaskan/Hawaiian Time Zone">
+                        <option value="AK">Alaska</option>
+                        <option value="HI">Hawaii</option>
+                    </optgroup>
+                    <optgroup label="Pacific Time Zone">
+                        <option value="CA">California</option>
+                        <option value="NV">Nevada</option>
+                        <option value="WA">Washington</option>
+                    </optgroup>
+                    <optgroup label="Mountain Time Zone">
+                        <option value="AZ">Arizona</option>
+                        <option value="CO">Colorado</option>
+                        <option value="ID">Idaho</option>
+                    </optgroup>
+                    <optgroup label="Central Time Zone">
+                        <option value="AL">Alabama</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                    </optgroup>
+                    <optgroup label="Eastern Time Zone">
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="WV">West Virginia</option>
+                    </optgroup>
+                </select><span class="select2 select2-container select2-container--default" dir="ltr"
+                    style="width: 100%;"><span class="selection"><span
+                            class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true"
+                            aria-expanded="false" tabindex="0" aria-labelledby="select2-6oxm-container"><span
+                                class="select2-selection__rendered" id="select2-6oxm-container"><span
+                                    class="select2-selection__placeholder">Select your state</span></span><span
+                                class="select2-selection__arrow" role="presentation"><b
+                                    role="presentation"></b></span></span></span><span class="dropdown-wrapper"
+                        aria-hidden="true"></span></span>
             </div>
-            <div class="form-group mr-md-2">
-              <input-number></input-number>
+
+            <div class="form-group">
+                <label>Attach screenshot:</label>
+                <div class="uniform-uploader"><input type="file" class="form-input-styled" data-fouc=""><span
+                        class="filename" style="user-select: none;">No file selected</span><span
+                        class="action btn bg-pink-400" style="user-select: none;">Choose File</span></div>
+                <span class="form-text text-muted">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
             </div>
-          </div>
+
+            <div class="form-group">
+                <label>Your message:</label>
+                <textarea rows="5" cols="5" class="form-control" placeholder="Enter your message here"></textarea>
+            </div>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+            </div>
         </form>
-      </div>
     </div>
-  </div>
-  <hr class="mt-0 margin-bottom-10">
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th class="action">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>3</td>
-          <td>James</td>
-          <td>Alexander</td>
-          <td class="text-center">
-            <div class="list-icons list-icons-extended text-center">
-              <a class="list-icons-item" href="javascript:;" (click)="viewDialog(1)">
-                <span nz-tooltip nzTitle="Xem">
-                  <i nz-icon nzType="eye" nzTheme="outline"></i>
-                </span>
-              </a>
-              <a class="list-icons-item text-primary" href="javascript:;" (click)="editDialog(1)">
-                <span nz-tooltip nzTitle="Sửa">
-                  <i nz-icon nzType="form" nzTheme="outline"></i>
-                </span>
-              </a>
-              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
-                <span nz-tooltip nzTitle="Xóa">
-                  <i nz-icon nzType="delete" nzTheme="outline"></i>
-                </span>
-              </a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <app-paging [data]="paging"></app-paging>
 </div>
-
-<nz-modal class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false" (nzOnCancel)="closeDialog()">
-  <app-home-dialog [params]="paramsDialog" (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)"></app-home-dialog>
-</nz-modal>

@@ -10,7 +10,7 @@ namespace NA.DataAccess.Bases
 {
     public static class QueryableExtention
     {
-        public static (IList<T> data, PagingModel paging) ToPaging<T>(this IQueryable<T> source, IPagingModel model)
+        public static (IList<T> data, PagingModel paging) ToPaging<T>(this IQueryable<T> source, IPagingSizeModel model)
         {
             var skip = model.page * model.size - model.size;
             //DUCNV: tong so trang
@@ -27,7 +27,7 @@ namespace NA.DataAccess.Bases
                 size = model.size,
                 totalPage = totalPage,
                 count = totalRecord,
-                order = model.order
+                order = model.order                
             };
             return (data, paging);
         }
@@ -67,8 +67,7 @@ namespace NA.DataAccess.Bases
 
                     var propertyJson = Expression.Property(table, resultKey.field);
                     var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                    var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
-                    property = Expression.Convert(Expression.Convert(Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson)), typeof(object)), propertyType);
+                    property = Expression.Convert(Expression.Call(jsonFC, propertyJson, Expression.Constant(resultKey.pathJson)), propertyType);
                 }
 
                 var queryExpr = source.Expression;
@@ -141,15 +140,14 @@ namespace NA.DataAccess.Bases
 
                     var propertyJson = Expression.Property(table, resultKey.field);
                     var jsonFC = typeof(DbFunction).GetMethods().First(m => m.Name == "JsonValue" && m.GetParameters().Length == 2);
-                    var jsonValue = Expression.Convert(Expression.Convert(propertyJson, typeof(object)), typeof(string));
-                    property = Expression.Convert(Expression.Convert(Expression.Call(jsonFC, jsonValue, Expression.Constant(resultKey.pathJson)), typeof(object)), propertyType);   
+                    property = Expression.Convert(Expression.Call(jsonFC, propertyJson, Expression.Constant(resultKey.pathJson)), propertyType);
                 }
 
                 if (resultKey.value.GetType() == typeof(JObject))
                 {
                     foreach (var v2value in resultKey.value.Value<JObject>())
-                    {
-                        var valueEx = Convert.ChangeType(v2value.Value, propertyType);
+                    {                        
+                        var valueEx = v2value.Value.ToObject(propertyType);
                         switch (v2value.Key)
                         {
                             case "gt":
@@ -212,7 +210,7 @@ namespace NA.DataAccess.Bases
                 }
                 else
                 {
-                    var valueEx = Convert.ChangeType(resultKey.value.Value<object>(), propertyType);
+                    var valueEx = resultKey.value.ToObject(propertyType);
                     expression = Expression.Equal(property, Expression.Constant(valueEx));
                 }
             }
